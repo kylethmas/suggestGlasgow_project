@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+{% load rango_template_tags %}
+
+<html>
+	<head lang = "en">
+		<meta charset = "utf-8"/>
+		<title>
+			SuggestGlasgow -
+			{% block title_block %}
+				
+			{% endblock %}
+		</title>
+	</head>
+	
+	<body>
+		<h1><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </h1>
+			{% if user.is_authenticated %}
+				<h3><a href="{% url 'suggestGlasgow:logout' %}">LogOut </a></h3>
+				<h3><a href="{% url 'suggestGlasgow:profile' %}">My Profile</a></h3>
+			{% else %}
+				<h3><a href="{% url 'suggestGlasgow:sign up' %}">Sign Up</a></h3>
+				<h3><a href="{% url 'suggestGlasgow:login' %}">Login</a></h3>
+			{% endif %}
+			
+		
+		<div>
+		{% block body_block %}
+		
+		{% endblock %}
+		</div>
+		
+		
+		<hr />
+		<div>
+			<h3> Contact us </h3>
+			<ul>
+			<li><a href="{% url 'suggestGlasgow:home' %}">Email</a></li>
+			<li><a href="{% url 'suggestGlasgow:home' %}">Facebook</a></li>
+			<li><a href="{% url 'suggestGlasgow:home' %}">Instagram</a></li>
+		</ul>
+		</div>
+	</body>
+	
+</html>
+	</body>
+	
+</html>
