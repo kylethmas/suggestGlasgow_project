@@ -5,7 +5,7 @@ from rango.models import Place
 from rango.forms import PlaceForm
 from django.shortcuts import redirect
 from django.urls import reverse
-from rango.forms import UserForm, UserProfileForm
+from rango.forms import UserForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.urls import reverse
