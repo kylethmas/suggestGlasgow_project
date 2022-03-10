@@ -7,16 +7,20 @@
 
 {% block body_block %}
 
+<!-- this is not working properly :) -->
+<!-- need to remove inline css here :) -->
 <div style = "text-align: center;">
 <h1>Sign up for SuggestGlasgow :)</h1>
 
+<!-- you shouldn't be able to get here but just in case :) -->
 {% if registered %}
 You have already registered!
 <a href="{% url 'suggestGlasgow:home' %}">Return to the homepage.</a><br />
 {% else %}
 
 By signing up you can save, rate and comment on any place you like!!!<br />
-<form id="user_form" method="post" action="{% url 'suggestGlasgow:login' %}" enctype="multipart/form-data">
+
+<form id="user_form" method="post" action="{% url 'suggestGlasgow:sign up' %}" enctype="multipart/form-data">
 	
 	{% csrf_token %}
 	{{ user_form.as_p }}
