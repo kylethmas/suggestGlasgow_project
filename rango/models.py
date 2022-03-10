@@ -21,14 +21,16 @@ class Category(models.Model):
         
         
 class Place(models.Model):
+    PlaceID = models.BigAutoField(primary_key=True)
     place_type = models.CharField(max_length = 128) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
-    place_name = models.CharField(max_length=128)
-    place_map = models.CharField(max_length = 128)
+    place_name = models.CharField(max_length=150)
+    place_map = models.CharField(max_length = 128) #plus code or lat/long
     url = models.URLField()
     likes = models.IntegerField(default = 0)
     dislikes = models.IntegerField(default = 0)
     #comments data structure goes here?
-    
+    #need place ID
+
     class Meta:
         verbose_name_plural = 'places'
 
@@ -37,8 +39,31 @@ class Place(models.Model):
         
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    #don't know if we want profile pictures?
-    picture = models.ImageField(upload_to = 'profile_images', blank = True)
-    
+
     def __str__(self):
         return self.user.username
+
+class Ratings(models.Model):
+    PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place",)
+    username = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="the user",)
+    liked = models.BooleanField()
+    saved = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'ratings'
+
+    def __str__(self):
+        return self.liked
+
+class Comments(models.Model):
+    CommentID = models.BigAutoField(primary_key=True)
+    username = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="the user",)
+    PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place", )
+    comment = models.CharField(max_length = 500)
+
+
+    class Meta:
+        verbose_name_plural = 'comments'
+
+    def __str__(self):
+        return self.comment
