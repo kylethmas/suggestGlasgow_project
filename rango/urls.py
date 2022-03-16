@@ -2,7 +2,8 @@ from django.conf.urls import url
 from django.urls import path
 from rango import views
 
-app_name = 'suggestGlasgow'
+LOGIN_URL = 'rango:login'
+APP_NAME = 'suggestGlasgow'
 
 urlpatterns = [
     path('', views.home, name='home'),
