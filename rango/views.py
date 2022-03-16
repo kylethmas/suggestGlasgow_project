@@ -15,7 +15,11 @@ from datetime import datetime
 from rango.forms import UserForm, UserProfileForm
 
 
-
+###Renee's TO DO list:
+### > add change password PasswordChangeView, PasswordChangeDoneView, PasswordResetView
+### > use LoginRequiredMixin to redirect users to login when they try to log in
+### > double check password management, decide if you want to use your hash alg
+### > validate email
 
 def home(request):
     context_dict = {'boldmessage': 'This is the home page'}
@@ -132,12 +136,15 @@ def user_login(request):
                 login(request, user)
                 return redirect(reverse('suggestGlasgow:home'))
             else:
-                return HttpResponse("Your suggestGlasgow account is disabled.")
+                #account not active
+                return HttpResponse("Oops.. your account is disabled.")
         else:
+            #invalid login
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
 
     else:
+        #not http post, retutn to login
         return render(request, 'rango/login.html')
 
 

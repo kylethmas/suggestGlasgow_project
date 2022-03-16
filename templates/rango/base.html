@@ -14,8 +14,9 @@
 	</head>
 	
 	<body>
+	<--! display username in corner?-->
 		<div id = "header">
-		<h1><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </h1>
+			<h1><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </a></h1>
 			{% if user.is_authenticated %}
 				<h3><a href="{% url 'suggestGlasgow:logout' %}">LogOut </a></h3>
 				<h3><a href="{% url 'suggestGlasgow:profile' %}">My Profile</a></h3>
@@ -41,9 +42,6 @@
 			<li><a href="{% url 'suggestGlasgow:home' %}">Instagram</a></li>
 		</ul>
 		</div>
-	</body>
-	
-</html>
 	</body>
 	
 </html>
