@@ -5,12 +5,11 @@
 	Add a page
 {% endblock %}
 
+{% block staticfiles_block %}
+	<link rel="stylesheet" href="{% static 'css/AddPlacestyle.css' %}" />
+{% endblock %}
+
 {% block body_block %}
-	<br />
-	<h1 id="PlaceName">Place name</h1>
-	<h2 id="PlaceDescription">This place is a [popular] &lt;place type&gt;.</h2>
-	<h2 id="PlaceLink"><a href="about:blank">Click here to visit their website (if not available, don't show this)</a></h2>
-	<br />
 	<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="POST" target="StayOnThisSite">
 		<main>
 			<div id="SplitContainer">
@@ -56,5 +55,5 @@
 
 	<iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-	<script type="text/javascript" src="Main.mjs" type="module"></script>
+	<script type="text/javascript" src="{% static 'js/Main.mjs' %}" type="module"></script>
 {% endblock %}
