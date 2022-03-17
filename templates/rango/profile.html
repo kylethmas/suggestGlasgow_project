@@ -1,15 +1,70 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
+
 {% block title_block %}
-	Profile Page
+	Profile 
 {% endblock %}
 
+{% block staticfiles_block %}
+	<link rel="stylesheet" href="{% static 'css/Profilestyle.css' %}" />
+{% endblock %}
 
 {% block body_block %}
-	<a href="/suggestGlasgow/Profile/AddPlace/">Add a new place here :) I should be a button :)</a><br />
+	<br/>
+	<h1 id="Title">My places</h1>
+	<h2 id="Subtitle">Here you can find all of the places you've added!</h2>
+	<br/>
 	
-	<h1> Make this the profile page :) </h1>
-	<br>
-	<h2> fun stuff goes here </h2>
+	<main>
+		<div class="OverflowWrapper" id="AddedPlacesWrapper">
+			<!-- this will be replaced by places that have been saved by the user !-->
+			<div class="ItemsWrapper">
+				<div>
+					<h2 class="RestaurantName">Restaurant</h2>
+					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
+					<div class="Ratings">
+						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
+						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
+						<div class="RemoveButton">Remove</div>
+					</div>
+				</div>
+				
+				<div>
+					<h2 class="RestaurantName">Restaurant</h2>
+					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
+					<div class="Ratings">
+						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
+						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
+						<div class="RemoveButton">Remove</div>
+					</div>
+				</div>
+		  
+				<div>
+					<h2 class="RestaurantName">Restaurant</h2>
+					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
+					<div class="Ratings">
+						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
+						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
+						<div class="RemoveButton">Remove</div>
+					</div>
+				</div>
+				
+				<div>
+					<h2 class="RestaurantName">Restaurant</h2>
+					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
+					<div class="Ratings">
+						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
+						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
+						<div class="RemoveButton">Remove</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<br />
+	<!-- make this a button? !-->
+	<h2 id="Subtitle"><a href="{% url 'suggestGlasgow:add place' %}">Add a new place here</a></h2>
+	<br/>
+    <script type="text/javascript" src="{% static 'js/Main.mjs' %}" type="module"></script>
 {% endblock %}

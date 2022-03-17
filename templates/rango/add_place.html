@@ -28,20 +28,21 @@
 						<p class="FieldInfo">Place name</p>
 						<input type="text" name="PlaceName" required></input>
 					</div>
+					
 					<div class="FieldContainer">
 						<p class="FieldInfo">Place type</p>
-						<!-- <input type="text" name="PlaceType" required></input> !-->
-						<h2 id="SelectionTitle">I would like to go to a <span><div id="SelectTypeMenu" class="DropdownMenu">
+						<div id="SelectTypeMenu" class="DropdownMenu">
 							<div>
-								<div>Please choose an option:</div>
-								<div>Restauraunt</div>
-								<div>Cafe</div>
-								<div>Fast Food</div>
-								<div>Nightlife</div>
+								<div>Select a place type...</div>
+								<div data-type="Option1">Restaurant</div>
+								<div data-type="Option2">Cafe</div>
+								<div data-type="Option3">Fast Food</div>
+								<div data-type="Option4">Nightlife</div>
 							</div>
-						</div></span></h2>
-						
+						</div>
+						<input id="HiddenPlaceTypeInput" type="text" name="PlaceType" required></input>
 					</div>
+						
 					<div class="FieldContainer">
 						<p class="FieldInfo">Location</p>
 						<p id="MapTitleExplanation">Select a point on the map</p>
