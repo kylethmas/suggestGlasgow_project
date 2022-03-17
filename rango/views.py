@@ -68,7 +68,7 @@ def add_place(request):
     return render(request, 'rango/add_place.html', context=context_dict)
 
 #renee: code I did not see existed
-"""def sign_up(request):
+def sign_up(request):
 
     registered = False;  #someones used to java hahaha
     
@@ -91,8 +91,9 @@ def add_place(request):
         
     return render(request, 'rango/signup.html',
             context = {'user_form' : user_form,
-                       'registered' : registered})"""
-        
+                       'registered' : registered})
+
+"""        
 def sign_up(request):
     registered = False
     if request.method == 'POST':
@@ -125,7 +126,7 @@ def sign_up(request):
     return  render(request, "rango/signup.html",
                    context = {"user_form": user_form,
                               "profile_form": profile_form,
-                              "registered": registered})
+                              "registered": registered}) """
 
 def user_login(request):
     if request.method == 'POST':
