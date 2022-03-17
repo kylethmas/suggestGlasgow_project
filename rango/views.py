@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
-from rango.forms import UserForm, UserProfileForm
+from rango.forms import UserForm
 
 
 ###Renee's TO DO list:
@@ -84,7 +84,7 @@ def sign_up(request):
             registered = True
             
         else:
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors)
     
     else:
         user_form = UserForm()
