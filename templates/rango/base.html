@@ -14,37 +14,46 @@
 		<!-- CSS -->
 		<link rel="stylesheet" href="{% static "css/style.css" %}" />
 		<!-- JavaScript -->
-		<script src="{% static "js/jquery.js" %}"></script>
+		<script src="{% static 'js/jquery.js' %}"></script>
 	</head>
 	
 	<body>
-	<!-- display username in corner?-->
-		<div id = "header">
-			<h1><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </a></h1>
-			{% if user.is_authenticated %}
-				<h3><a href="{% url 'suggestGlasgow:logout' %}">LogOut </a></h3>
-				<h3><a href="{% url 'suggestGlasgow:profile' %}">My Profile</a></h3>
-			{% else %}
-				<h3><a href="{% url 'suggestGlasgow:sign up' %}">Sign Up</a></h3>
-				<h3><a href="{% url 'suggestGlasgow:login' %}">Login</a></h3>
-			{% endif %}
-		</div>
-		
-		<div>
-		{% block body_block %}
-		
-		{% endblock %}
-		</div>
-		
-		
-		<hr />
-		<div id = "footer">
-			<h3> Contact us </h3>
-			<ul>
-			<li><a href="{% url 'suggestGlasgow:home' %}">Email</a></li>
-			<li><a href="{% url 'suggestGlasgow:home' %}">Facebook</a></li>
-			<li><a href="{% url 'suggestGlasgow:home' %}">Instagram</a></li>
-		</ul>
+		<div id="PageContainer">
+			<div id="PageContentWrapper">
+				<!-- display username in corner?-->
+				<header>
+					<h1><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </a></h1>
+					<div id="ButtonsWrapper">
+						{% if user.is_authenticated %}
+							<h3><a href="{% url 'suggestGlasgow:logout' %}">LogOut </a></h3>
+							<h3><a href="{% url 'suggestGlasgow:profile' %}">My Profile</a></h3>
+						{% else %}
+							<div>
+								<h3><a href="{% url 'suggestGlasgow:sign up' %}">Sign Up</a></h3>
+							</div>
+							<div>
+								<h3><a href="{% url 'suggestGlasgow:login' %}">Login</a></h3>
+							</div>
+						{% endif %}
+					</div>
+				</header>
+					
+				<div>
+				{% block body_block %}
+				
+				{% endblock %}
+				</div>
+					
+			</div>	
+
+			<footer>
+				<h1>Contact us!</h1>
+				<div id="SocialMediaWrapper">
+					<img src="{% static 'images/Instagram.png' %}" alt="Instagram Logo" />
+					<img src="{% static 'images/Twitter.png' %}" alt="Twitter Logo" />
+					<img src="{% static 'images/Youtube.png' %}" alt="Youtube Logo" />
+				</div>
+			</footer>
 		</div>
 	</body>
 	
