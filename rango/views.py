@@ -24,6 +24,10 @@ from rango.forms import UserForm, UserProfileForm
 def home(request):
     context_dict = {'boldmessage': 'This is the home page'}
     return render(request, 'rango/home.html', context=context_dict)
+    
+def index(request):
+    context_dict = {'boldmessage': 'This is the index page'}
+    return render(request, 'rango/index.html', context=context_dict)
 
 #might come in useful later :)
 def show_category(request, category_name_slug):
