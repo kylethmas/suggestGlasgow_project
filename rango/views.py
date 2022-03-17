@@ -25,10 +25,6 @@ def home(request):
     context_dict = {'boldmessage': 'This is the home page'}
     return render(request, 'rango/home.html', context=context_dict)
     
-def index(request):
-    context_dict = {'boldmessage': 'This is the index page'}
-    return render(request, 'rango/index.html', context=context_dict)
-    
 def example_place(request):
     return render(request, 'rango/ExamplePlace.html')
 
