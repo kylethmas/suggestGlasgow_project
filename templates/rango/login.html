@@ -11,7 +11,8 @@
 {% endblock %}
 
 {% block body_block %}
-	
+	<div id="BackgroundImage"></div>
+    <div id="CenterWrapper">
 	<div>
         <h1>Log in to SuggestGlasgow</h1>
 		<!-- changed this id so will need to change in css 
@@ -27,14 +28,18 @@
 				<p class="FieldInfo">Password</p>
 				<input type="password" name="password" value="" size="50" />
 			</div>
-			<br /> 
-			<input type="checkbox" name="Remember"><span>Remember me</span></input><br /><br />
-			<input type="submit" value="Log in" />
-			<button>Go back</button><br /> 
+			<br/> 
+			<input type="checkbox" name="Remember"><span>Remember me</span></input>
+			<br/>
+			<br/>
+			<button type="submit" name = "submit">Log in</button>
+			<button>Go back</button>
+			<br/> 
         </form> 
 		
         <br />
         <p><a href= "{% url 'suggestGlasgow:sign up' %}" >Don't have an account? Sign up now!</a></p>
       </div>
     <iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
+	</div>
 {% endblock %}
