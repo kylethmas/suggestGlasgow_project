@@ -7,19 +7,24 @@
 
 {% block body_block %}
 
+{% block staticfiles_block %}
+	<link rel="stylesheet" href="{% static 'css/UpdatedStyle.css' %}" />
+{% endblock %}
 
 <header>
-	<h1 id="WebsiteTitle">Welcome to this website!</h1>
-</header>
-<br/>
-<h2 id="SelectionTitle">I would like to go to a <span><div id="SelectTypeMenu" class="DropdownMenu">
-	<div>
-		<div>SelectedOption</div>
-		<div>Option1</div>
-		<div>Option2</div>
-		<div>Option3</div>
+	<div id="WebsiteTitleWrapper">
+		<h1 id="WebsiteTitle">Welcome to this website!</h1>
+		
+		<h2 id="SelectionTitle">I would like to go to a <span><div id="SelectTypeMenu" class="DropdownMenu">
+			<div>
+				<div>SelectedOption</div>
+				<div>Option1</div>
+				<div>Option2</div>
+				<div>Option3</div>
+			</div>
+		</div></span></h2>
 	</div>
-</div></span></h2>
+</header>
 <br/>
 <br/>
 <main>

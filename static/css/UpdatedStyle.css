@@ -11,7 +11,10 @@ header{
   position: relative;
   width: 100%;
   height: calc(min(max(100px, 30vh), 350px));
-  background-image: url("Background.png");
+  background-image: linear-gradient(
+    rgba(0, 0, 0, .4),
+    rgba(0, 0, 0, .4)
+  ), url("{% static 'images/Background.png' %}");
   background-position: center;
 }
 
@@ -41,13 +44,18 @@ header{
   filter: brightness(.7);
 }
 
-#WebsiteTitle{
+#WebsiteTitleWrapper{
   position: absolute;
-  font-size: 56px;
   top: 50%;
   left: 50%;
   margin: 0px;
   transform: translate(-50%, -50%);
+  color: #ffffffff;
+}
+#WebsiteTitle{
+  text-align: center;
+  font-size: 56px;
+  margin: 10px 0 10px 0;
 }
 
 span *{
@@ -55,11 +63,16 @@ span *{
 }
 
 #SelectionTitle{
+  color: #ffffffff;
   position: relative;
   font-size: 35px;
-  left: 50%;
+  text-align: center;
   display: inline-block;
-  transform: translateX(-50%);
+  width: 90vw;
+  margin: 10px 0 10px 0;
+}
+#SelectionTitle *{
+  text-align: left;
 }
 
 
@@ -75,7 +88,7 @@ span *{
 }
 .DropdownMenu > div{
   position: absolute;
-  backdrop-filter: blur(3px) invert(.1);
+  backdrop-filter: blur(3px) invert(.25);
   top: 0px;
   width: 100%;
 }
