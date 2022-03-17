@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Restaurant View</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="PageContainer">
+      <div id="PageContentWrapper">
+        <header>
+          <div id="ButtonsWrapper">
+            <div>Sign up</div>
+            <div>Log in</div>
+          </div>
+          <h1 id="WebsiteTitle">SuggestGlasgow</h1>
+        </header>
+        <br />
+        <h1 id="PlaceName">Add a place</h1>
+        <h2 id="PlaceDescription">Have you found a place that we haven't listed yet? You can add it to our system using this form!</h2>
+        <br />
+        <form name="AddPlaceForm" id="AddPlaceForm" action="/SubmitThisSomewhere" method="POST" target="StayOnThisSite">
+          <main>
+            <div id="SplitContainer">
+              <section id="Left">
+                <div id="ImageDropWrapper">
+                  <div>
+                    <p>Drag and drop an image of the place</p>
+                  </div>
+                </div>
+              </section>
+              <section id="Right">
+                <div class="FieldContainer">
+                  <p class="FieldInfo">Place name</p>
+                  <input type="text" name="PlaceName" required></input>
+                </div>
+                <div class="FieldContainer">
+                  <p class="FieldInfo">Place type</p>
+                  <div id="SelectTypeMenu" class="DropdownMenu">
+                    <div>
+                      <div>Select...</div>
+                      <div data-type="Option1">Option1</div>
+                      <div data-type="Option2">Option2</div>
+                      <div data-type="Option3">Option3</div>
+                    </div>
+                  </div>
+                  <input id="HiddenPlaceTypeInput" type="text" name="PlaceType" required></input>
+                </div>
+                <div class="FieldContainer">
+                  <p class="FieldInfo">Location</p>
+                  <p id="MapTitleExplanation">Select a point on the map</p>
+                  <div id="Map" data-lat="55.865" data-lng="-4.25"></div>
+                  <input id="HiddenLatitudeInput" type="number" name="Latitude" required></input>
+                  <input id="HiddenLongitudeInput" type="number" name="Longitude" required></input>
+                </div>
+                <div class="FieldContainer">
+                  <p class="FieldInfo">Website link (optional)</p>
+                  <input type="text" name="PlaceWebsite"></input>
+                </div>
+              </section>
+            </div>
+            <div id="ConsentCheckboxWrapper">
+              <input id="ConsentCheckbox" type="checkbox" name="Consent" required></input>
+              <span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>
+            </div>
+            <br />
+            <button type="submit" name="Submit">Submit</button>
+          </main>
+        </form>
+        <br />
+      </div>
+      <footer>
+        <h1>Contact us!</h1>
+        <div id="SocialMediaWrapper">
+          <img src="Instagram.png" />
+          <img src="Twitter.png" />
+          <img src="Youtube.png" />
+        </div>
+      </footer>
+    </div>
+    <iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" src="Main.mjs" type="module"></script>
+  </body>
+</html>

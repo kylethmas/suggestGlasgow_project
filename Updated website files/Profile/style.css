@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+*{
+  font-family: "PT Sans", sans-serif;
+}
+
+body{
+  margin: 0;
+  overflow: overlay;
+}
+
+header{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #000000ff;
+}
+
+#ButtonsWrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+#ButtonsWrapper > div{
+  margin: 8px 8px 8px 0;
+  padding: 8px;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 100px;
+
+  background-color: #ffffff7f;
+  backdrop-filter: blur(3px);
+  user-select: none;
+  cursor: pointer;
+}
+#ButtonsWrapper > div:hover{
+  filter: brightness(.85);
+}
+#ButtonsWrapper > div:active{
+  filter: brightness(.7);
+}
+
+#Title, #Subtitle{
+  text-align: center;
+}
+
+#WebsiteTitle{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: calc(min(50%, 69% - 220px));
+  top: 50%;
+  font-size: 28px;
+  color: white;
+  margin: 0px;
+}
+
+
+
+/*Horizontally scrolling element*/
+#AddedPlacesWrapper{
+  --wrapper-width: 100vw;
+  --box-height: calc(max(450px, 67.5vmin));
+  --box-width: calc(max(300px, 45vmin));
+  --box-margin: 20px;
+}
+
+.ItemsWrapper::-webkit-scrollbar,
+.ItemsWrapper::-webkit-scrollbar-button{
+  width: 0;
+  height: 0;
+}
+
+.OverflowWrapper{
+  max-height: calc(var(--box-height) + 2 * var(--box-margin));
+  overflow-y: hidden;
+}
+
+.ItemsWrapper{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /*This is set in js, this is a backup in case of blocked js */
+  flex-wrap: nowrap;
+  width: calc(var(--box-height) + 2 * var(--box-margin));
+  padding: var(--box-margin);
+  box-sizing: border-box;
+  max-height: var(--wrapper-width);
+  min-height: var(--wrapper-width);
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: translateX(-100%) rotate(-90deg);
+  transform-origin: right top;
+}
+
+.ItemsWrapper > div{
+  box-sizing: border-box;
+  flex-shrink: 0;
+  flex-basis: var(--box-width);
+  display: block;
+  position: relative;
+  transform: translateY(-100%) rotate(90deg);
+  transform-origin: left bottom;
+  margin: 0 var(--box-margin) calc((var(--box-width) - var(--box-height)) + var(--box-margin)) 0;
+  width: var(--box-width);
+  min-height: var(--box-height);
+}
+.ItemsWrapper > div:last-of-type{
+  margin-bottom: calc(var(--box-width) - var(--box-height));
+}
+
+
+
+.RestaurantName{
+  position: absolute;
+  top: 0;
+  min-width: 100%;
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  padding: 5px 0;
+  color: #ffffffff;
+  background-color: #0000009f;
+  backdrop-filter: blur(3px);
+}
+
+.RestaurantImageWrapper{
+  width: 100%;
+  aspect-ratio: 2 / 3;
+}
+
+.RestaurantImageWrapper > img{
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+
+.Ratings{
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  min-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: #0000009f;
+  backdrop-filter: blur(3px);
+  color: #ffffffff;
+}
+.Ratings > div > img{
+  width: 40px;
+  filter: invert(1);
+}
+.Ratings > div:not(:last-child){
+  margin-top: -0px;
+  padding-bottom: 10px;
+  position: relative;
+}
+.Ratings > div:not(:last-child)::after{
+  content: attr(data-count);
+  position: absolute;
+  min-width: 100%;
+  left: 0;
+  text-align: center;
+  bottom: 0px;
+}
+.Ratings > div:last-child{
+  margin-left: auto;
+  padding: 5px;
+  align-self: center;
+  border: 2px solid #ffffffff;
+  font-size: 22px;
+}
+.Ratings > *{
+  user-select: none;
+  cursor: pointer;
+}
+.Ratings > *:hover{
+  backdrop-filter: invert(.6);
+}
+
+#PageContainer{
+  position: relative;
+  min-height: 100vh;
+}
+#PageContentWrapper{
+  padding-bottom: 200px;
+}
+footer{
+  background-color: #000000ff;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+}
+footer > h1{
+  text-align: center;
+  color: #ffffffff;
+}
+#SocialMediaWrapper{
+  display: flex;
+  justify-content: center;
+}
+#SocialMediaWrapper > img{
+  width: 48px;
+  height: 48px;
+  margin: 10px;
+  cursor: pointer;
+}
