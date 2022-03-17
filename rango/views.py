@@ -151,7 +151,6 @@ def user_login(request):
         #not http post, retutn to login
         return render(request, 'rango/login.html')
 
-
 @login_required
 def profile(request):
     return render(request, 'rango/profile.html')
