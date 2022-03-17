@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+*{
+  font-family: "PT Sans", sans-serif;
+}
+
+body{
+  margin: 0;
+}
+
+header{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #000000ff;
+}
+
+#ButtonsWrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+#ButtonsWrapper > div{
+  margin: 8px 8px 8px 0;
+  padding: 8px;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 100px;
+
+  background-color: #ffffff7f;
+  backdrop-filter: blur(3px);
+  user-select: none;
+  cursor: pointer;
+}
+#ButtonsWrapper > div:hover{
+  filter: brightness(.85);
+}
+#ButtonsWrapper > div:active{
+  filter: brightness(.7);
+}
+
+#WebsiteTitle{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: calc(min(50%, 69% - 220px));
+  top: 50%;
+  font-size: 28px;
+  color: white;
+  margin: 0px;
+}
+
+
+#PlaceName, #PlaceDescription, #PlaceLink{
+  text-align: center;
+}
+#PlaceDescription, #PlaceLink{
+  margin: 8px 0 8px 0;
+}
+
+#SplitContainer{
+  display: flex;
+  position: relative;
+  margin: 0 15vw 0 15vw;
+}
+#SplitContainer > section{
+  margin: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+
+#Left{
+  width: 40%;
+}
+#ImageDropWrapper{
+  width: 100%;
+  min-height: 50vh;
+}
+#ImageDropWrapper *{
+  pointer-events: none;
+}
+#ImageDropWrapper > div{
+  aspect-ratio: .67;
+  border: 2px dashed black;
+  border-radius: 16px;
+}
+#ImageDropWrapper > div > p{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+}
+
+
+
+#Right{
+  width: 60%;
+  position: relative;
+}
+
+.FieldContainer > input[type="text"],
+.FieldContainer > input[type="password"]{
+  border: 2px solid black;
+  background-color: #00000000;
+  width: 100%;
+  height: 33px;
+  font-size: 25px;
+}
+
+.FieldInfo{
+  font-size: 14px;
+  text-align: left;
+  margin: 7px 0px 2px 0px;
+}
+
+.FieldContainer{
+  width: 80%;
+  margin: 0px auto 20px auto;
+}
+
+#Map{
+  width: 100%;
+  aspect-ratio: 2;
+}
+#Map div[style*="width: 256px"]{
+  filter: invert(.2) brightness(2) saturate(1.6);
+  /*This is just so that the map looks nicer. Legally,
+  it should be fine because this is not a production
+  website anyway, and the "For development purposes
+  only" is still clearly visible.*/
+}
+
+#MapTitleExplanation{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background-color: #ffffff7f;
+  backdrop-filter: blur(3px);
+  margin: 0;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity .5s linear;
+}
+#HiddenLatitudeInput,
+#HiddenLongitudeInput{
+  display: none; /*These exist just to hold the data entered with the map*/
+}
+
+button{
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+button[name="Submit"]{
+  margin: 5px auto 5px auto;
+  border: 2px solid black;
+  padding: 5px 15px 5px 15px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+}
+button[name="Submit"]:hover{
+  backdrop-filter: brightness(.9);
+}
+button[name="Submit"]:active{
+  backdrop-filter: brightness(.7);
+}
+
+#ConsentCheckboxWrapper{
+  position: relative;
+  text-align: center;
+}
+input[type="checkbox"]{
+  margin: auto;
+  font-size: 20px;
+  transform: scale(2);
+  display: inline-block;
+}
+input[type="checkbox"] + span{
+  font-size: 20px;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+#PageContainer{
+  position: relative;
+  min-height: 100vh;
+}
+#PageContentWrapper{
+  padding-bottom: 200px;
+}
+footer{
+  background-color: #000000ff;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+}
+footer > h1{
+  text-align: center;
+  color: #ffffffff;
+}
+#SocialMediaWrapper{
+  display: flex;
+  justify-content: center;
+}
+#SocialMediaWrapper > img{
+  width: 48px;
+  height: 48px;
+  margin: 10px;
+  cursor: pointer;
+}

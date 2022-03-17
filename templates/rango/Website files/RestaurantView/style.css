@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+*{
+  font-family: "PT Sans", sans-serif;
+}
+
+body{
+  margin: 0;
+}
+
+header{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #000000ff;
+}
+
+#ButtonsWrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+#ButtonsWrapper > div{
+  margin: 8px 8px 8px 0;
+  padding: 8px;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 100px;
+
+  background-color: #ffffff7f;
+  backdrop-filter: blur(3px);
+  user-select: none;
+  cursor: pointer;
+}
+#ButtonsWrapper > div:hover{
+  filter: brightness(.85);
+}
+#ButtonsWrapper > div:active{
+  filter: brightness(.7);
+}
+
+#WebsiteTitle{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: calc(min(50%, 69% - 220px));
+  top: 50%;
+  font-size: 28px;
+  color: white;
+  margin: 0px;
+}
+
+
+#PlaceName, #PlaceDescription, #PlaceLink{
+  text-align: center;
+}
+#PlaceDescription, #PlaceLink{
+  margin: 8px 0 8px 0;
+}
+
+main{
+  display: flex;
+  position: relative;
+  margin: 0 15vw 0 15vw;
+}
+main > section{
+  margin: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+#Left{
+  width: 40%;
+}
+#RestaurantImageWrapper{
+  width: 100%;
+  aspect-ratio: .67;
+}
+#RestaurantImageWrapper > img{
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+
+#Ratings{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#Ratings > div > img{
+  width: calc(max(30px, 7vmin - 25px));
+}
+#Ratings > div:not(:last-child){
+  margin-top: -10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+#Ratings > div:not(:last-child)::after{
+  content: attr(data-count);
+  position: absolute;
+  min-width: 100%;
+  left: 0;
+  text-align: center;
+  bottom: 0px;
+}
+#Ratings > div:last-child{
+  margin-left: auto;
+  padding: 5px;
+  align-self: center;
+  border: 2px solid black;
+  font-size: 22px;
+}
+#Ratings > *{
+  user-select: none;
+  cursor: pointer;
+}
+#Ratings > *:hover{
+  backdrop-filter: brightness(.8);
+}
+
+
+
+#Right{
+  width: 60%;
+}
+#Right > #OverflowWrapper{
+  flex-basis: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column wrap;
+  overflow: hidden;
+}
+#Map{
+  width: 100%;
+  aspect-ratio: 2.5;
+}
+#Map div[style*="width: 256px"]{
+  filter: invert(.2) brightness(2) saturate(1.6);
+  /*This is just so that the map looks nicer. Legally,
+  it should be fine because this is not a production
+  website anyway, and the "For development purposes
+  only" is still clearly visible.*/
+}
+#CommentSectionTitle{
+  text-align: center;
+}
+#ViewAllComments{
+  text-align: center;
+  margin: -8px 0 10px 0;
+}
+.Comment{
+  background-color: #0000000f;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.Comment .InfoWrapper{
+  display: flex;
+  justify-content: space-between;
+}
+.Comment .Title{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#OverflowWrapper > *:not(:first-child){
+  cursor: pointer;
+}
+
+
+#CommentsOverlayBackground{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0000004f;
+  backdrop-filter: blur(4px);
+  z-index: 2147483647;
+  cursor: pointer;
+
+  display: none;
+}
+#CommentsOverlayBackground > div{
+  box-sizing: border-box;
+  width: calc(max(min(90vw, 30vw + 500px), 60vw));
+  max-height: calc(100% - 40px);
+  background-color: #fffffff7;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  cursor: default;
+}
+#CommentsOverlayBackground > div > h1{
+  margin: 20px;
+  text-align: center;
+}
+#LoadMoreCommentsButton{
+  margin: auto;
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid black;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 8px;
+  user-select: none;
+}
+#CommentsSection{
+  max-height: 35vh;
+  overflow-y: auto;
+}
+
+.Disabled{
+  backdrop-filter: brightness(.7);
+  cursor: not-allowed !important;
+}
+
+textarea{
+  display: block;
+  border: 2px solid black;
+  font-size: 20px;
+}
+textarea[name="Comment"]{
+  width: calc(100% - 5px);
+  height: calc(max(100px, 15vh));
+  outline: none;
+}
+
+button{
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+button[name="Submit"]{
+  margin: 5px auto 5px auto;
+  border: 2px solid black;
+  padding: 5px 15px 5px 15px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+}
+button[name="Submit"]:hover{
+  backdrop-filter: brightness(.9);
+}
+button[name="Submit"]:active{
+  backdrop-filter: brightness(.7);
+}
+
+#PageContainer{
+  position: relative;
+  min-height: 100vh;
+}
+#PageContentWrapper{
+  padding-bottom: 200px;
+}
+footer{
+  background-color: #000000ff;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+}
+footer > h1{
+  text-align: center;
+  color: #ffffffff;
+}
+#SocialMediaWrapper{
+  display: flex;
+  justify-content: center;
+}
+#SocialMediaWrapper > img{
+  width: 48px;
+  height: 48px;
+  margin: 10px;
+  cursor: pointer;
+}
