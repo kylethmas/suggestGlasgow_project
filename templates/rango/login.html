@@ -1,9 +1,13 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
+
 {% block title_block %}
 	Log In 
-	
+{% endblock %}
+
+{% block staticfiles_block %}
+	<link rel="stylesheet" href="{% static 'css/LogInstyle.css' %}" />
 {% endblock %}
 
 {% block body_block %}
