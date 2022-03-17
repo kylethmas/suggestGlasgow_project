@@ -28,6 +28,9 @@ def home(request):
 def index(request):
     context_dict = {'boldmessage': 'This is the index page'}
     return render(request, 'rango/index.html', context=context_dict)
+    
+def example_place(request):
+    return render(request, 'rango/ExamplePlace.html')
 
 #might come in useful later :)
 def show_category(request, category_name_slug):
