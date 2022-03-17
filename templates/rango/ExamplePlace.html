@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Restaurant View</title>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	<!-- put place name here ? !-->
+	<!-- need to do style sheets !-->
+{% endblock %}
+
+{% block body_block %}
     <div id="PageContainer">
       <div id="PageContentWrapper">
         <header>
@@ -21,7 +23,7 @@
         <br />
         <main>
           <section id="Left">
-            <div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="Restaurant.jpg" /></div>
+            <div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="C:\Users\niamh\Workspace\suggestGlasgow_project\static\images\Restaurant.jpg" /></div>
             <div id="Ratings">
               <div data-count="13"><img src="Like.png" /></div>
               <div data-count="69"><img src="Dislike.png" /></div>
@@ -83,5 +85,4 @@
     <iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script type="text/javascript" src="Main.mjs" type="module"></script>
-  </body>
-</html>
+{% endblock %}

@@ -2,18 +2,31 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Login
+	Log In 
+	
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to SuggestGlasgow :)</h1>
+	
+	<div>
+        <h1>Log in to SuggestGlasgow</h1>
+        <form name="login_form" id="LogInForm" method="POST" action="{% url 'suggestGlasgow:login' %}" <!-- target="StayOnThisSite" !-->
+          <div class="FieldContainer">
+            <p class="FieldInfo">Username</p>
+            <input type="text" name="Username"></input>
+          </div>
 
-<form id="login_form" method="post" action="{% url 'suggestGlasgow:login' %}">
-	{% csrf_token %}
-	Username: <input type="text" name="username" value="" size="50" />
-	<br />
-	Password: <input type="password" name="password" value="" size="50" />
-	<br />
-	<input type="submit" value="submit" />
-</form>
+          <div class="FieldContainer">
+            <p class="FieldInfo">Password</p>
+            <input type="password" name="Password"></input>
+          </div>
+          <br />
+          <input type="checkbox" name="Remember"><span>Remember me</span></input><br /><br />
+          <button type="submit" name="Submit">Log In</button>
+          <button>Go back</button><br />
+        </form>
+        <br />
+        <p><a href= "{% url 'suggestGlasgow:sign up' %}" >Don't have an account? Sign up now!</a></p>
+      </div>
+    <iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
 {% endblock %}
