@@ -12,7 +12,7 @@
 			{% endblock %}
 		</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="{% static "css/style.css" %}" />
+		<link rel="stylesheet" href="{% static "css/HomeUpdatedstyle.css" %}" />
 		<!-- JavaScript -->
 		<script src="{% static 'js/jquery.js' %}"></script>
 		{% block staticfiles_block %}
@@ -26,7 +26,7 @@
 				<!-- display username in corner?-->
 				<header>
 					<h1><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </a></h1>
-					<div id="ButtonsWrapper">
+					<div id="ButtonsWrapper">	<!-- do we change these to buttons? !-->
 						{% if user.is_authenticated %}
 							<div>
 								<h3><a href="{% url 'suggestGlasgow:logout' %}">LogOut </a></h3>
@@ -47,7 +47,6 @@
 					
 				<div>
 				{% block body_block %}
-				
 				{% endblock %}
 				</div>
 					

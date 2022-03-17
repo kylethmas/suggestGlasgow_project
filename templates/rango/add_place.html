@@ -10,16 +10,9 @@
 {% endblock %}
 
 {% block body_block %}
-<<<<<<< HEAD
-	<br />
-	<h1 id="PlaceName">Place name</h1>
-	<h2 id="PlaceDescription">This place is a [popular] &lt;place type&gt;.</h2>
-	<h2 id="PlaceLink"><a href="about:blank">Click here to visit their website (if not available, don't show this)</a></h2>
-	<br />
-	<form name="AddPlaceForm" id="PlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="post" target="StayOnThisSite">
-=======
+
 	<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="POST" target="StayOnThisSite">
->>>>>>> 6e587446441b52780305ed6b969784f1ef38c1cc
+	<br/>
 		<main>
 			<div id="SplitContainer">
 				<section id="Left">
