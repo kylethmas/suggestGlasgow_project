@@ -11,7 +11,7 @@
 	<h2 id="PlaceDescription">This place is a [popular] &lt;place type&gt;.</h2>
 	<h2 id="PlaceLink"><a href="about:blank">Click here to visit their website (if not available, don't show this)</a></h2>
 	<br />
-	<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="POST" target="StayOnThisSite">
+	<form name="AddPlaceForm" id="PlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="post" target="StayOnThisSite">
 		<main>
 			<div id="SplitContainer">
 				<section id="Left">
