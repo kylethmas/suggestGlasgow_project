@@ -53,7 +53,7 @@ def show_category(request, category_name_slug):
     return render(request, 'rango/category.html', context = context_dict)
    
 
-@login_required    
+#@login_required
 def add_place(request):
     form = PlaceForm()
         
