@@ -3,7 +3,7 @@ from django.urls import path
 from rango import views
 
 LOGIN_URL = 'rango:login'
-APP_NAME = 'suggestGlasgow'
+app_name = 'suggestGlasgow'
 
 urlpatterns = [
     path('', views.home, name='home'),
