@@ -1,7 +1,7 @@
 from django import forms
 from rango.models import Place
 from django.contrib.auth.models import User
-from rango.models import UserProfile
+
             
 class PlaceForm(forms.ModelForm):
     place_name = forms.CharField(max_length = 128, help_text = "Place name")
@@ -32,8 +32,8 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password',)
         
-
+"""
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('picture',)
+        fields = ('picture',) """
