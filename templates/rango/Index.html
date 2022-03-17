@@ -1,0 +1,57 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Homepage
+{% endblock %}
+
+{% block body_block %}
+	<div id="PageContainer">
+		<div id="PageContentWrapper">
+			<header>
+				<div id="ButtonsWrapper">
+					<div>Sign up</div>
+					<div>Log in</div>
+				</div>
+				<h1 id="WebsiteTitle">Welcome to this website!</h1>
+			</header>
+			<br/>
+			<h2 id="SelectionTitle">I would like to go to a <span><div id="SelectTypeMenu" class="DropdownMenu">
+			  <div>
+				<div>SelectedOption</div>
+				<div>Option1</div>
+				<div>Option2</div>
+				<div>Option3</div>
+			  </div>
+			</div></span></h2>
+			<br/>
+			<br/>
+			<main>
+				<div>
+					<img src="Background.png" />
+					<div>
+					  <h2>Heading</h2>
+					  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent metus erat, vestibulum id mauris sed, viverra vestibulum magna. Sed venenatis aliquet mauris in bibendum. Morbi felis leo, finibus ut dapibus ut, gravida id felis. Mauris enim massa, lacinia eget sem sed, commodo malesuada turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris sodales ligula non est venenatis scelerisque. In fringilla risus ut ex luctus feugiat. Aenean luctus dignissim ante eu dapibus. Suspendisse potenti.</p>
+					</div>
+				</div>
+          <div>
+            <img src="Background.png" />
+            <div>
+              <h2>Heading</h2>
+              <p>Vivamus ultrices nulla sed ultrices vestibulum. Donec sagittis accumsan varius. Donec tincidunt sem ac quam dignissim mollis. Pellentesque ornare est id lacus tincidunt lobortis. Etiam dictum accumsan facilisis. Mauris tincidunt euismod mollis. Aenean rhoncus euismod massa, nec mattis mauris pharetra in. Sed quam quam, consectetur nec velit ut, fermentum dictum arcu. Donec id ante a tortor commodo mollis ac vel dolor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+            </div>
+          </div>
+        </main>
+        <br />
+      </div>
+      <footer>
+        <h1>Contact us!</h1>
+        <div id="SocialMediaWrapper">
+          <img src="Instagram.png" />
+          <img src="Twitter.png" />
+          <img src="Youtube.png" />
+        </div>
+      </footer>
+    </div>
+{% endblock %}
+
