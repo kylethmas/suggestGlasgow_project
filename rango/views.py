@@ -143,5 +143,22 @@ class LikeCategoryView(View):
         place.save()
     
         return HttpResponse(place.likes)
+        
+class DislikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        place_id = request.GET['place_id']
+        try:
+            place = Place.objects.get(PlaceID = place_id)
+
+        except Place.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+    
+        place.dislikes = place.dislikes + 1
+        place.save()
+    
+        return HttpResponse(place.dislikes)
 
 

@@ -37,9 +37,24 @@
 								<img alt="Restaurant Image" src= "{% static 'images/Like.png' %}">
 								</button>
 								{% else %}
-									<!-- display just the picture and the likes here !-->					
+									<!-- display just the picture here !-->					
 								{% endif %}
 						</div>
+						
+						<div>
+							<strong id="dislike_count">{{ place.dislikes }}</strong> dislikes
+							{% if user.is_authenticated %}
+								<button id="dislike_btn"
+								data-placeid ="{{ place.PlaceID }}"
+								class="btn btn-primary btn-sm"
+								type="button">
+								<img alt="Restaurant Image" src= "{% static 'images/Dislike.png' %}">
+								</button>
+								{% else %}
+									<!-- display just the picture here !-->					
+								{% endif %}
+						</div>
+						
 						<div data-count="{{ place.dislikes }}"><img src="{% static 'images/Dislike.png' %}" /></div>
 						<div data-count="Add"><img src="{% static 'images/Add.png' %}" /></div>
 						<div id="CommentButton">Comment</div>

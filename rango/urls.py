@@ -17,6 +17,6 @@ urlpatterns = [
     path('Profile/AddPlace/', views.add_place, name='add place'),
     path('ExamplePlace/', views.example_place, name='example place'),
     path('LikePlace/', views.LikeCategoryView.as_view(), name='like place'),
-
+    path('DislikePlace/', views.DislikeCategoryView.as_view(), name='dislike place'),
 
 ]

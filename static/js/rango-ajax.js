@@ -13,3 +13,19 @@ $(document).ready(function() {
 			})
 	});
 });
+
+
+$(document).ready(function() {
+	$('#dislike_btn').click(function() {
+		var placeIdVar;
+		placeIdVar = $(this).attr('data-placeid');
+		
+		$.get('/suggestGlasgow/DislikePlace/',
+			{'place_id': placeIdVar},
+			function(data) {
+				$('#dislike_count').html(data);
+				$('#dislike_btn').hide();
+				//maybe show the image?
+			})
+	});
+});
