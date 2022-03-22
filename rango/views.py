@@ -29,25 +29,22 @@ def example_place(request):
     return render(request, 'rango/ExamplePlace.html')
 
 #might come in useful later :)
-def show_category(request, category_name_slug):
+def show_place(request, place_name_slug):
     
     context_dict = {}
     
     try:
-        category = Category.objects.get(slug = category_name_slug)
+        #place = Place.objects.get(slug = place_name_slug)
+        place = Place.objects.get(place_name = place_name_slug)
+        context_dict['place'] = place
         
-        pages = Page.objects.filter(category = category)
+    except Place.DoesNotExist:
         
-        context_dict['pages'] = pages
-        context_dict['category'] = category
+        context_dict['place'] = None
         
-    except Category.DoesNotExist:
-        
-        context_dict['category'] = None
-        context_dict['pages'] = None
-        
-    return render(request, 'rango/category.html', context = context_dict)
-   
+    return render(request, 'rango/place.html', context = context_dict)
+
+
 
 @login_required
 def add_place(request):
