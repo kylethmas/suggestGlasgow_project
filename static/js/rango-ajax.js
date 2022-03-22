@@ -9,6 +9,7 @@ $(document).ready(function() {
 			function(data) {
 				$('#like_count').html(data);
 				$('#like_btn').hide();
+				$('#dislike_btn').hide();
 				//maybe show the image?
 			})
 	});
@@ -25,6 +26,7 @@ $(document).ready(function() {
 			function(data) {
 				$('#dislike_count').html(data);
 				$('#dislike_btn').hide();
+				$('#like_btn').hide();
 				//maybe show the image?
 			})
 	});
