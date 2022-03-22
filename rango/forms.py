@@ -2,18 +2,24 @@ from django import forms
 from rango.models import Place
 from django.contrib.auth.models import User
 
-            
+place_types = (("Restaurant", "Restaurant"),
+          ("Cafe", "Cafe"),
+          ("Fast Food", "Fast Food"),
+          ("Nightlife", "Nightlife"))
+
 class PlaceForm(forms.ModelForm):
     place_name = forms.CharField(max_length = 128, help_text = "Place name")
-    place_type = forms.CharField(max_length = 128, help_text = "Place type") #this will be a drop down menu
-    place_map = forms.CharField(max_length = 128, help_text = "Approximate Location") # this will be a map interface
-    url = forms.URLField(max_length = 200, help_text = "Website (optional)") #optional?
+    place_type = forms.ChoiceField(choices = place_types, help_text = "Category ")
+    place_map = forms.CharField(max_length = 128, help_text = "Approximate Location", required=False) # this will be a map interface
+    url = forms.URLField(max_length = 200, help_text = "Website (optional)", required=False) #optional?
     likes = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
     dislikes = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
-    
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     class Meta:
         model = Place
-        exclude = ('category',)
+        #exclude = ('category',)
+        fields = ('place_name', 'place_type', 'place_map', 'url')
         
     def clean(self):
         cleaned_data = self.cleaned_data

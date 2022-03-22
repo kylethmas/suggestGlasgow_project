@@ -10,62 +10,77 @@
 {% endblock %}
 
 {% block body_block %}
-
-	<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="POST" target="StayOnThisSite">
-	<br/>
-		<main>
-			<div id="SplitContainer">
-				<section id="Left">
-					<div id="ImageDropWrapper">
-						<div>
-							<p>Drag and drop an image of the place</p>
-						</div>
+	<br>
+	<main>
+		<div id="SplitContainer">
+			<section id="Left">
+				<div id="ImageDropWrapper">
+					<div>
+						<p>Drag and drop an image of the place</p>
 					</div>
-				</section>
-				
-				<section id="Right">
+				</div>
+			</section>
+			
+			<section id="Right">
+				<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="POST" target="StayOnThisSite">
+					{% csrf_token %}
+					{% for hidden in form.hidden_fields %}
+						{{ hidden }}
+					{% endfor %}
+					
 					<div class="FieldContainer">
-						<p class="FieldInfo">Place name</p>
-						<input type="text" name="PlaceName" required></input>
+						{{ form.place_name.errors }}
+						<p class="FieldInfo">
+							{{ form.place_name.help_text }}
+						</p>
+						{{ form.place_name }}
+							
+					</div>
+					<div class="FieldContainer">
+						{{ form.place_type.errors }}
+						<p class="FieldInfo">
+							{{ form.place_type.help_text }}
+						</p>
+						<div class = "DropdownMenu" id="SelectTypeMenu">
+							<div>
+								{{ form.place_type }}
+							</div>
+						</div>
 					</div>
 					
 					<div class="FieldContainer">
-						<p class="FieldInfo">Place type</p>
-						<div id="SelectTypeMenu" class="DropdownMenu">
-							<div>
-								<div>Select a place type...</div>
-								<div data-type="Option1">Restaurant</div>
-								<div data-type="Option2">Cafe</div>
-								<div data-type="Option3">Fast Food</div>
-								<div data-type="Option4">Nightlife</div>
-							</div>
-						</div>
-						<input id="HiddenPlaceTypeInput" type="text" name="PlaceType" required></input>
-					</div>
-						
-					<div class="FieldContainer">
-						<p class="FieldInfo">Location</p>
+						{{ form.place_map.errors }}
+						<p class="FieldInfo">
+							{{ form.place_map.help_text }}
+						</p>
 						<p id="MapTitleExplanation">Select a point on the map</p>
 						<div id="Map" data-lat="55.865" data-lng="-4.25"></div>
-						<input id="HiddenLatitudeInput" type="number" name="Latitude" required></input>
-						<input id="HiddenLongitudeInput" type="number" name="Longitude" required></input>
-					</div>
-					<div class="FieldContainer">
-						<p class="FieldInfo">Website link (optional)</p>
-						<input type="text" name="PlaceWebsite"></input>
-					</div>
-				</section>
-			</div>
-			<div id="ConsentCheckboxWrapper">
-				<input id="ConsentCheckbox" type="checkbox" name="Consent" required></input>
-				<span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>
-			</div>
-			<br/>
-			<button type="submit" name="Submit">Submit</button>
-		</main>
-	</form>
-	<br/>
+						<!-- <input id="HiddenLatitudeInput" type="number" name="Latitude" required></input>
+						<input id="HiddenLongitudeInput" type="number" name="Longitude" required></input> -->
+						{{ form.place_map }}
 
+					</div>
+					
+					<div class="FieldContainer">
+						{{ form.url.errors }}
+						<p class="FieldInfo">
+							{{ form.url.help_text }}
+						</p>
+						{{ form.url }}
+					</div>
+					
+
+					<div id="ConsentCheckboxWrapper">
+							<input id="ConsentCheckbox" type="checkbox" name="Consent" required></input>
+							<span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>
+					</div>
+					<br>
+					<input type="submit" name="submit" value="Submit" />
+				</form>
+			</section>
+		</div>
+		<br/>
+	</main>
 	<iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<script type="text/javascript" src="{% static 'js/Main.mjs' %}" type="module"></script>

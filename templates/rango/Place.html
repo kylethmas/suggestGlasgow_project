@@ -14,6 +14,7 @@
 				
 	<div>
 	{% if place %}
+		<h1>{{ place.PlaceID }}</h1>
 		<h1 id="PlaceName">{{ place.place_name }}</h1>
 		<h2 id="PlaceDescription">This place is a [popular] {{ place.place_type }}.</h2>
 		{% if place.url %}

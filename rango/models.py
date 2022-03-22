@@ -22,7 +22,7 @@ class Category(models.Model):
         
 class Place(models.Model):
     PlaceID = models.BigAutoField(primary_key=True)
-    place_type = models.CharField(max_length = 128) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
+    place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife"))) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
     place_name = models.CharField(max_length=150)
     place_map = models.CharField(max_length = 128) #plus code or lat/long
     url = models.URLField()
@@ -74,6 +74,7 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment
+<<<<<<< HEAD
         
 class SavedList(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="savedList", null=True) # <--- added
@@ -89,3 +90,6 @@ class Item(models.Model):
 
     def __str__(self):
         return self.tex
+=======
+
+>>>>>>> 6104ba200fc12949d8767ea31c45d7d575960e2c

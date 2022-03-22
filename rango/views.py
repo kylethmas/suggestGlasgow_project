@@ -47,7 +47,6 @@ def show_place(request, place_name_slug):
     return render(request, 'rango/place.html', context = context_dict)
 
 
-
 @login_required
 def add_place(request):
     form = PlaceForm()
@@ -55,13 +54,15 @@ def add_place(request):
     if request.method == 'POST':
         form = PlaceForm(request.POST)
 
-
     if form.is_valid():
-        place.save()
+        form.save()
         print("Page has been saved!!!")
 
     else:
         print(form.errors)
+        print("Page has wrong!!!")
+        print(form.errors)
+        #return redirect('/')
 
     context_dict = {'form': form}
     return render(request, 'rango/add_place.html', context=context_dict)

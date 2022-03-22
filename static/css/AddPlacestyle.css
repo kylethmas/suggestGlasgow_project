@@ -103,6 +103,7 @@ header{
 }
 
 .FieldContainer > input[type="text"],
+.FieldContainer > input[type="url"],
 .FieldContainer > input[type="password"]{
   border: 2px solid black;
   background-color: #00000000;
@@ -201,7 +202,7 @@ header{
   display: none; /*These exist just to hold the data entered with the map*/
 }
 
-button{
+button,input{
   background: none;
 	color: inherit;
 	border: none;
@@ -210,7 +211,7 @@ button{
 	cursor: pointer;
 	outline: inherit;
 }
-button[name="Submit"]{
+input[name="Submit"]{
   margin: 5px auto 5px auto;
   border: 2px solid black;
   padding: 5px 15px 5px 15px;
@@ -219,10 +220,10 @@ button[name="Submit"]{
   transform: translateX(-50%);
   font-size: 20px;
 }
-button[name="Submit"]:hover{
+input[name="Submit"]:hover{
   backdrop-filter: brightness(.9);
 }
-button[name="Submit"]:active{
+input[name="Submit"]:active{
   backdrop-filter: brightness(.7);
 }
 
