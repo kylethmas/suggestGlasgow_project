@@ -28,6 +28,12 @@ class Place(models.Model):
     url = models.URLField()
     likes = models.IntegerField(default = 0)
     dislikes = models.IntegerField(default = 0)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.place_name)
+        super(Place, self).save(*args, **kwargs)
+
     #comments data structure goes here?
     #need place ID
 
