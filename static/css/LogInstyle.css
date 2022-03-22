@@ -43,6 +43,7 @@ body{
   font-size: 20px;
 }
 .FieldContainer > input[type="text"],
+.FieldContainer > input[type="email"],
 .FieldContainer > input[type="password"]{
   border: 2px solid black;
   background-color: #00000000;

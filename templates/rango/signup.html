@@ -1,35 +1,51 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
+
 {% block title_block %}
-	Sign up
+	Log In 
 {% endblock %}
 
+{% block staticfiles_block %}
+	<link rel="stylesheet" href="{% static 'css/LogInstyle.css' %}" />
+{% endblock %}
+
+<!-- need to modify this so that you can either scroll or there is no header and footer !-->
 {% block body_block %}
+	<div id="BackgroundImage"></div>
+    <div id="CenterWrapper">
+	<div>
+        <h1>Sign up to SuggestGlasgow</h1>
+		<!-- changed this id so will need to change in css 
+		<form id="login_form" method="post" action="{% url 'suggestGlasgow:login' %}" <!-- target="StayOnThisSite" !-->
+		<form id="login_form" method="post" action="{% url 'suggestGlasgow:home' %}">
+			{% csrf_token %}
+			<div class="FieldContainer">
+				<p class="FieldInfo">Username</p>
+				{{ user_form.username }}
+			</div>
 
-<!-- this class fixes the inline css problem. should move classes to base to allow several styles! -->
-<style>
-.pageStyle {
-	text-align : center;
-}
-</style>
-<div class = "pageStyle">
-<h1>Sign up for SuggestGlasgow :)</h1>
+			<div class="FieldContainer">
+				<p class="FieldInfo">Password</p>
+				{{ user_form.password }}
+			</div>
 
-<!-- you shouldn't be able to get here but just in case :) -->
-<!-- you get here once done registering -->
-{% if registered %}
-You are now registered!
-<a href="{% url 'suggestGlasgow:home' %}">Return to the homepage.</a><br />
-{% else %}
-By signing up you can save, rate and comment on any place you like!!!<br />
-<form id="user_form" method="post" action="{% url 'suggestGlasgow:sign up' %}" enctype="multipart/form-data">
-	
-	{% csrf_token %}
-	{{ user_form }}
-	
-	<input type="submit" name="submit" value="Sign Up!" />
-</form>
-</div>
-{% endif %}
+			<div class="FieldContainer">
+				<p class="FieldInfo">Email</p>
+				{{ user_form.email }}
+			</div>
+			<br/> 
+			<input type="checkbox" name="Remember"><span>Remember me</span></input>
+			<br/>
+			<br/>
+			<button type="submit" name = "submit">Sign up</button>
+			<button>Go back</button>
+			<br/> 
+        </form> 
+		
+        <br />
+        <p><a href= "{% url 'suggestGlasgow:login' %}" >Already have an account? Log in!</a></p>
+      </div>
+    <iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
+	</div>
 {% endblock %}
