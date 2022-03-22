@@ -12,7 +12,7 @@
 			{% endblock %}
 		</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="{% static "css/UpdatedStyle.css" %}" />
+		<link rel="stylesheet" href="{% static "css/BaseStyle.css" %}" />
 		<!-- JavaScript -->
 		<script src="{% static 'js/jquery.js' %}"></script>
 		{% block staticfiles_block %}
@@ -25,22 +25,14 @@
 			<div id="PageContentWrapper">
 				<!-- display username in corner?-->
 				<header>
-					<h1><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </a></h1>
+					<h1 id="WebsiteTitle"><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </a></h1>
 					<div id="ButtonsWrapper">	<!-- do we change these to buttons? !-->
 						{% if user.is_authenticated %}
-							<div>
-								<h3><a href="{% url 'suggestGlasgow:logout' %}">LogOut </a></h3>
-							</div>
-							<div>
-								<h3><a href="{% url 'suggestGlasgow:profile' %}">My Profile</a></h3>
-							</div>
+							<a href="{% url 'suggestGlasgow:logout' %}">LogOut </a>
+							<a href="{% url 'suggestGlasgow:profile' %}">My Profile</a>
 						{% else %}
-							<div>
-								<h3><a href="{% url 'suggestGlasgow:sign up' %}">Sign Up</a></h3>
-							</div>
-							<div>
-								<h3><a href="{% url 'suggestGlasgow:login' %}">Login</a></h3>
-							</div>
+							<a href="{% url 'suggestGlasgow:sign up' %}">Sign Up</a>
+							<a href="{% url 'suggestGlasgow:login' %}">Login</a>
 						{% endif %}
 					</div>
 				</header>

@@ -26,8 +26,7 @@ By signing up you can save, rate and comment on any place you like!!!<br />
 <form id="user_form" method="post" action="{% url 'suggestGlasgow:sign up' %}" enctype="multipart/form-data">
 	
 	{% csrf_token %}
-	{{ user_form.as_p }}
-	{{ profile_form.as_p }}
+	{{ user_form }}
 	
 	<input type="submit" name="submit" value="Sign Up!" />
 </form>

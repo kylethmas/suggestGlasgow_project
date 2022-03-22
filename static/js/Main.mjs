@@ -23,10 +23,13 @@ google.maps.event.addListener(Map, "click", function(Event){
   SelectedMarker.setPosition(Event.latLng);
 });
 
-document.querySelector("#ImageDropWrapper").addEventListener("dragover", function(Event){
-  Event.preventDefault(); //Prevent browser from opening the file as usual. Both dragover and drop events need to be preventDefault-ed.
-});
-document.querySelector("#ImageDropWrapper").addEventListener("drop", function(Event){
-  Event.preventDefault(); //Prevent browser from opening the file as usual. Both dragover and drop events need to be preventDefault-ed.
-  debugger;
+const SelectTypeMenu = document.querySelector("#SelectTypeMenu");
+const SelectedType = document.querySelector("#SelectTypeMenu > div > div:first-child");
+const HiddenInput = document.querySelector("#HiddenPlaceTypeInput");
+
+SelectTypeMenu.addEventListener("click", function(Event){
+  const Type = Event.target.dataset.type;
+  if(Type === undefined) return;
+  SelectedType.innerText = Event.target.innerText;
+  HiddenInput.value = Type;
 });

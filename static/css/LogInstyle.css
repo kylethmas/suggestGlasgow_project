@@ -1,14 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
-*{
-  font-family: "PT Sans", sans-serif;
+/*Remove header and footer styles from the base template*/
+
+header, footer{
+  display: none;
 }
+#PageContentWrapper{
+	padding: 0;
+}
+
 
 body{
   margin: -2vh -2vw -2vh -2vw;
   overflow: hidden;
 }
 #BackgroundImage{
-  background-image: url("Background.png");
+  background-image: url("../Images/Background.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
