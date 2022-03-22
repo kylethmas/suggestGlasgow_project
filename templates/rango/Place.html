@@ -11,11 +11,12 @@
 {% endblock %}
 
 {% block body_block %}
+				
 	<div>
 	{% if place %}
 		<h1>{{ place.PlaceID }}</h1>
 		<h1 id="PlaceName">{{ place.place_name }}</h1>
-		<h2 id="PlaceDescription">This place is a [popular] &lt;{{ place.place_type }}&gt;.</h2>
+		<h2 id="PlaceDescription">This place is a [popular] {{ place.place_type }}.</h2>
 		{% if place.url %}
 			<h2 id="PlaceLink"><a href="{{ place.url }}">Click here to visit their website </a></h2>
 		{% endif %}
@@ -26,7 +27,35 @@
 					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
 					<div id="Ratings">
 					
-						<div data-count="{{ place.likes }}"><img src="{% static 'images/Like.png' %}" /></div>
+						 <!-- <div data-count="{{ place.likes }}"><img src="{% static 'images/Like.png' %}" /></div> -->
+						<div>
+							<strong id="like_count">{{ place.likes }}</strong> likes
+							{% if user.is_authenticated %}
+								<button id="like_btn"
+								data-placeid ="{{ place.PlaceID }}"
+								class="btn btn-primary btn-sm"
+								type="button">
+								<img alt="Restaurant Image" src= "{% static 'images/Like.png' %}">
+								</button>
+								{% else %}
+									<!-- display just the picture here !-->					
+								{% endif %}
+						</div>
+						
+						<div>
+							<strong id="dislike_count">{{ place.dislikes }}</strong> dislikes
+							{% if user.is_authenticated %}
+								<button id="dislike_btn"
+								data-placeid ="{{ place.PlaceID }}"
+								class="btn btn-primary btn-sm"
+								type="button">
+								<img alt="Restaurant Image" src= "{% static 'images/Dislike.png' %}">
+								</button>
+								{% else %}
+									<!-- display just the picture here !-->					
+								{% endif %}
+						</div>
+						
 						<div data-count="{{ place.dislikes }}"><img src="{% static 'images/Dislike.png' %}" /></div>
 						<div data-count="Add"><img src="{% static 'images/Add.png' %}" /></div>
 						<div id="CommentButton">Comment</div>
