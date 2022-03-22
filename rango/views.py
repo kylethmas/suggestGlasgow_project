@@ -34,8 +34,7 @@ def show_place(request, place_name_slug):
     context_dict = {}
     
     try:
-        # place = Place.objects.get(slug = place_name_slug)
-        #THIS WILL PROBABLY CAUSE A PROBLEM LATER CHANGE CODE TO COMMENTED OUT ABOVE
+        #place = Place.objects.get(slug = place_name_slug)
         place = Place.objects.get(place_name = place_name_slug)
         context_dict['place'] = place
         
