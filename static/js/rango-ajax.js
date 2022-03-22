@@ -29,3 +29,18 @@ $(document).ready(function() {
 			})
 	});
 });
+
+$(document).ready(function() {
+	$('#save_btn').click(function() {
+		var placeIdVar;
+		placeIdVar = $(this).attr('data-placeid');
+		
+		$.get('/suggestGlasgow/SavePlace/',
+			{'place_id': placeIdVar},
+			function(data) {
+				$('#save_count').html(data);
+				$('#save_btn').hide();
+				//maybe show the image?
+			})
+	});
+});

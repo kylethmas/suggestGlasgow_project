@@ -127,7 +127,7 @@ def user_logout(request):
     return redirect(reverse('suggestGlasgow:home'))
 
 
-class LikeCategoryView(View):
+class LikePlaceView(View):
     @method_decorator(login_required)
     def get(self, request):
         place_id = request.GET['place_id']
@@ -144,7 +144,7 @@ class LikeCategoryView(View):
     
         return HttpResponse(place.likes)
         
-class DislikeCategoryView(View):
+class DislikePlaceView(View):
     @method_decorator(login_required)
     def get(self, request):
         place_id = request.GET['place_id']
@@ -156,6 +156,25 @@ class DislikeCategoryView(View):
         except ValueError:
             return HttpResponse(-1)
     
+        place.dislikes = place.dislikes + 1
+        place.save()
+    
+        return HttpResponse(place.dislikes)
+        
+class SavePlaceView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        place_id = request.GET['place_id']
+        
+        try:
+            place = Place.objects.get(PlaceID = place_id)
+
+        except Place.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+    
+        # need to save the category to a specified list for the user
         place.dislikes = place.dislikes + 1
         place.save()
     

@@ -34,7 +34,7 @@
 								data-placeid ="{{ place.PlaceID }}"
 								class="btn btn-primary btn-sm"
 								type="button">
-								<img alt="Restaurant Image" src= "{% static 'images/Like.png' %}">
+								<img alt="Restaurant Button" src= "{% static 'images/Like.png' %}">
 								</button>
 								{% else %}
 									<!-- display just the picture here !-->					
@@ -48,15 +48,28 @@
 								data-placeid ="{{ place.PlaceID }}"
 								class="btn btn-primary btn-sm"
 								type="button">
-								<img alt="Restaurant Image" src= "{% static 'images/Dislike.png' %}">
+								<img alt="Restaurant Button" src= "{% static 'images/Dislike.png' %}">
 								</button>
 								{% else %}
 									<!-- display just the picture here !-->					
 								{% endif %}
 						</div>
 						
-						<div data-count="{{ place.dislikes }}"><img src="{% static 'images/Dislike.png' %}" /></div>
-						<div data-count="Add"><img src="{% static 'images/Add.png' %}" /></div>
+						<div>
+							<strong id="save"></strong> Save
+							{% if user.is_authenticated %}
+								<button id="save_btn"
+								data-placeid ="{{ place.PlaceID }}"
+								class="btn btn-primary btn-sm"
+								type="button">
+								<img alt="Restaurant Button" src= "{% static 'images/Add.png' %}">
+								</button>
+								{% else %}
+									<!-- display just the picture here !-->					
+								{% endif %}
+						</div>
+						
+						
 						<div id="CommentButton">Comment</div>
 					</div>
 				</section>

@@ -73,3 +73,18 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment
+        
+class SavedList(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="savedList", null=True) # <--- added
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+    
+class Item(models.Model):
+    saved_list = models.ForeignKey(SavedList, on_delete=models.CASCADE)
+    text = models.CharField(max_length=300)
+    complete = models.BooleanField()
+
+    def __str__(self):
+        return self.tex
