@@ -13,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
 from rango.forms import UserForm
+from django.views import View
+from django.utils.decorators import method_decorator
 
 
 ###Renee's TO DO list:
@@ -125,20 +127,21 @@ def user_logout(request):
     return redirect(reverse('suggestGlasgow:home'))
 
 
-@login_required
-def like_place(self, request):
-    place_id = request.GET['placeID']
-    try:
-        place = Place.objects.get(id=int(place_id))
+class LikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        place_id = request.GET['place_id']
+        try:
+            place = Place.objects.get(PlaceID = place_id)
 
-    except Place.DoesNotExist:
-        return HttpResponse(-1)
-    except ValueError:
-        return HttpResponse(-1)
+        except Place.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
     
-    place.likes = place.likes + 1
-    place.save()
+        place.likes = place.likes + 1
+        place.save()
     
-    return HttpResponse(place.likes)
+        return HttpResponse(place.likes)
 
 

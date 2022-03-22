@@ -13,23 +13,7 @@
 {% block body_block %}
 	<br/>
 	<h1 id="PlaceName">Place name</h1>
-	
-	<div>
-		<strong id="like_count">{{ page.likes }}</strong>
-		<!-- currently likes only show if user is logged in !-->
-		{% if user.is_authenticated %}
-			<button id="like_btn"
-			data-categoryid="{{ page.id }}"
-			class="btn btn-primary btn-sm"
-			type="button">
-			<img src= "{% static 'images/Like.png' %}">
-			</button>
-		{% else %}
-		 <!-- display just the picture and the likes here !-->
-		{% endif %}
-	</div>
-	
-	
+
 	<h2 id="PlaceDescription">This place is a [popular] &lt;place type&gt;.</h2>
 	<h2 id="PlaceLink"><a href="about:blank">Click here to visit their website (if not available, don't show this)</a></h2>
 	<br/>
@@ -41,10 +25,10 @@
 			
 				<div data-count= {{ page.likes }}>
 				<div>
-					<strong id="like_count">{{ page.likes }}</strong> likes
+					<strong id="like_count">{{ place.likes }}</strong> likes
 					<!-- currently likes only show if user is logged in !-->
 					{% if user.is_authenticated %}
-						<button id="like_btn"
+						<button id="like_button"
 						data-categoryid="{{ page.id }}"
 						class="btn btn-primary btn-sm"
 						type="button">

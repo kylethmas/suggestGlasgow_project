@@ -2,14 +2,14 @@
 $(document).ready(function() {
 	$('#like_btn').click(function() {
 		var placeIdVar;
-	placeIdVar = $(this).attr('data-placeid');
-
-	$.get('/rango/like place/',
-		{'place_id': placeIdVar},
+		placeIdVar = $(this).attr('data-placeid');
 		
-		function(data) {
-			$('#like_count').html(data);
-			$('#like_btn').hide();
-		})
+		$.get('/suggestGlasgow/LikePlace/',
+			{'place_id': placeIdVar},
+			function(data) {
+				$('#like_count').html(data);
+				$('#like_btn').hide();
+				//maybe show the image?
+			})
 	});
 });

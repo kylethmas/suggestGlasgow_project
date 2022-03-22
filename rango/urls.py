@@ -16,6 +16,7 @@ urlpatterns = [
     path('LogOut/', views.user_logout, name='logout'),
     path('Profile/AddPlace/', views.add_place, name='add place'),
     path('ExamplePlace/', views.example_place, name='example place'),
-    path('LikePlace/', views.like_place, name='like place'),
+    path('LikePlace/', views.LikeCategoryView.as_view(), name='like place'),
+
 
 ]
