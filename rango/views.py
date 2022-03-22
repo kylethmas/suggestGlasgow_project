@@ -125,21 +125,20 @@ def user_logout(request):
     return redirect(reverse('suggestGlasgow:home'))
 
 
-class LikePlaceView(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        place_id = request.GET['place_id']
-        try:
-            place = Place.objects.get(id=int(place_id))
+@login_required
+def like_place(self, request):
+    place_id = request.GET['placeID']
+    try:
+        place = Place.objects.get(id=int(place_id))
+
+    except Place.DoesNotExist:
+        return HttpResponse(-1)
+    except ValueError:
+        return HttpResponse(-1)
     
-        except Place.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
-        
-        place.likes = place.likes + 1
-        place.save()
-        
-        return HttpResponse(place.likes)
+    place.likes = place.likes + 1
+    place.save()
+    
+    return HttpResponse(place.likes)
 
 
