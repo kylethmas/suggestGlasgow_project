@@ -7,7 +7,7 @@ app_name = 'suggestGlasgow'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('<slug:place_name_slug>/', views.show_place, name = 'show_place'),
+    path('Places/<slug:place_name_slug>/', views.show_place, name = 'show_place'),
     #path('add_category/', views.add_category, name='add_category'),
     #path('category/<slug:category_name_slug>/add_page/', views.add_page, name='add_page'),
     path('SignUp/', views.sign_up, name='sign up'),
