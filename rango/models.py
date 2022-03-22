@@ -74,8 +74,7 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment
-<<<<<<< HEAD
-        
+
 class SavedList(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="savedList", null=True) # <--- added
     name = models.CharField(max_length=200)
@@ -90,6 +89,3 @@ class Item(models.Model):
 
     def __str__(self):
         return self.tex
-=======
-
->>>>>>> 6104ba200fc12949d8767ea31c45d7d575960e2c
