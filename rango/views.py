@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.models import Category
-from rango.models import Place
+from rango.models import Place, UserProfile
 from rango.forms import PlaceForm
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -79,7 +79,7 @@ def sign_up(request):
             
             user.set_password(user.password)
             user.save()
-           
+            
             registered = True
             
         else:
@@ -160,12 +160,12 @@ class DislikePlaceView(View):
         place.save()
     
         return HttpResponse(place.dislikes)
-        
+
 class SavePlaceView(View):
     @method_decorator(login_required)
     def get(self, request):
         place_id = request.GET['place_id']
-        
+
         try:
             place = Place.objects.get(PlaceID = place_id)
 
@@ -173,11 +173,12 @@ class SavePlaceView(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-    
-        # need to save the category to a specified list for the user
-        place.dislikes = place.dislikes + 1
-        place.save()
-    
-        return HttpResponse(place.dislikes)
+        
+        #p = Page.objects.get_or_create(category=category, title=title, url=url)
+        
+        #pages = Page.objects.filter(category=category).order_by('-views')
+        user = UserProfile
+        user.saved.extend(place)
+        #return render(request, 'rango/page_listing.html', {'pages': pages})
 
 

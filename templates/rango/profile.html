@@ -15,7 +15,16 @@
 	<h1 id="Title">My places</h1>
 	<h2 id="Subtitle">Here you can find all of the places you've added!</h2>
 	<br/>
-	
+	{% if saved %}
+    <ul>
+        {% for place in saved %}
+			<li>
+				<a href="{% url 'suggestGlasgow:home' %}">{{ place.title }}</a>
+			</li>
+		{% endfor %}
+    </li>
+	{% endfor %}
+		
 	<main>
 		<div class="OverflowWrapper" id="AddedPlacesWrapper">
 			<!-- this will be replaced by places that have been saved by the user !-->

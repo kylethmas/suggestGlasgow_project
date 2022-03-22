@@ -40,7 +40,7 @@ $(document).ready(function() {
 			function(data) {
 				$('#save_count').html(data);
 				$('#save_btn').hide();
-				//maybe show the image?
+				//maybe change save_btn to unsave_btn?
 			})
 	});
 });
