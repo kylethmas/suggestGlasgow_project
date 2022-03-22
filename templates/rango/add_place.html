@@ -10,59 +10,19 @@
 {% endblock %}
 
 {% block body_block %}
-
+	<br>
 	<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="POST" target="StayOnThisSite">
-	<br/>
-		<main>
-			<div id="SplitContainer">
-				<section id="Left">
-					<div id="ImageDropWrapper">
-						<div>
-							<p>Drag and drop an image of the place</p>
-						</div>
-					</div>
-				</section>
-				
-				<section id="Right">
-					<div class="FieldContainer">
-						<p class="FieldInfo">Place name</p>
-						<input type="text" name="PlaceName" required></input>
-					</div>
-					
-					<div class="FieldContainer">
-						<p class="FieldInfo">Place type</p>
-						<div id="SelectTypeMenu" class="DropdownMenu">
-							<div>
-								<div>Select a place type...</div>
-								<div data-type="Option1">Restaurant</div>
-								<div data-type="Option2">Cafe</div>
-								<div data-type="Option3">Fast Food</div>
-								<div data-type="Option4">Nightlife</div>
-							</div>
-						</div>
-						<input id="HiddenPlaceTypeInput" type="text" name="PlaceType" required></input>
-					</div>
-						
-					<div class="FieldContainer">
-						<p class="FieldInfo">Location</p>
-						<p id="MapTitleExplanation">Select a point on the map</p>
-						<div id="Map" data-lat="55.865" data-lng="-4.25"></div>
-						<input id="HiddenLatitudeInput" type="number" name="Latitude" required></input>
-						<input id="HiddenLongitudeInput" type="number" name="Longitude" required></input>
-					</div>
-					<div class="FieldContainer">
-						<p class="FieldInfo">Website link (optional)</p>
-						<input type="text" name="PlaceWebsite"></input>
-					</div>
-				</section>
-			</div>
-			<div id="ConsentCheckboxWrapper">
-				<input id="ConsentCheckbox" type="checkbox" name="Consent" required></input>
-				<span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>
-			</div>
-			<br/>
-			<button type="submit" name="Submit">Submit</button>
-		</main>
+		{% csrf_token %}
+		{% for hidden in form.hidden_fields %}
+			{{ hidden }}
+		{% endfor %}
+		{% for field in form.visible_fields %}
+			{{ field.errors }}
+			{{ field.help_text }}
+			{{ field }}
+			<br>
+		{% endfor %}
+		<input type="submit" name="submit" value="Create Category" />
 	</form>
 	<br/>
 

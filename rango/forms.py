@@ -10,7 +10,8 @@ class PlaceForm(forms.ModelForm):
     url = forms.URLField(max_length = 200, help_text = "Website (optional)") #optional?
     likes = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
     dislikes = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
-    
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     class Meta:
         model = Place
         exclude = ('category',)

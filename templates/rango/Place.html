@@ -13,6 +13,7 @@
 {% block body_block %}
 	<div>
 	{% if place %}
+		<h1>{{ place.PlaceID }}</h1>
 		<h1 id="PlaceName">{{ place.place_name }}</h1>
 		<h2 id="PlaceDescription">This place is a [popular] &lt;{{ place.place_type }}&gt;.</h2>
 		{% if place.url %}
