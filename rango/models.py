@@ -22,7 +22,7 @@ class Category(models.Model):
         
 class Place(models.Model):
     PlaceID = models.BigAutoField(primary_key=True)
-    place_type = models.CharField(max_length = 128) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
+    place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife"))) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
     place_name = models.CharField(max_length=150)
     place_map = models.CharField(max_length = 128) #plus code or lat/long
     url = models.URLField()
@@ -73,3 +73,4 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment
+
