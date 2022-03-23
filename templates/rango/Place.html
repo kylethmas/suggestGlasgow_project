@@ -29,20 +29,27 @@
 						 <!-- <div data-count="{{ place.likes }}"><img src="{% static 'images/Like.png' %}" /></div> -->
 						<div>
 							<strong id="like_count">{{ place.likes }}</strong> likes
+							<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
 							{% if user.is_authenticated %}
-								 {% if place.PlaceID in already_liked %} 
-								 <!-- cant click button !-->
-								 {% else %}
-									<button id="like_btn"
-									data-placeid ="{{ place.PlaceID }}"
-									class="btn btn-primary btn-sm"
-									type="button">
-									<img alt="Restaurant Button" src= "{% static 'images/Like.png' %}">
-									</button>
-								{% endif %}
+								 <form action="{% url 'place_like' place.PlaceID %}" method="POST">
+									{% csrf_token %}
+									
+									{% if post_is_liked %}
+									<button type="submit" name="place_id" value="{{place.PlaceID}}" class="btn btn-info">Unlike</button>
+									 {% else %}
+									<button type="submit" name="place_id" value="{{place.PlaceID}}" class="btn btn-info">Like</button>
+									{% endif %}
 							{% else %}
-							<!-- display just the picture here !-->					
+								 <!-- cant click button !-->
 							{% endif %}
+								 
+<!-- 							<button id="like_btn"
+							data-placeid ="{{ place.PlaceID }}"
+							class="btn btn-primary btn-sm"
+							type="button">
+							<img alt="Restaurant Button" src= "{% static 'images/Like.png' %}">
+							</button>
+ -->
 						</div>
 						
 						<div>

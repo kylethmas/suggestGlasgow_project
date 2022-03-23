@@ -45,6 +45,9 @@ class Place(models.Model):
     def __str__(self):
         return self.place_name
 
+    def number_of_likes(self):
+        return self.likes.count()
+
         
 class Ratings(models.Model):
     PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place",)
