@@ -15,28 +15,28 @@ def populate():
          'url':'https://kylescatering.ie/delivery/kyles-cafe/',
          'likes': 54,
          'dislikes': 2,
-         'slug': 'Cafe_Kyle'},
+         'slug': 'cafe_kyle'},
         {'place_type': 'Nightlife',
          'place_name': 'Bamboo',
          'place_map': 'G2 6RT',
          'url': 'http://www.bamboonightclub.co.uk/',
          'likes': 97,
          'dislikes': 62,
-         'slug': 'Bamboo'},
+         'slug': 'bamboo'},
         {'place_type': 'Restaurant',
          'place_name': 'Sugo',
          'place_map': 'G1 3LX',
          'url': 'https://www.sugopasta.co.uk/',
          'likes': 23,
          'dislikes': 14,
-         'slug': 'Sugo'},
-        {'place_type': 'Fastfood',
+         'slug': 'sugo'},
+        {'place_type': 'Fast Food',
          'place_name': "McDonald's Finnieston",
          'place_map': 'G3 8JU',
          'url': 'https://www.just-eat.co.uk/restaurants-mcdonalds-finnieston-glasgow/menu',
          'likes': 12,
          'dislikes': 27,
-         'slug': 'McDonaldsFinnieston'}
+         'slug': 'mcdonalds_finnieston'}
     ]
 
     for p in places:

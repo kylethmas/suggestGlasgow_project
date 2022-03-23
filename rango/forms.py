@@ -2,10 +2,12 @@ from django import forms
 from rango.models import Place
 from django.contrib.auth.models import User
 
-place_types = (("Restaurant", "Restaurant"),
-          ("Cafe", "Cafe"),
-          ("Fast Food", "Fast Food"),
-          ("Nightlife", "Nightlife"))
+place_types = (
+    ("Restaurant", "Restaurant"),
+    ("Cafe", "Cafe"),
+    ("Fast Food", "Fast Food"),
+    ("Nightlife", "Nightlife"),
+)
 
 class PlaceForm(forms.ModelForm):
     place_name = forms.CharField(max_length = 128, help_text = "Place name")
@@ -30,7 +32,8 @@ class PlaceForm(forms.ModelForm):
             cleaned_data['url'] = url
             
         return cleaned_data
-        
+
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget = forms.PasswordInput())
     
@@ -42,9 +45,9 @@ class UserForm(forms.ModelForm):
 class SuggestForm(forms.ModelForm):
     place_type = forms.ChoiceField(choices = place_types, help_text = "Category ")
 
-    #class Meta:
-        #model = User
-        #fields = ('username', 'email', 'password',)
+    class Meta:
+        model = Place
+        fields = ('place_type',)
         
 """
 class UserProfileForm(forms.ModelForm):
