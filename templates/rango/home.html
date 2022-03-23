@@ -14,17 +14,20 @@
 <div id="Parent">
 	<div id="WebsiteTitleWrapper">
 		<h1 id="WelcomeTitle">Welcome to this website!</h1>
-		
-		<h2 id="SelectionTitle">I would like to go to a <span><div id="SelectTypeMenu" class="DropdownMenu">
-			<div>
-				<div>...</div>
-				<div>Restaurant</div>
-				<div>Cafe</div>
-				<div>Fast Food</div>
-				<div>Nightlife</div>
+		<h2 id="SelectionTitle">I would like to go to a ...<span>
+		<form name = "SuggestPlaceForm" id="suggest_form" method="post" action = "">
+			{% csrf_token %}
+			<div class = "DropdownMenu" id="SelectTypeMenu">
+					<div>{{ form.place_type }}</div>
 			</div>
-		</div></span></h2>
-		{{ place.place_name }}
+			<p class="FieldInfo">
+				{{ form.place_type.help_text }}
+			</p>
+
+
+			<input type="submit" name="submit" value="Suggest Place" />
+		</form>
+		</span></h2>
 	</div>
 </div>
 <br/>

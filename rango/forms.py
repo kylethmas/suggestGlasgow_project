@@ -49,7 +49,12 @@ class UserProfileForm(forms.ModelForm):
 class SuggestForm(forms.ModelForm):
     place_type = forms.ChoiceField(choices = place_types, help_text = "Category ")
 
-    #class Meta:
-        #model = User
-        #fields = ('username', 'email', 'password',)
+    class Meta:
+        model = Place
+        fields = ('place_type',)
         
+"""
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('picture',) """

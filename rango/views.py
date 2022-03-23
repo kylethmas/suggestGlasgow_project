@@ -1,12 +1,45 @@
-from django.shortcuts import render, redirect
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@NiamhGillespie 
+kylethmas
+/
+suggestGlasgow_project
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+suggestGlasgow_project/rango/views.py /
+@kylethmas
+kylethmas merge working
+Latest commit 7af357f 2 minutes ago
+ History
+ 3 contributors
+@NiamhGillespie@kylethmas@reneewallis
+214 lines (164 sloc)  6.25 KB
+   
+from django.shortcuts import render
 from django.http import HttpResponse
-from rango.models import Category, Place, UserProfile
-from rango.forms import PlaceForm, UserForm, UserProfileForm
+from rango.models import Place, UserProfile, Category
+from rango.forms import PlaceForm, SuggestForm
+from django.shortcuts import redirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from datetime import datetime
+from rango.forms import UserForm, SuggestForm
 from django.views import View
 from django.utils.decorators import method_decorator
 import random
@@ -16,10 +49,39 @@ def home(request):
     place_list = Place.objects.filter(place_type="Cafe")
     random_place = random.choice(place_list)
     context_dict = {}
-    context_dict['places'] = place_list
     context_dict['place'] = random_place
+    form = SuggestForm()
+    if request.method == 'POST':
+        form = SuggestForm(request.POST)
+        if form.is_valid():
+            category = form['place_type'].value()
+            place_list = Place.objects.filter(place_type=category)
+            if len(place_list) > 1 :
+                random_place = random.choice(place_list)
+            else:
+                random_place = place_list[0]
+            print(category, random_place)
+            return redirect(reverse('suggestGlasgow:show_place',
+                                    kwargs={'place_name_slug':
+                                                random_place.slug}))
+        else:
+            print(form.errors)
+    context_dict['form'] = form
     return render(request, 'rango/home.html', context=context_dict)
-    
+
+def suggest_place(request):
+    form = SuggestForm()
+    if request.method == 'POST':
+        form = SuggestForm(request.POST)
+        if form.is_valid():
+            category = form['place_type'].value()
+            place_list = Place.objects.filter(place_type=category)
+            random_place = random.choice(place_list)
+            print(category, random_place)
+        else:
+            print(form.errors)
+    return render(request, 'rango/home.html')
+
 def example_place(request):
     return render(request, 'rango/ExamplePlace.html')
 
@@ -29,7 +91,7 @@ def show_place(request, place_name_slug):
     
     try:
         #place = Place.objects.get(slug = place_name_slug)
-        place = Place.objects.get(place_name = place_name_slug)
+        place = Place.objects.get(slug = place_name_slug)
         context_dict['place'] = place
         
     except Place.DoesNotExist:
@@ -70,7 +132,6 @@ def sign_up(request):
     
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
         
         if user_form.is_valid():
             user = user_form.save()
@@ -78,22 +139,16 @@ def sign_up(request):
             user.set_password(user.password)
             user.save()
             
-            profile = profile_form.save()
-            profile.user = user
-            profile.save()
-            
             registered = True
             
         else:
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors)
     
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
         
     return render(request, 'rango/signup.html',
             context = {'user_form' : user_form,
-                       'profile_form': profile_form,
                        'registered' : registered})
 
 
@@ -137,21 +192,12 @@ class LikePlaceView(View):
         place_id = request.GET['place_id']
         try:
             place = Place.objects.get(PlaceID = place_id)
-            #request.user.userprofile.liked.add(place)
-            
+
         except Place.DoesNotExist:
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        
-        #current_user = request.user
-        #a = UserProfile.objects.get(user = current_user)
-        #a.liked.add(place.PlaceID)
-        #a.liked.add("10")
-        #liked.add(UserProfile.objects.get(user = current_user))
-        #a.save()
-        
-        
+    
         place.likes = place.likes + 1
         place.save()
     
@@ -193,5 +239,3 @@ class SavePlaceView(View):
         user = UserProfile
         user.saved.extend(place)
         #return render(request, 'rango/page_listing.html', {'pages': pages})
-
-
