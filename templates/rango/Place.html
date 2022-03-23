@@ -12,9 +12,8 @@
 
 {% block body_block %}
 				
-	<div>
+	<div>	
 	{% if place %}
-		<h1>{{ place.PlaceID }}</h1>
 		<h1 id="PlaceName">{{ place.place_name }}</h1>
 		<h2 id="PlaceDescription">This place is a [popular] {{ place.place_type }}.</h2>
 		{% if place.url %}
@@ -31,15 +30,19 @@
 						<div>
 							<strong id="like_count">{{ place.likes }}</strong> likes
 							{% if user.is_authenticated %}
-								<button id="like_btn"
-								data-placeid ="{{ place.PlaceID }}"
-								class="btn btn-primary btn-sm"
-								type="button">
-								<img alt="Restaurant Button" src= "{% static 'images/Like.png' %}">
-								</button>
-								{% else %}
-									<!-- display just the picture here !-->					
+								 {% if place.PlaceID in already_liked %} 
+								 <!-- cant click button !-->
+								 {% else %}
+									<button id="like_btn"
+									data-placeid ="{{ place.PlaceID }}"
+									class="btn btn-primary btn-sm"
+									type="button">
+									<img alt="Restaurant Button" src= "{% static 'images/Like.png' %}">
+									</button>
 								{% endif %}
+							{% else %}
+							<!-- display just the picture here !-->					
+							{% endif %}
 						</div>
 						
 						<div>
