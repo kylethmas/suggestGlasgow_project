@@ -1,32 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@NiamhGillespie 
-kylethmas
-/
-suggestGlasgow_project
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-suggestGlasgow_project/rango/views.py /
-@kylethmas
-kylethmas merge working
-Latest commit 7af357f 2 minutes ago
- History
- 3 contributors
-@NiamhGillespie@kylethmas@reneewallis
-214 lines (164 sloc)  6.25 KB
-   
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.models import Place, UserProfile, Category
