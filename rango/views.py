@@ -1,18 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from rango.models import Place, Ratings, Category
-from rango.forms import PlaceForm, SuggestForm
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from datetime import datetime
-from rango.forms import UserForm, SuggestForm
 from django.views import View
 from django.utils.decorators import method_decorator
+from rango.models import Place, Ratings, Category
+from rango.forms import PlaceForm, SuggestForm, UserForm
+from datetime import datetime
 import random
 
 
@@ -81,11 +77,13 @@ def add_place(request):
 
     if form.is_valid():
         form.save()
+
         print("Page has been saved!!!")
-        # NOT WORKING REDIRECT
-        return redirect(reverse('rango:show_place',
+        name = form['place_name'].value()
+        place = Place.objects.get(place_name=name)
+        return redirect(reverse('suggestGlasgow:show_place',
                                 kwargs={'place_name_slug':
-                                            place_name_slug}))
+                                            place.slug}))
 
     else:
         print(form.errors)
