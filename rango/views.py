@@ -7,7 +7,6 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -15,22 +14,20 @@ from datetime import datetime
 from rango.forms import UserForm
 from django.views import View
 from django.utils.decorators import method_decorator
+import random
 
-
-###Renee's TO DO list:
-### > add change password PasswordChangeView, PasswordChangeDoneView, PasswordResetView
-### > use LoginRequiredMixin to redirect users to login when they try to log in
-### > double check password management, decide if you want to use your hash alg
-### > validate email
 
 def home(request):
-    context_dict = {'boldmessage': 'This is the home page'}
+    place_list = Place.objects.filter(place_type="Cafe")
+    random_place = random.choice(place_list)
+    context_dict = {}
+    context_dict['places'] = place_list
+    context_dict['place'] = random_place
     return render(request, 'rango/home.html', context=context_dict)
     
 def example_place(request):
     return render(request, 'rango/ExamplePlace.html')
 
-#might come in useful later :)
 def show_place(request, place_name_slug):
     
     context_dict = {}
@@ -57,6 +54,10 @@ def add_place(request):
     if form.is_valid():
         form.save()
         print("Page has been saved!!!")
+        # NOT WORKING REDIRECT
+        return redirect(reverse('rango:show_place',
+                                kwargs={'place_name_slug':
+                                            place_name_slug}))
 
     else:
         print(form.errors)
