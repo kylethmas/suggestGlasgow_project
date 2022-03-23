@@ -46,31 +46,11 @@ class Place(models.Model):
         return self.place_name
 
         
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
-    
-    #additional attributes
-    #what fields?
-    liked = models.ManyToManyField(Place, blank = True, related_name="liked_list",)
-    disliked = models.ManyToManyField(Place, blank = True, related_name="disliked_list",)
-    saved  = models.ManyToManyField(Place, blank = True, related_name="saved_list",)
-    
-    @receiver(post_save, sender=User) #add this
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserProfile.objects.create(user=instance)
-    
-    @receiver(post_save, sender=User) #add this
-    def save_user_profile(sender, instance, **kwargs):
-        instance.userprofile.save()
-        
-    def __str__(self):
-        return self.user.username
-
 class Ratings(models.Model):
     PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place",)
-    username = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="the user",)
+    username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="the user",)
     liked = models.BooleanField()
+    disliked = models.BooleanField()
     saved = models.BooleanField(default=False)
 
     class Meta:
@@ -81,7 +61,7 @@ class Ratings(models.Model):
 
 class Comments(models.Model):
     CommentID = models.BigAutoField(primary_key=True)
-    username = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="the user",)
+    username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="the user",)
     PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place", )
     comment = models.CharField(max_length = 500)
 

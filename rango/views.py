@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rango.models import Place, UserProfile, Category
+from rango.models import Place, Ratings, Category
 from rango.forms import PlaceForm, SuggestForm
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -163,12 +163,12 @@ class LikePlaceView(View):
         place_id = request.GET['place_id']
         try:
             place = Place.objects.get(PlaceID = place_id)
-
+            
         except Place.DoesNotExist:
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-    
+
         place.likes = place.likes + 1
         place.save()
     
