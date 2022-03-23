@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from rango.models import Category, Place, UserProfile
-from rango.forms import PlaceForm, UserForm
+from rango.forms import PlaceForm, UserForm, UserProfileForm
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
@@ -70,6 +70,7 @@ def sign_up(request):
     
     if request.method == 'POST':
         user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
         
         if user_form.is_valid():
             user = user_form.save()
@@ -77,16 +78,22 @@ def sign_up(request):
             user.set_password(user.password)
             user.save()
             
+            profile = profile_form.save()
+            profile.user = user
+            profile.save()
+            
             registered = True
             
         else:
-            print(user_form.errors)
+            print(user_form.errors, profile_form.errors)
     
     else:
         user_form = UserForm()
+        profile_form = UserProfileForm()
         
     return render(request, 'rango/signup.html',
             context = {'user_form' : user_form,
+                       'profile_form': profile_form,
                        'registered' : registered})
 
 
@@ -130,12 +137,21 @@ class LikePlaceView(View):
         place_id = request.GET['place_id']
         try:
             place = Place.objects.get(PlaceID = place_id)
-
+            #request.user.userprofile.liked.add(place)
+            
         except Place.DoesNotExist:
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-    
+        
+        #current_user = request.user
+        #a = UserProfile.objects.get(user = current_user)
+        #a.liked.add(place.PlaceID)
+        #a.liked.add("10")
+        #liked.add(UserProfile.objects.get(user = current_user))
+        #a.save()
+        
+        
         place.likes = place.likes + 1
         place.save()
     

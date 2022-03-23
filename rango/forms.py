@@ -1,5 +1,5 @@
 from django import forms
-from rango.models import Place
+from rango.models import Place, UserProfile
 from django.contrib.auth.models import User
 
 place_types = (("Restaurant", "Restaurant"),
@@ -37,6 +37,13 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
+        
+class UserProfileForm(forms.ModelForm):
+    
+    class Meta:
+        model = UserProfile
+        fields = ('liked', 'disliked', 'saved')
+
 
 
 class SuggestForm(forms.ModelForm):

@@ -1,6 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 # might come in useful later 
 class Category(models.Model):
@@ -26,8 +28,8 @@ class Place(models.Model):
     place_name = models.CharField(max_length=150)
     place_map = models.CharField(max_length = 128) #plus code or lat/long
     url = models.URLField()
-    likes = models.IntegerField(default = 0)
-    dislikes = models.IntegerField(default = 0)
+    likes = models.IntegerField(User, default = 0)
+    dislikes = models.IntegerField(User, default = 0)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -46,8 +48,22 @@ class Place(models.Model):
         
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
-    saved  = models.ManyToManyField('self', default=[])
+    
+    #additional attributes
+    #what fields?
+    liked = models.ManyToManyField(Place, blank = True, related_name="liked_list",)
+    disliked = models.ManyToManyField(Place, blank = True, related_name="disliked_list",)
+    saved  = models.ManyToManyField(Place, blank = True, related_name="saved_list",)
+    
+    @receiver(post_save, sender=User) #add this
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+    
+    @receiver(post_save, sender=User) #add this
+    def save_user_profile(sender, instance, **kwargs):
+        instance.userprofile.save()
+        
     def __str__(self):
         return self.user.username
 
@@ -76,17 +92,3 @@ class Comments(models.Model):
     def __str__(self):
         return self.comment
 
-class SavedList(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="savedList", null=True) # <--- added
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
-    
-class Item(models.Model):
-    saved_list = models.ForeignKey(SavedList, on_delete=models.CASCADE)
-    text = models.CharField(max_length=300)
-    complete = models.BooleanField()
-
-    def __str__(self):
-        return self.tex
