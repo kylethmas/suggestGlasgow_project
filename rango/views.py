@@ -57,6 +57,10 @@ def add_place(request):
     if form.is_valid():
         form.save()
         print("Page has been saved!!!")
+        # NOT WORKING REDIRECT
+        return redirect(reverse('rango:show_place',
+                                kwargs={'place_name_slug':
+                                            place_name_slug}))
 
     else:
         print(form.errors)
