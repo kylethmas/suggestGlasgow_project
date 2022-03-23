@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rango.models import Category
-from rango.models import Place, UserProfile
-from rango.forms import PlaceForm
+from rango.models import Place, UserProfile, Category
+from rango.forms import PlaceForm, SuggestForm
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
