@@ -49,6 +49,10 @@ class UserProfile(models.Model):
     saved  = models.ManyToManyField('self', default=[])
     def __str__(self):
         return self.user.username
+        
+        
+class Post(models.Model):
+    likes = models.ManyToManyField(User, blank = True, related_name = 'likes')
 
 class Ratings(models.Model):
     PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place",)

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.models import Category
-from rango.models import Place, UserProfile
+from rango.models import Place, UserProfile, Post
 from rango.forms import PlaceForm
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -144,6 +144,24 @@ class LikePlaceView(View):
         place.save()
     
         return HttpResponse(place.likes)
+
+def like_button(request):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    context ={
+        'post': post,
+        'is_liked': is_liked,
+        'total_likes': post.likes.count(),
+    }
+    if request.is_ajax():
+        html = render_to_string('like_section.html', context, request=request)
+        return JsonResponse({'form': html})
         
 class DislikePlaceView(View):
     @method_decorator(login_required)
