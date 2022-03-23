@@ -1,17 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from rango.models import Category
-from rango.models import Place, UserProfile, Post
-from rango.forms import PlaceForm
-from django.shortcuts import redirect
+from rango.models import Category, Place, UserProfile
+from rango.forms import PlaceForm, UserForm
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
 from datetime import datetime
-from rango.forms import UserForm
 from django.views import View
 from django.utils.decorators import method_decorator
 import random
@@ -145,24 +140,6 @@ class LikePlaceView(View):
         place.save()
     
         return HttpResponse(place.likes)
-
-def like_button(request):
-    post = get_object_or_404(Post, id=request.POST.get('post_id'))
-    is_liked = False
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(request.user)
-        is_liked = False
-    else:
-        post.likes.add(request.user)
-        is_liked = True
-    context ={
-        'post': post,
-        'is_liked': is_liked,
-        'total_likes': post.likes.count(),
-    }
-    if request.is_ajax():
-        html = render_to_string('like_section.html', context, request=request)
-        return JsonResponse({'form': html})
         
 class DislikePlaceView(View):
     @method_decorator(login_required)

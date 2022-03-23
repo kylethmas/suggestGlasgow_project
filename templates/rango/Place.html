@@ -12,22 +12,8 @@
 
 {% block body_block %}
 				
-	<div>
-	{{ place.likes }} Like
-
-	{% if request.user.is_authenticated %}
-		<form action= "{% url 'suggestGlasgow:like place %}" method="POST">
-		{% csrf_token %}
-		{% if is_liked %}
-			<button type="submit" id="like" name="post_id" value="{{ post.id }}" class="btn btn-danger">Dislike</button>
-		{% else %}
-			<button type="submit" id="like" name="post_id" value="{{ post.id }}" class="btn btn-primary">Like</button>
-		{% endif %}
-		</form>
-	{% endif %}
-	
+	<div>	
 	{% if place %}
-		<h1>{{ place.PlaceID }}</h1>
 		<h1 id="PlaceName">{{ place.place_name }}</h1>
 		<h2 id="PlaceDescription">This place is a [popular] {{ place.place_type }}.</h2>
 		{% if place.url %}

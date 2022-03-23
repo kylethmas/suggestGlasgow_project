@@ -47,24 +47,3 @@ $(document).ready(function() {
 	});
 });
 
-
-$(document).ready(function(){
-  $(document).on('click', '#like', function(event){
-    event.preventDefault();
-    var pk = $(this).attr('value');
-    $.ajax({
-      type: 'POST',
-      url: '{% url "likes" %}',
-      data: {
-            'post_id': pk,
-            'csrfmiddlewaretoken': '{{ csrf_token }}'
-            },
-            success: function(response){
-              $('#like-section').html(response['form'])
-            },
-            error: function(rs, e){
-              console.log(rs.responseText);
-            },
-          });
-     });
-})
