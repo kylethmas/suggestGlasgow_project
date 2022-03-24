@@ -11,28 +11,32 @@ def populate():
     places = [
         {'place_type': 'Cafe',
          'place_name': 'Cafe Kyle',
-         'place_map': 'ADD MAP THINGY HERE G3 6RF',
+         'latitude': '55.87226',
+         'longitude': '-4.27247',
          'url':'https://kylescatering.ie/delivery/kyles-cafe/',
          'slug': 'cafe_kyle'},
         {'place_type': 'Nightlife',
          'place_name': 'Bamboo',
-         'place_map': 'G2 6RT',
+         'latitude': '55.87226',
+         'longitude': '-4.27247',
          'url': 'http://www.bamboonightclub.co.uk/',
          'slug': 'bamboo'},
         {'place_type': 'Restaurant',
          'place_name': 'Sugo',
-         'place_map': 'G1 3LX',
+         'latitude': '55.87226',
+         'longitude': '-4.27247',
          'url': 'https://www.sugopasta.co.uk/',
          'slug': 'sugo'},
         {'place_type': 'Fast Food',
          'place_name': "McDonald's Finnieston",
-         'place_map': 'G3 8JU',
+         'latitude': '55.87226',
+         'longitude': '-4.27247',
          'url': 'https://www.just-eat.co.uk/restaurants-mcdonalds-finnieston-glasgow/menu',
          'slug': 'mcdonalds_finnieston'}
     ]
 
     for p in places:
-        add_place(p['place_type'],p['place_name'], p['url'],p['place_map'], p['slug'])
+        add_place(p['place_type'],p['place_name'],p['latitude'], p['longitude'], p['url'], p['slug'])
 
     users = [
         {'username':'john101',
@@ -71,10 +75,11 @@ def populate():
         add_user(u['username'],u['email'], u['password'])
 
 
-def add_place(place_type, place_name, url, location,slugName = '', comments = []):
+def add_place(place_type, place_name, latitude, longitude, url, slugName = '', comments = []):
     p = Place.objects.get_or_create(place_type=place_type, place_name=place_name)[0]
     p.url = url
-    p.place_map = location
+    p.latitude = latitude
+    p.longitude = longitude
     p.slug = slugName
     p.comments = comments
     p.save()
