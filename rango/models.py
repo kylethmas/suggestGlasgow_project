@@ -27,11 +27,11 @@ class Place(models.Model):
     place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife"))) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
     place_name = models.CharField(max_length=150)
     place_image = models.ImageField(upload_to='place_images', blank=True)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    #latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    #longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     url = models.URLField()
     likes = models.ManyToManyField(User, related_name='place_like')
-    dislikes = models.IntegerField(User, default = 0)
+    dislikes = models.ManyToManyField(User, related_name='place_dislike')
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -49,6 +49,8 @@ class Place(models.Model):
 
     def number_of_likes(self):
         return self.likes.count()
+    def number_of_dislikes(self):
+        return self.dislikes.count()
 
         
 class Ratings(models.Model):
