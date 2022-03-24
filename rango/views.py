@@ -13,10 +13,7 @@ import random
 
 
 def home(request):
-    place_list = Place.objects.filter(place_type="Cafe")
-    random_place = random.choice(place_list)
     context_dict = {}
-    context_dict['place'] = random_place
     form = SuggestForm()
     if request.method == 'POST':
         form = SuggestForm(request.POST)
