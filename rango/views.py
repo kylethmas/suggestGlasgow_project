@@ -59,7 +59,6 @@ def show_place(request, place_name_slug, **kwargs):
     try:
         #place = Place.objects.get(slug = place_name_slug)
         place = Place.objects.get(slug = place_name_slug)
-        rating = Ratings.objects.filter(PlaceID = place.PlaceID, 
         context_dict['place'] = place
         model = Place
 
@@ -120,10 +119,10 @@ def sign_up(request):
             user.save()
             
             registered = True
-            
+            return redirect(reverse('suggestGlasgow:home'))
         else:
             print(user_form.errors)
-    
+        
     else:
         user_form = UserForm()
         
@@ -167,7 +166,7 @@ def user_logout(request):
 
 
 def PlaceLike(request, PlaceID):
-    place = get_object_or_404(Place, id=request.POST.get('PlaceID'))
+    place = get_object_or_404(Place, PlaceID =request.POST.get('PlaceID'))
     if place.likes.filter(id=request.user.id).exists():
         place.likes.remove(request.user)
     else:
@@ -208,6 +207,6 @@ class SavePlaceView(View):
         #p = Page.objects.get_or_create(category=category, title=title, url=url)
         
         #pages = Page.objects.filter(category=category).order_by('-views')
-        user = UserProfile
-        user.saved.extend(place)
+        #user = UserProfile
+        #user.saved.extend(place)
         #return render(request, 'rango/page_listing.html', {'pages': pages})

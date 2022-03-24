@@ -8,15 +8,7 @@
   ), url("../Images/Background.png");
   background-position: center;
 }
-#WebsiteTitle{
-  position: absolute;
-  transform: translate(-50%, -50%);
-  left: calc(min(50%, 69% - 220px));
-  top: 50%;
-  font-size: 28px;
-  color: white;
-  margin: 0px;
-}
+
 #WebsiteTitleWrapper{
   position: absolute;
   top: 50%;

@@ -44,6 +44,24 @@ header{
   filter: brightness(.7);
 }
 
+#ButtonsWrapper > div:hover{
+  filter: brightness(.85);
+}
+#ButtonsWrapper > div:active{
+  filter: brightness(.7);
+}
+
+
+#WebsiteTitle{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: calc(min(50%, 69% - 220px));
+  top: 50%;
+  font-size: 28px;
+  color: white;
+  margin: 0px;
+}
+
 
 #PageContainer{
   position: relative;

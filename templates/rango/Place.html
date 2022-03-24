@@ -31,7 +31,7 @@
 							<strong id="like_count">{{ place.likes }}</strong> likes
 							<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
 							{% if user.is_authenticated %}
-								 <form action="{% url 'place_like' place.PlaceID %}" method="POST">
+								 <form action="{% url 'suggestGlasgow:place_like' place.PlaceID %}" method="POST">
 									{% csrf_token %}
 									
 									{% if post_is_liked %}

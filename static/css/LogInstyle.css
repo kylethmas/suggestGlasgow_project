@@ -12,6 +12,7 @@ body{
   margin: -2vh -2vw -2vh -2vw;
   overflow: hidden;
 }
+
 #BackgroundImage{
   background-image: url("../Images/Background.png");
   background-position: center;
