@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings
 
 import django
 django.setup()
-from rango.models import Category, Place
+from rango.models import Category, Place, User
 
 
 def populate():
@@ -86,8 +86,12 @@ def add_place(place_type, place_name, latitude, longitude, url, slugName = '', c
     return p
 
 
-def add_user(username,email,password):
-    user = User.objects.create_user(username,email,password)
+def add_user(name,email,password):
+    users = User.objects
+    if users.filter(username=name).exists():
+        user = User.objects.get(username=name)
+    else:
+        user = User.objects.create_user(username,email,password)
     return user
 
 

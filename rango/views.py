@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views import View
 from django.utils.decorators import method_decorator
-from rango.models import Place, Ratings, Category
+from rango.models import Place, Ratings, Category, User
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
 import random
@@ -119,11 +119,11 @@ def sign_up(request):
         user_form = UserForm(request.POST)
         
         if user_form.is_valid():
-            user = user_form.save()
-            
+            #user = user_form.save()
+            user = User.objects.create_user(user_form.username.value, user_form.email, user_form.password)
             user.set_password(user.password)
             user.save()
-            
+
             registered = True
             return redirect(reverse('suggestGlasgow:home'))
         else:
