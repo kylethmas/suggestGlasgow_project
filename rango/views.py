@@ -124,7 +124,9 @@ def sign_up(request):
         
         if user_form.is_valid():
             #user = user_form.save()
-            user = User.objects.create_user(user_form['username'], user_form['email'], user_form['password'])
+            print(user_form.data['username'])
+            print(user_form.data['email'])
+            user = User.objects.create_user(user_form.data['username'], user_form.data['email'], user_form.data['password'])
             user.set_password(user.password)
             user.save()
 
