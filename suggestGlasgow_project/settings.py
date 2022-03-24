@@ -134,5 +134,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 LOGIN_URL = 'suggestGlasgow:login'
-GOOGLE_MAPS_API_KEY = 'AIzaSyB3ZtVGgGaj-4DxOZzLR02aBHSSFo82S3g'
+GOOGLE_KEY = 'AIzaSyB3ZtVGgGaj-4DxOZzLR02aBHSSFo82S3g'
 #AUTH_USER_MODEL = 'rango.UserProfile'

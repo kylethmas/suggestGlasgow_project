@@ -11,9 +11,9 @@ place_types = (("Restaurant", "Restaurant"),
 class PlaceForm(forms.ModelForm):
     place_name = forms.CharField(max_length=128, help_text="Place name")
     place_type = forms.ChoiceField(choices=place_types, help_text="Category ")
-    place_map = forms.CharField(max_length=128, help_text="Approximate Location",
-                                required=False)  # this will be a map interface
-    #place_image = forms.ImageField(upload_to='place_images', blank=True)
+    place_map = forms.CharField(max_length=128, help_text="Approximate Location", required=False)  
+    latitude = forms.CharField(max_length=25, help_text="Latitude of place", required=False)  
+    longitude = forms.CharField(max_length=25, help_text="Longitude of place", required=False)  
     url = forms.URLField(max_length=200, help_text="Website (optional)", required=False)  # optional?
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     dislikes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
@@ -22,7 +22,7 @@ class PlaceForm(forms.ModelForm):
     class Meta:
         model = Place
         # exclude = ('category',)
-        fields = ('place_name', 'place_type', 'place_image', 'place_map', 'url')
+        fields = ('place_name', 'place_type', 'place_image', 'latitude', 'longitude', 'url')
 
     def clean(self):
         cleaned_data = self.cleaned_data

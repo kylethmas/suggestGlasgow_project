@@ -68,17 +68,26 @@
 							
 					</div>
 					
-					<div class="FieldContainer">
+					<div class="FieldContainer" onLoad="loadMap()">
+						
 						{{ form.latitude.errors }}
 						<p class="FieldInfo">
 							{{ form.latitude.help_text }}
 						</p>
-						<p id="MapTitleExplanation">Select a point on the map</p>
+						<!-- <p id="MapTitleExplanation">Select a point on the map</p>
 						<div id="Map" data-lat="55.865" data-lng="-4.25"></div>
 						<input id="HiddenLatitudeInput" type="number" name="Latitude" required></input>
-						<input id="HiddenLongitudeInput" type="number" name="Longitude" required></input>
+						<input id="HiddenLongitudeInput" type="number" name="Longitude" required></input> !-->
 						{{ form.latitude }}
-
+					</div>
+					
+					<div class="FieldContainer" onLoad="loadMap()">
+						
+						{{ form.longitude.errors }}
+						<p class="FieldInfo">
+							{{ form.longitude.help_text }}
+						</p>
+						{{ form.longitude }}
 					</div>
 					
 					<div class="FieldContainer">
