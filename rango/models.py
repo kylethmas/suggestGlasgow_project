@@ -28,7 +28,7 @@ class Place(models.Model):
     place_name = models.CharField(max_length=150)
     place_map = models.CharField(max_length = 128) #plus code or lat/long
     url = models.URLField()
-    likes = models.IntegerField(User, default = 0)
+    likes = models.ManyToManyField(User, related_name='place_like')
     dislikes = models.IntegerField(User, default = 0)
     slug = models.SlugField(unique=True)
 
@@ -45,12 +45,15 @@ class Place(models.Model):
     def __str__(self):
         return self.place_name
 
+    def number_of_likes(self):
+        return self.likes.count()
+
         
 class Ratings(models.Model):
     PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place",)
     username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="the user",)
-    liked = models.BooleanField()
-    disliked = models.BooleanField()
+    liked = models.BooleanField(default=False)
+    disliked = models.BooleanField(default=False)
     saved = models.BooleanField(default=False)
     LIKE = 1
     DISLIKE = -1
@@ -89,4 +92,11 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment
+
+class UserProfile(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
 

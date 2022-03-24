@@ -1,18 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from rango.models import Place, Ratings, Category
-from rango.forms import PlaceForm, SuggestForm
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from datetime import datetime
-from rango.forms import UserForm, SuggestForm
 from django.views import View
 from django.utils.decorators import method_decorator
+from rango.models import Place, Ratings, Category
+from rango.forms import PlaceForm, SuggestForm, UserForm
+from datetime import datetime
 import random
 
 
@@ -56,7 +52,7 @@ def suggest_place(request):
 def example_place(request):
     return render(request, 'rango/ExamplePlace.html')
 
-def show_place(request, place_name_slug):
+def show_place(request, place_name_slug, **kwargs):
     
     context_dict = {}
     
@@ -65,6 +61,16 @@ def show_place(request, place_name_slug):
         place = Place.objects.get(slug = place_name_slug)
         rating = Ratings.objects.filter(PlaceID = place.PlaceID, 
         context_dict['place'] = place
+        model = Place
+
+        def get_context_data(self, **kwargs):
+            data = super().get_context_data(**kwargs)
+            likes_connected = get_object_or_404(place, id=self.kwargs['PlaceID'])
+            liked = False
+            if likes_connected.likes.filter(id=self.request.user.id).exists():
+                liked = True
+            context_dict['number_of_likes'] = likes_connected.number_of_likes()
+            context_dict['post_is_liked'] = liked
         
     except Place.DoesNotExist:
         
@@ -82,11 +88,13 @@ def add_place(request):
 
     if form.is_valid():
         form.save()
+
         print("Page has been saved!!!")
-        # NOT WORKING REDIRECT
-        return redirect(reverse('rango:show_place',
+        name = form['place_name'].value()
+        place = Place.objects.get(place_name=name)
+        return redirect(reverse('suggestGlasgow:show_place',
                                 kwargs={'place_name_slug':
-                                            place_name_slug}))
+                                            place.slug}))
 
     else:
         print(form.errors)
@@ -158,22 +166,14 @@ def user_logout(request):
     return redirect(reverse('suggestGlasgow:home'))
 
 
-class LikePlaceView(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        place_id = request.GET['place_id']
-        try:
-            place = Place.objects.get(PlaceID = place_id)
-            
-        except Place.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
+def PlaceLike(request, PlaceID):
+    place = get_object_or_404(Place, id=request.POST.get('PlaceID'))
+    if place.likes.filter(id=request.user.id).exists():
+        place.likes.remove(request.user)
+    else:
+        place.likes.add(request.user)
 
-        place.likes = place.likes + 1
-        place.save()
-    
-        return HttpResponse(place.likes)
+    return HttpResponseRedirect(reverse('Place', args=[str(PlaceID)]))
         
 class DislikePlaceView(View):
     @method_decorator(login_required)
