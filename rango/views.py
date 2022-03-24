@@ -120,7 +120,7 @@ def sign_up(request):
         
         if user_form.is_valid():
             #user = user_form.save()
-            user = User.objects.create_user(user_form.username.value, user_form.email, user_form.password)
+            user = User.objects.create_user(user_form['username'], user_form['email'], user_form['password'])
             user.set_password(user.password)
             user.save()
 

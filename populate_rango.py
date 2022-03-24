@@ -74,7 +74,6 @@ def populate():
     for u in users:
         add_user(u['username'],u['email'], u['password'])
 
-
 def add_place(place_type, place_name, latitude, longitude, url, slugName = '', comments = []):
     p = Place.objects.get_or_create(place_type=place_type, place_name=place_name)[0]
     p.url = url
@@ -91,7 +90,7 @@ def add_user(name,email,password):
     if users.filter(username=name).exists():
         user = User.objects.get(username=name)
     else:
-        user = User.objects.create_user(username,email,password)
+        user = User.objects.create_user(name,email,password)
     return user
 
 
