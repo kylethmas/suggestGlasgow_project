@@ -5,6 +5,10 @@ const Map = new google.maps.Map(MapElement, {
   "mapTypeId": google.maps.MapTypeId.ROADMAP
 });
 
+new google.maps.Marker({
+"map": Map,
+"title": "Place location"
+}).setPosition(new google.maps.LatLng(MapElement.dataset.lat, MapElement.dataset.lng));
 
 
 async function GetCommentsFrom(Index){ //This would contain a database call

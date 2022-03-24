@@ -97,9 +97,13 @@ def add_place(request):
         print("Page has been saved!!!")
         name = form['place_name'].value()
         place = Place.objects.get(place_name=name)
+        print(place)
         return redirect(reverse('suggestGlasgow:show_place',
-                                kwargs={'place_name_slug':
-                                            place.slug}))
+                                    kwargs={'place_name_slug':
+                                                place.slug}))
+        #return redirect(reverse('suggestGlasgow:show_place',
+         #                       kwargs={'place_name_slug':
+          #                                  place.slug}))
 
     else:
         print(form.errors)
