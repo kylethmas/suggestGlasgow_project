@@ -26,7 +26,9 @@ class Place(models.Model):
     PlaceID = models.BigAutoField(primary_key=True)
     place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife"))) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
     place_name = models.CharField(max_length=150)
-    place_map = models.CharField(max_length = 128) #plus code or lat/long
+    place_image = models.ImageField(upload_to='place_images', blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     url = models.URLField()
     likes = models.ManyToManyField(User, related_name='place_like')
     dislikes = models.IntegerField(User, default = 0)
