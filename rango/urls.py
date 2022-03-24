@@ -17,6 +17,6 @@ urlpatterns = [
     path('Profile/AddPlace/', views.add_place, name='add place'),
     path('ExamplePlace/', views.example_place, name='example place'),
     path('place-like/<str:slug>', views.PlaceLike, name="place_like"),
-    path('DislikePlace/', views.DislikePlaceView.as_view(), name='dislike place'),
+    path('place-dislike/<str:slug>', views.PlaceDislike, name="place_dislike"),
     path('SavePlace/', views.SavePlaceView.as_view(), name='save place'),
 ]

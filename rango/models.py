@@ -31,7 +31,7 @@ class Place(models.Model):
     longitude = models.CharField(u'longitude', max_length=25, blank=True, null=True)
     url = models.URLField()
     likes = models.ManyToManyField(User, related_name='place_like')
-    dislikes = models.IntegerField(User, default = 0)
+    dislikes = models.ManyToManyField(User, related_name='place_dislike')
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -49,6 +49,8 @@ class Place(models.Model):
 
     def number_of_likes(self):
         return self.likes.count()
+    def number_of_dislikes(self):
+        return self.dislikes.count()
 
         
 class Ratings(models.Model):

@@ -70,6 +70,12 @@ def show_place(request, place_name_slug, **kwargs):
                 liked = True
             context_dict['number_of_likes'] = likes_connected.number_of_likes()
             context_dict['post_is_liked'] = liked
+
+            disliked = False
+            if likes_connected.dislikes.filter(id=self.request.user.id).exists():
+                disliked = True
+            context_dict['number_of_dislikes'] = likes_connected.number_of_likes()
+            context_dict['post_is_disliked'] = disliked
         
     except Place.DoesNotExist:
         
@@ -178,23 +184,20 @@ def PlaceLike(request, slug):
                      kwargs={'place_name_slug':
                                  slug}))
 
+def PlaceDislike(request, slug):
+    post = get_object_or_404(Place, slug =request.POST.get('slug'))
+    print(post)
+    if post.dislikes.filter(id=request.user.id).exists():
+        post.dislikes.remove(request.user)
+    else:
+        post.dislikes.add(request.user)
 
-class DislikePlaceView(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        place_id = request.GET['place_id']
-        try:
-            place = Place.objects.get(PlaceID = place_id)
+    #return HttpResponseRedirect(reverse('show_place', args=[str(post)]))
+    return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
+                     kwargs={'place_name_slug':
+                                 slug}))
 
-        except Place.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
-    
-        place.dislikes = place.dislikes + 1
-        place.save()
-    
-        return HttpResponse(place.dislikes)
+
 
 class SavePlaceView(View):
     @method_decorator(login_required)

@@ -28,21 +28,20 @@
 					
 						 <!-- <div data-count="{{ place.likes }}"><img src="{% static 'images/Like.png' %}" /></div> -->
 						<div>
-							
-							{{ user }}
 							{% if user.is_authenticated %}
 								 <form action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
 									{% csrf_token %}
-									
 									{% if post_is_liked %}
 									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Unlike</button>
 									 {% else %}
 									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Like</button>
 									{% endif %}
+								</form>
 							{% else %}
 								 <!-- cant click button !-->
+								 <a class="btn btn-outline-info" href="{% url 'suggestGlasgow:login' %}?next={{request.path}}">Log in to like this article!</a><br>
 							{% endif %}
-							<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+							<strong class="text-secondary">{{ place.number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
 								 
 <!-- 							<button id="like_btn"
 							data-placeid ="{{ place.PlaceID }}"
@@ -54,7 +53,24 @@
 						</div>
 						
 						<div>
-							<strong id="dislike_count">{{ place.dislikes }}</strong> dislikes
+							{% if user.is_authenticated %}
+								 <form action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
+									{% csrf_token %}
+									{% if post_is_disliked %}
+									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Un Dislike</button>
+									 {% else %}
+									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Dislike</button>
+									{% endif %}
+								</form>
+							{% else %}
+								 <!-- cant click button !-->
+								 <a class="btn btn-outline-info" href="{% url 'suggestGlasgow:login' %}?next={{request.path}}">Log in to like this article!</a><br>
+							{% endif %}
+							<strong class="text-secondary">{{ place.number_of_dislikes }} Dislike{{ number_of_dislikes|pluralize }}</strong>
+			
+							
+							
+							<!-- <strong id="dislike_count">{{ place.dislikes }}</strong> dislikes
 							{% if user.is_authenticated %}
 								<button id="dislike_btn"
 								data-placeid ="{{ place.PlaceID }}"
@@ -63,8 +79,9 @@
 								<img alt="Restaurant Button" src= "{% static 'images/Dislike.png' %}">
 								</button>
 								{% else %}
+								{% endif %} 
 									<!-- display just the picture here !-->					
-								{% endif %}
+								
 						</div>
 						
 						<div>
