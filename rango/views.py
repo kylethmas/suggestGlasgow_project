@@ -63,6 +63,7 @@ def show_place(request, place_name_slug):
     try:
         #place = Place.objects.get(slug = place_name_slug)
         place = Place.objects.get(slug = place_name_slug)
+        rating = Ratings.objects.filter(PlaceID = place.PlaceID, 
         context_dict['place'] = place
         
     except Place.DoesNotExist:

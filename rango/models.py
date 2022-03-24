@@ -52,6 +52,24 @@ class Ratings(models.Model):
     liked = models.BooleanField()
     disliked = models.BooleanField()
     saved = models.BooleanField(default=False)
+    LIKE = 1
+    DISLIKE = -1
+    
+    VOTES = (
+        (DISLIKE, 'Dislike'),
+        (LIKE, 'Like')
+    )
+    
+    vote = models.SmallIntegerField(verbose_name=("like or dislike"), choices=VOTES)
+    user = models.ForeignKey(User, verbose_name=_("the user"))
+    
+    place = models.ForeignKey(Place, on\_delete=models.CASCADE)
+    place_id = models.PositiveIntegerField()
+    place_object = GenericForeignKey()
+    
+    objects = LikeDislikeManager()
+    
+    
 
     class Meta:
         verbose_name_plural = 'ratings'
