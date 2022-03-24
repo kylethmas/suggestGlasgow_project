@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -64,7 +64,7 @@ def show_place(request, place_name_slug, **kwargs):
 
         def get_context_data(self, **kwargs):
             data = super().get_context_data(**kwargs)
-            likes_connected = get_object_or_404(place, id=self.kwargs['PlaceID'])
+            likes_connected = get_object_or_404(place, slug=self.kwargs['slug'])
             liked = False
             if likes_connected.likes.filter(id=self.request.user.id).exists():
                 liked = True
@@ -165,15 +165,20 @@ def user_logout(request):
     return redirect(reverse('suggestGlasgow:home'))
 
 
-def PlaceLike(request, PlaceID):
-    place = get_object_or_404(Place, PlaceID =request.POST.get('PlaceID'))
-    if place.likes.filter(id=request.user.id).exists():
-        place.likes.remove(request.user)
+def PlaceLike(request, slug):
+    post = get_object_or_404(Place, slug =request.POST.get('slug'))
+    print(post)
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
     else:
-        place.likes.add(request.user)
+        post.likes.add(request.user)
 
-    return HttpResponseRedirect(reverse('Place', args=[str(PlaceID)]))
-        
+    #return HttpResponseRedirect(reverse('show_place', args=[str(post)]))
+    return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
+                     kwargs={'place_name_slug':
+                                 slug}))
+
+
 class DislikePlaceView(View):
     @method_decorator(login_required)
     def get(self, request):
