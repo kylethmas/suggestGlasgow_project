@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings
 
 import django
 django.setup()
-from rango.models import Category, Place
+from rango.models import Category, Place, User
 
 
 def populate():
