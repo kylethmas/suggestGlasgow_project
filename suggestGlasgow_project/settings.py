@@ -29,7 +29,7 @@ SECRET_KEY = '3=tj-(6toxgs-fe3y4kxwi^e!-@9w1^rh90!q#o&6v1)+e-r=u'
 DEBUG = True
 
 ALLOWED_HOSTS = ['https://kylethmas.pythonanywhere.com/',
-                 'host 127.0.0.1',
+                 '127.0.0.1',
                 'kylethmas.pythonanywhere.com']
 
 
