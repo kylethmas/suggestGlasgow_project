@@ -6,8 +6,8 @@ const Map = new google.maps.Map(MapElement, {
 });
 
 new google.maps.Marker({
-"map": Map,
-"title": "Place location"
+  "map": Map,
+  "title": "Place location"
 }).setPosition(new google.maps.LatLng(MapElement.dataset.lat, MapElement.dataset.lng));
 
 
@@ -101,3 +101,7 @@ for(const Element of document.querySelectorAll("#CommentButton, #OverflowWrapper
 }
 
 document.querySelector("#LoadMoreCommentsButton").addEventListener("click", LoadMoreComments);
+
+document.querySelectorAll("#Ratings > form").forEach(Element => Element.addEventListener("click", function(Event){
+  this.querySelector("button").click();
+}));

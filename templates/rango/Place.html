@@ -22,82 +22,32 @@
 			<br/>
 	
 			<main>
-				<section id="Left"> 
+				<section id="Left">
 					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
 					<div id="Ratings">
-					
-						 <!-- <div data-count="{{ place.likes }}"><img src="{% static 'images/Like.png' %}" /></div> -->
-						<div>
-							{% if user.is_authenticated %}
-								 <form action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
-									{% csrf_token %}
-									{% if post_is_liked %}
-									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Unlike</button>
-									 {% else %}
-									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Like</button>
-									{% endif %}
-								</form>
+						<form data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
+							{% csrf_token %}
+							{% if post_is_liked %}
+							<img src="{% static 'images/Liked.png' %}" />
 							{% else %}
-								 <!-- cant click button !-->
-								 <a class="btn btn-outline-info" href="{% url 'suggestGlasgow:login' %}?next={{request.path}}">Log in to like this article!</a><br>
+							<img src="{% static 'images/Like.png' %}" />
 							{% endif %}
-							<strong class="text-secondary">{{ place.number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
-								 
-<!-- 							<button id="like_btn"
-							data-placeid ="{{ place.PlaceID }}"
-							class="btn btn-primary btn-sm"
-							type="button">
-							<img alt="Restaurant Button" src= "{% static 'images/Like.png' %}">
-							</button>
- -->
-						</div>
-						
-						<div>
-							{% if user.is_authenticated %}
-								 <form action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
-									{% csrf_token %}
-									{% if post_is_disliked %}
-									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Un Dislike</button>
-									 {% else %}
-									<button type="submit" name="slug" value="{{place.slug}}" class="btn btn-info">Dislike</button>
-									{% endif %}
-								</form>
+							<button type="submit" value="{{place.slug}}" name="slug"></button>
+						</form>
+						<form data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
+							{% csrf_token %}
+							{% if post_is_disliked %}
+							<img src="{% static 'images/Disliked.png' %}" />
 							{% else %}
-								 <!-- cant click button !-->
-								 <a class="btn btn-outline-info" href="{% url 'suggestGlasgow:login' %}?next={{request.path}}">Log in to like this article!</a><br>
+							<img src="{% static 'images/Dislike.png' %}" />
 							{% endif %}
-							<strong class="text-secondary">{{ place.number_of_dislikes }} Dislike{{ number_of_dislikes|pluralize }}</strong>
-			
-							
-							
-							<!-- <strong id="dislike_count">{{ place.dislikes }}</strong> dislikes
-							{% if user.is_authenticated %}
-								<button id="dislike_btn"
-								data-placeid ="{{ place.PlaceID }}"
-								class="btn btn-primary btn-sm"
-								type="button">
-								<img alt="Restaurant Button" src= "{% static 'images/Dislike.png' %}">
-								</button>
-								{% else %}
-								{% endif %} 
-									<!-- display just the picture here !-->					
-								
-						</div>
-						
-						<div>
-							<strong id="save"></strong> Save
-							{% if user.is_authenticated %}
-								<button id="save_btn"
-								data-placeid ="{{ place.PlaceID }}"
-								class="btn btn-primary btn-sm"
-								type="button">
-								<img alt="Restaurant Button" src= "{% static 'images/Add.png' %}">
-								</button>
-								{% else %}
-									<!-- display just the picture here !-->					
-								{% endif %}
-						</div>
-						
+							<button type="submit" value="{{place.slug}}" name="slug"></button>
+						</form>
+						<!--<form data-count="Add" action="{\% url 'suggestGlasgow:add_place' place.slug %}" method="POST">-->
+						<form data-count="Add">
+							<img src="{% static 'images/Add.png' %}" />
+							<button type="submit" value="{{place.slug}}" name="slug"></button>
+						</form>
 						
 						<div id="CommentButton">Comment</div>
 					</div>
