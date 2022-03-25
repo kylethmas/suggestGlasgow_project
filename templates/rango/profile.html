@@ -23,7 +23,7 @@
 					<div>
 						<a href="{% url 'suggestGlasgow:show_place' place.slug %}">
 							<h2 class="RestaurantName">{{ place.place_name }}</h2>
-							<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ place.place_image }}" /></div>
+							<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
 						</a>
 						<div class="Ratings">
 							<div data-count="{{ place.number_of_likes }}"><img src="{% static 'images/Like.png' %}" /></div>
