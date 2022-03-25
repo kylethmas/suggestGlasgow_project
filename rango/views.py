@@ -84,10 +84,11 @@ def show_place(request, place_name_slug, **kwargs):
 @login_required
 def add_place(request):
     form = PlaceForm()
-        
+    
     if request.method == 'POST':
         form = PlaceForm(request.POST)
-
+        print("hi")
+        
         if form.is_valid():
             form.save()
 
@@ -95,13 +96,10 @@ def add_place(request):
             name = form['place_name'].value()
             place = Place.objects.get(place_name=name)
             print(place)
-            return redirect(reverse('suggestGlasgow:home'))
-            #return redirect(reverse('suggestGlasgow:show_place',
-             #                           kwargs={'place_name_slug':
-              #                                      place.slug}))
-            #return redirect(reverse('suggestGlasgow:show_place',
-             #                       kwargs={'place_name_slug':
-              #                                  place.slug}))
+
+            return redirect(reverse('suggestGlasgow:show_place',
+                                        kwargs={'place_name_slug':
+                                                    place.slug}))
 
         else:
             print(form.errors)

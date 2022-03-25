@@ -1,3 +1,15 @@
+.RestaurantImageWrapper{
+  width: 100%;
+  aspect-ratio: 2 / 3;
+}
+
+.RestaurantImageWrapper > img{
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+
 
 #PlaceName, #PlaceDescription, #PlaceLink{
   text-align: center;
@@ -151,8 +163,8 @@
   transition: opacity .5s linear;
 }
 #HiddenPlaceTypeInput,
-#HiddenLatitudeInput,
-#HiddenLongitudeInput{
+#id_longitude,
+#id_latitude{
   display: none; /*These exist just to hold the data entered with the map*/
 }
 

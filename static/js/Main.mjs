@@ -9,8 +9,8 @@ let SelectedMarker = null;
 
 google.maps.event.addListener(Map, "click", function(Event){
   //Set values of hidden latitude and longitude inputs to make form submission easier
-  document.querySelector("#HiddenLatitudeInput").value = Event.latLng.lat();
-  document.querySelector("#HiddenLongitudeInput").value = Event.latLng.lng();
+  document.querySelector("#id_latitude").value = Event.latLng.lat();
+  document.querySelector("#id_longitude").value = Event.latLng.lng();
 
   //Hide map selection hint
   document.querySelector("#MapTitleExplanation").style.opacity = "0";
@@ -32,4 +32,7 @@ SelectTypeMenu.addEventListener("click", function(Event){
   if(Type === undefined) return;
   SelectedType.innerText = Event.target.innerText;
   HiddenInput.value = Type;
+});
+document.querySelector("#id_place_image").addEventListener("change", function(Event){
+	document.querySelector("#output").src = URL.createObjectURL(Event.target.files[0]);
 });
