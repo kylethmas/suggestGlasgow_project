@@ -18,11 +18,22 @@
 		<form name = "SuggestPlaceForm" id="suggest_form" method="post" action = "">
 			{% csrf_token %}
 			<div class = "DropdownMenu" id="SelectTypeMenu">
+				<!--
 					<div>{{ form.place_type }}</div>
+				{% for x, y in form.fields.place_type.choices %}
+					<option value="{{ x }}">{{ y }}</option>
+				{% endfor %}
+				-->
+				<div>
+					<div>&nbsp;</div>
+					{% for x, y in form.fields.place_type.choices %}
+					<div data-type="{{ x }}">{{ y }}</div>
+					{% endfor %}
+				</div>
 			</div>
 			
-
-			<input type="submit" name="submit" value="Suggest Place" />
+			<input id="id_place_type" name="place_type" type="text" />
+			<input id="SubmitButton" type="submit" name="submit" value="Suggest Place" />
 		</form>
 		</span></h2>
 	</div>
@@ -45,6 +56,7 @@
 		</div>
 	</div>
 </main>
+<script type="text/javascript" src="{% static 'js/Home.mjs' %}" type="module"></script>
 <br />
 {% endblock %}
 

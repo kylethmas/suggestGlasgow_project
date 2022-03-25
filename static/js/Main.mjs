@@ -25,7 +25,7 @@ google.maps.event.addListener(Map, "click", function(Event){
 
 const SelectTypeMenu = document.querySelector("#SelectTypeMenu");
 const SelectedType = document.querySelector("#SelectTypeMenu > div > div:first-child");
-const HiddenInput = document.querySelector("#HiddenPlaceTypeInput");
+const HiddenInput = document.querySelector("#id_place_type");
 
 SelectTypeMenu.addEventListener("click", function(Event){
   const Type = Event.target.dataset.type;

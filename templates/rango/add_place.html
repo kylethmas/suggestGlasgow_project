@@ -41,10 +41,14 @@
 						<p class="FieldInfo">
 							{{ form.place_type.help_text }}
 						</p>
-						<div class = "DropdownMenu" id="SelectTypeMenu">
+						<div class="DropdownMenu" id="SelectTypeMenu">
 							<div>
-								{{ form.place_type }}
+								<div>Select one...</div>
+								{% for x, y in form.fields.place_type.choices %}
+								<div data-type="{{ x }}">{{ y }}</div>
+								{% endfor %}
 							</div>
+							<input id="id_place_type" name="place_type" type="text" />
 						</div>
 					</div>
 					
@@ -73,11 +77,11 @@
 					
 
 					<div id="ConsentCheckboxWrapper">
-							<input id="ConsentCheckbox" type="checkbox" name="Consent" required></input>
-							<span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>
+						<input id="ConsentCheckbox" type="checkbox" name="Consent" required></input>
+						<span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>
 					</div>
 					<br>
-					<input type="submit" name="submit" value="Submit" />
+					<button type="submit" name="submit">Submit</button>
 				</form>
 			</section>
 		</div>

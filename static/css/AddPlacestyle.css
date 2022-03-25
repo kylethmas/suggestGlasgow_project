@@ -125,6 +125,9 @@
   background-color: #0000003f;
 }
 
+.DropdownMenu > input{
+  display: none;
+}
 
 .setloc-map {
     max-width: 100%;
@@ -177,7 +180,7 @@ button,input{
 	cursor: pointer;
 	outline: inherit;
 }
-input[name="Submit"]{
+button{
   margin: 5px auto 5px auto;
   border: 2px solid black;
   padding: 5px 15px 5px 15px;
@@ -186,10 +189,10 @@ input[name="Submit"]{
   transform: translateX(-50%);
   font-size: 20px;
 }
-input[name="Submit"]:hover{
+button:hover{
   backdrop-filter: brightness(.9);
 }
-input[name="Submit"]:active{
+button:active{
   backdrop-filter: brightness(.7);
 }
 
