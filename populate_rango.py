@@ -86,13 +86,11 @@ def add_place(place_type, place_name, latitude, longitude, url, slugName = '', c
 
 
 def add_user(name,email,password):
-
-
+    users = User.objects
     if users.filter(username=name).exists():
         user = User.objects.get(username=name)
     else:
         user = User.objects.create_user(name,email,password)
-        users = User.objects
         u = UserProfile.objects.get_or_create(user=user)[0]
         u.save()
 
