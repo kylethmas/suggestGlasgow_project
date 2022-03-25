@@ -5,13 +5,16 @@ function* ChangeText(){
     let CurrentIndex = 0;
     while(true){
         const CurrentString = Options[(CurrentIndex++) % Options.length];
+        let NewString = AnimatedItem.innerText;
         for(let i = 0; i < CurrentString.length; ++i){
-            AnimatedItem.innerText += CurrentString[i];
+            NewString += CurrentString[i];
+            AnimatedItem.innerText = NewString; //This is needed because html elements can't have trailing spaces
             yield Math.random() * 150. + 150.;
         }
         yield 1500.;
         for(let i = 0; i < CurrentString.length; ++i){
-            AnimatedItem.innerText = AnimatedItem.innerText.slice(0, -1);
+            NewString = NewString.slice(0, -1);
+            AnimatedItem.innerText = NewString;
             yield 80.;
         }
         yield 600.;
