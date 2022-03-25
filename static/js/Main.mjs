@@ -25,7 +25,7 @@ google.maps.event.addListener(Map, "click", function(Event){
 
 const SelectTypeMenu = document.querySelector("#SelectTypeMenu");
 const SelectedType = document.querySelector("#SelectTypeMenu > div > div:first-child");
-const HiddenInput = document.querySelector("#id_place_type");
+const HiddenInput = document.querySelector("#HiddenPlaceTypeInput");
 
 SelectTypeMenu.addEventListener("click", function(Event){
   const Type = Event.target.dataset.type;
@@ -33,7 +33,6 @@ SelectTypeMenu.addEventListener("click", function(Event){
   SelectedType.innerText = Event.target.innerText;
   HiddenInput.value = Type;
 });
-
 document.querySelector("#id_place_image").addEventListener("change", function(Event){
 	document.querySelector("#output").src = URL.createObjectURL(Event.target.files[0]);
-});#
+});
