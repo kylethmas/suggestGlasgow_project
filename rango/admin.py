@@ -1,5 +1,5 @@
 from django.contrib import admin
-from rango.models import Ratings, Place
+from rango.models import Ratings, Place, UserProfile
 
 
 class PlaceAdmin(admin.ModelAdmin):
@@ -8,3 +8,4 @@ class PlaceAdmin(admin.ModelAdmin):
 
 admin.site.register(Ratings)
 admin.site.register(Place,PlaceAdmin)
+admin.site.register(UserProfile)
