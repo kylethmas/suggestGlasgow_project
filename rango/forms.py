@@ -9,12 +9,11 @@ place_types = (("Restaurant", "Restaurant"),
 
 
 class PlaceForm(forms.ModelForm):
-    place_name = forms.CharField(max_length=128, help_text="Place name")
-    place_type = forms.ChoiceField(choices=place_types, help_text="Category ")
-    place_map = forms.CharField(max_length=128, help_text="Approximate Location", required=False)  
-    latitude = forms.CharField(max_length=25, help_text="Latitude of place", required=False)
-    longitude = forms.CharField(max_length=25, help_text="Longitude of place", required=False)  
-    url = forms.URLField(max_length=200, help_text="Website (optional)", required=False)  # optional?
+    place_name = forms.CharField(max_length=128, help_text="Place name", required=True)
+    place_type = forms.ChoiceField(choices=place_types, help_text="Category ", required=True)
+    latitude = forms.CharField(max_length=25, help_text="Latitude of place", required=True)
+    longitude = forms.CharField(max_length=25, help_text="Longitude of place", required=True)  
+    url = forms.CharField(max_length=200, help_text="Website (optional)", required=False)  # optional?
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     dislikes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -29,7 +28,7 @@ class PlaceForm(forms.ModelForm):
         url = cleaned_data.get('url')
 
         if url and not url.startswith('http://'):
-            url = f'http://{url}'
+            url = f'https://{url}'
             cleaned_data['url'] = url
 
         return cleaned_data

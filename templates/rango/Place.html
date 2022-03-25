@@ -23,7 +23,7 @@
 	
 			<main>
 				<section id="Left">
-					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
+					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static '{{place.place_image}}' %}" /></div>
 					<div id="Ratings">
 						<form data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
 							{% csrf_token %}

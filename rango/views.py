@@ -92,6 +92,7 @@ def add_place(request):
         if form.is_valid():
             form.save()
 
+
             print("Page has been saved!!!")
             name = form['place_name'].value()
             place = Place.objects.get(place_name=name)
