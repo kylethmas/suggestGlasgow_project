@@ -80,37 +80,38 @@ def show_place(request, place_name_slug, **kwargs):
         
     return render(request, 'rango/place.html', context = context_dict)
 
-
 @login_required
 def add_place(request):
-    form = PlaceForm()
     
     if request.method == 'POST':
-        form = PlaceForm(request.POST)
+        place = PlaceForm(request.POST)
         print("hi")
         
-        if form.is_valid():
-            form.save()
-
-
+        if place.is_valid():
+        
             print("Page has been saved!!!")
-            name = form['place_name'].value()
-            place = Place.objects.get(place_name=name)
-            print(place)
+            
+            #if 'place_image' in request.FILES:
+             #   place.place_image = request.FILES['place_image']
+            
+            place.save()
+            
+            name = place['place_name'].value()
+            place_get = Place.objects.get(place_name=name)
+            print(place_get.place_image)
 
             return redirect(reverse('suggestGlasgow:show_place',
                                         kwargs={'place_name_slug':
-                                                    place.slug}))
+                                                    place_get.slug}))
 
         else:
-            print(form.errors)
-            print("Page has wrong!!!")
-            print(form.errors)
-            #return redirect('/')
+            print(place.errors)
+            
+    else:
+        place = PlaceForm()
 
-    context_dict = {'form': form}
+    context_dict = {'form': place}
     return render(request, 'rango/add_place.html', context=context_dict)
-
 
 def sign_up(request):
 
@@ -221,3 +222,8 @@ class SavePlaceView(View):
         #user = UserProfile
         #user.saved.extend(place)
         #return render(request, 'rango/page_listing.html', {'pages': pages})
+        
+#def Comment(request, slug):
+ #   post = get_object_or_404(Place, slug =request.POST.get('slug'))
+  #  print(post)
+    

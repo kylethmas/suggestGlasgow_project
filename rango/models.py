@@ -24,22 +24,20 @@ class Category(models.Model):
         
 class Place(models.Model):
     PlaceID = models.BigAutoField(primary_key=True)
-    place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife"))) # this could be helpful for later >>> ForeignKey(Category, on_delete=models.CASCADE)
+    place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife")))
     place_name = models.CharField(max_length=150)
-    place_image = models.ImageField(upload_to='place_images', blank=True)
-    latitude = models.CharField(u'latitude', max_length=25, blank=True, null=True)
-    longitude = models.CharField(u'longitude', max_length=25, blank=True, null=True)
+    place_image = models.ImageField(upload_to='place_images')
+    latitude = models.CharField(u'latitude', max_length=25, blank=True, default = 0)
+    longitude = models.CharField(u'longitude', max_length=25, blank=True, default = 0)
     url = models.URLField()
-    likes = models.ManyToManyField(User, related_name='place_like',default=[])
-    dislikes = models.ManyToManyField(User, related_name='place_dislike', default=[])
+    likes = models.ManyToManyField(User, related_name='place_like')
+    dislikes = models.ManyToManyField(User, related_name='place_dislike')
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.place_name)
         super(Place, self).save(*args, **kwargs)
 
-    #comments data structure goes here?
-    #need place ID
 
     class Meta:
         verbose_name_plural = 'places'

@@ -33,6 +33,7 @@ SelectTypeMenu.addEventListener("click", function(Event){
   SelectedType.innerText = Event.target.innerText;
   HiddenInput.value = Type;
 });
+
 document.querySelector("#id_place_image").addEventListener("change", function(Event){
 	document.querySelector("#output").src = URL.createObjectURL(Event.target.files[0]);
-});
+});#
