@@ -133,6 +133,8 @@ def sign_up(request):
             user = User.objects.create_user(user_form.data['username'], user_form.data['email'], user_form.data['password'])
             user.set_password(user.password)
             user.save()
+            u = UserProfile.objects.get_or_create(user=user)[0]
+            u.save()
 
             registered = True
             return redirect(reverse('suggestGlasgow:home'))
@@ -219,25 +221,3 @@ def PlaceSave(request, slug):
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                      kwargs={'place_name_slug':
                                  slug}))
-
-
-
-class SavePlaceView(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        place_id = request.GET['place_id']
-
-        try:
-            place = Place.objects.get(PlaceID = place_id)
-
-        except Place.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
-        
-        #p = Page.objects.get_or_create(category=category, title=title, url=url)
-        
-        #pages = Page.objects.filter(category=category).order_by('-views')
-        #user = UserProfile
-        #user.saved.extend(place)
-        #return render(request, 'rango/page_listing.html', {'pages': pages})
