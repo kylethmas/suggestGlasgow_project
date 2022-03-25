@@ -19,5 +19,4 @@ urlpatterns = [
     path('place-like/<str:slug>', views.PlaceLike, name="place_like"),
     path('place-dislike/<str:slug>', views.PlaceDislike, name="place_dislike"),
     path('place-save/<str:slug>', views.PlaceSave, name="place_save"),
-    path('SavePlace/', views.SavePlaceView.as_view(), name='save place'),
 ]
