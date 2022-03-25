@@ -57,8 +57,10 @@ def show_place(request, place_name_slug, **kwargs):
         #place = Place.objects.get(slug = place_name_slug)
         place = Place.objects.get(slug = place_name_slug)
         print(request.user)
-        user = User.objects.get(username = request.user)
         context_dict['place'] = place
+        if request.user.username != "":
+            user = User.objects.get(username = request.user)
+
         #model = Place
 
         def get_context_data(self, **kwargs):
