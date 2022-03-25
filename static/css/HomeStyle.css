@@ -8,6 +8,10 @@
   background-position: center;
 }
 
+#suggest_form > input{
+  display: none;
+}
+
 
 #WebsiteTitleWrapper{
   position: absolute;
@@ -52,7 +56,7 @@ span *{
 }
 .DropdownMenu > div{
   position: absolute;
-  backdrop-filter: blur(3px) invert(.25);
+  backdrop-filter: blur(2px) invert(.15);
   top: 0px;
   width: 100%;
 }
