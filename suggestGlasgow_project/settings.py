@@ -19,7 +19,6 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR, ]
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -29,7 +28,9 @@ SECRET_KEY = '3=tj-(6toxgs-fe3y4kxwi^e!-@9w1^rh90!q#o&6v1)+e-r=u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://kylethmas.pythonanywhere.com/',
+                 '127.0.0.1',
+                'kylethmas.pythonanywhere.com']
 
 
 # Application definition
