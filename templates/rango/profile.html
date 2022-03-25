@@ -19,7 +19,7 @@
     <ul>
         {% for place in saved %}
 			<li>
-				<a href="{% url 'suggestGlasgow:home' %}">{{ place.title }}</a>
+				<a href="{% url 'suggestGlasgow:home' %}">{{ place.place_name }}</a>
 			</li>
 		{% endfor %}
     </li>

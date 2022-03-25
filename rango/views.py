@@ -174,7 +174,11 @@ def user_login(request):
 
 @login_required
 def profile(request):
-    return render(request, 'rango/profile.html')
+    user = get_object_or_404(UserProfile, user=request.user)
+    context_dict = {}
+    context_dict['saved'] = user.saves.all()
+    print(context_dict)
+    return render(request, 'rango/profile.html', context=context_dict)
 
     
 @login_required
