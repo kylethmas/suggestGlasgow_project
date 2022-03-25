@@ -84,29 +84,28 @@ def show_place(request, place_name_slug, **kwargs):
 @login_required
 def add_place(request):
     form = PlaceForm()
-        
+    
     if request.method == 'POST':
         form = PlaceForm(request.POST)
+        print("hi")
+        
+        if form.is_valid():
+            form.save()
 
-    if form.is_valid():
-        form.save()
+            print("Page has been saved!!!")
+            name = form['place_name'].value()
+            place = Place.objects.get(place_name=name)
+            print(place)
 
-        print("Page has been saved!!!")
-        name = form['place_name'].value()
-        place = Place.objects.get(place_name=name)
-        print(place)
-        return redirect(reverse('suggestGlasgow:show_place',
-                                    kwargs={'place_name_slug':
-                                                place.slug}))
-        #return redirect(reverse('suggestGlasgow:show_place',
-         #                       kwargs={'place_name_slug':
-          #                                  place.slug}))
+            return redirect(reverse('suggestGlasgow:show_place',
+                                        kwargs={'place_name_slug':
+                                                    place.slug}))
 
-    else:
-        print(form.errors)
-        print("Page has wrong!!!")
-        print(form.errors)
-        #return redirect('/')
+        else:
+            print(form.errors)
+            print("Page has wrong!!!")
+            print(form.errors)
+            #return redirect('/')
 
     context_dict = {'form': form}
     return render(request, 'rango/add_place.html', context=context_dict)

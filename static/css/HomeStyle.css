@@ -2,12 +2,12 @@
   position: relative;
   width: 100%;
   height: calc(min(max(100px, 30vh), 350px));
-  background-image: linear-gradient(
-    rgba(0, 0, 0, .4),
-    rgba(0, 0, 0, .4)
-  ), url("../Images/Background.png");
+  background-image: url("../Images/Background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
 }
+
 
 #WebsiteTitleWrapper{
   position: absolute;
@@ -39,7 +39,6 @@ span *{
 #SelectionTitle *{
   text-align: left;
 }
-
 
 .DropdownMenu{
   width: 300px;

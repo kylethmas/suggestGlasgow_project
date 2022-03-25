@@ -13,23 +13,25 @@ body{
   overflow: hidden;
 }
 
+
 #BackgroundImage{
-  background-image: url("../Images/Background.png");
-  background-position: center;
+  background-image: url("../Images/Background.jpg");
+  background-position: center; 
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 104vh;
-  min-width: 104vw;
-  filter: blur(3px);
+  min-width: 104vw; 
+  /*filter: blur(3px); */
 }
 #CenterWrapper{
   position: absolute;
-  background-color: #ffffffaf;
+  background-color: #ffffffdf;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.3);
   padding: 40px;
   border-radius: 27px;
+  
 }
 #CenterWrapper > div{
   position: relative;
@@ -46,7 +48,7 @@ body{
 .FieldContainer > input[type="text"],
 .FieldContainer > input[type="email"],
 .FieldContainer > input[type="password"]{
-  border: 2px solid black;
+  border: 2px solid #4F4159;
   background-color: #00000000;
   width: 100%;
   font-size: 20px;
@@ -84,7 +86,7 @@ button{ /*Resets default button styles*/
 }
 button{
   margin: 5px auto 5px auto;
-  border: 2px solid black;
+  border: 2px solid #4F4159;
   padding: 5px;
   width: 120px;
   font-size: 20px;
