@@ -30,8 +30,8 @@ class Place(models.Model):
     latitude = models.CharField(u'latitude', max_length=25, blank=True, null=True)
     longitude = models.CharField(u'longitude', max_length=25, blank=True, null=True)
     url = models.URLField()
-    likes = models.ManyToManyField(User, related_name='place_like')
-    dislikes = models.ManyToManyField(User, related_name='place_dislike')
+    likes = models.ManyToManyField(User, related_name='place_like',default=[])
+    dislikes = models.ManyToManyField(User, related_name='place_dislike', default=[])
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
