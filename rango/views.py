@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views import View
 from django.utils.decorators import method_decorator
-from rango.models import Place, Ratings, Category, User
+from rango.models import Place, Ratings, Category, User, UserProfile
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
 import random
@@ -56,8 +56,10 @@ def show_place(request, place_name_slug, **kwargs):
     try:
         #place = Place.objects.get(slug = place_name_slug)
         place = Place.objects.get(slug = place_name_slug)
+        print(request.user)
+        user = User.objects.get(username = request.user)
         context_dict['place'] = place
-        model = Place
+        #model = Place
 
         def get_context_data(self, **kwargs):
             data = super().get_context_data(**kwargs)
@@ -73,6 +75,12 @@ def show_place(request, place_name_slug, **kwargs):
                 disliked = True
             context_dict['number_of_dislikes'] = likes_connected.number_of_likes()
             context_dict['post_is_disliked'] = disliked
+
+            user_connected = get_object_or_404(user, user=self.kwargs['user'])
+            saved = false
+            if user_connected.saves.filter(slug=self.request.place.slug).exists():
+                saved = True
+            data['post_is_saved'] = saved
         
     except Place.DoesNotExist:
         
@@ -193,6 +201,19 @@ def PlaceDislike(request, slug):
         post.dislikes.remove(request.user)
     else:
         post.dislikes.add(request.user)
+
+    #return HttpResponseRedirect(reverse('show_place', args=[str(post)]))
+    return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
+                     kwargs={'place_name_slug':
+                                 slug}))
+def PlaceSave(request, slug):
+    post = get_object_or_404(Place, slug =request.POST.get('slug'))
+    user = get_object_or_404(UserProfile,user = request.user)
+    print(post,user)
+    if user.saves.filter(PlaceID=post.PlaceID).exists():
+        user.saves.remove(post)
+    else:
+        user.saves.add(post)
 
     #return HttpResponseRedirect(reverse('show_place', args=[str(post)]))
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',

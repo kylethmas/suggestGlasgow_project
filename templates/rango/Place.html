@@ -43,6 +43,17 @@
 							{% endif %}
 							<button type="submit" value="{{place.slug}}" name="slug"></button>
 						</form>
+						
+						<form data-count="Add" action="{% url 'suggestGlasgow:place_save' place.slug %}" method="POST">
+							{% csrf_token %}
+							{% if post_is_saved %}
+							saved
+							{% else %}
+							<img src="{% static 'images/Add.png' %}" />
+							{% endif %}
+							<button type="submit" value="{{place.slug}}" name="slug"></button>
+						</form>
+						
 						<!--<form data-count="Add" action="{\% url 'suggestGlasgow:add_place' place.slug %}" method="POST">-->
 						<form data-count="Add">
 							<img src="{% static 'images/Add.png' %}" />

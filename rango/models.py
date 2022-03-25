@@ -82,7 +82,9 @@ class Comments(models.Model):
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    #name = models.CharField(max_length=150)
     saves = models.ManyToManyField(Place, related_name='place_save')
+
 
     def __str__(self):
         return self.user.username
