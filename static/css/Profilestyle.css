@@ -1,3 +1,7 @@
+body{
+  overflow: overlay;
+}
+
 
 #Title, #Subtitle{
   text-align: center;

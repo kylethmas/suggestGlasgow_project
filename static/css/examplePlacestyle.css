@@ -59,6 +59,7 @@ main > section{
 }
 #Ratings > div{
   margin-left: auto;
+  margin-top: -10px;
   padding: 5px;
   align-self: center;
   border: 2px solid black;
