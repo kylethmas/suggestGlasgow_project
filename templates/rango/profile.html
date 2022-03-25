@@ -15,61 +15,29 @@
 	<h1 id="Title">My places</h1>
 	<h2 id="Subtitle">Here you can find all of the places you've added!</h2>
 	<br/>
-	{% if saved %}
-    <ul>
-        {% for place in saved %}
-			<li>
-				<a href="{% url 'suggestGlasgow:home' %}">{{ place.title }}</a>
-			</li>
-		{% endfor %}
-    </li>
-	{% endif %}
-		
 	<main>
+	{% if saved %}
 		<div class="OverflowWrapper" id="AddedPlacesWrapper">
-			<!-- this will be replaced by places that have been saved by the user !-->
 			<div class="ItemsWrapper">
-				<div>
-					<h2 class="RestaurantName">Restaurant</h2>
-					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
-					<div class="Ratings">
-						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
-						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
-						<div class="RemoveButton">Remove</div>
+				{% for place in saved %}
+					<div>
+						<a href="{% url 'suggestGlasgow:show_place' place.slug %}">
+							<h2 class="RestaurantName">{{ place.place_name }}</h2>
+							<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ place.place_image }}" /></div>
+						</a>
+						<div class="Ratings">
+							<div data-count="{{ place.number_of_likes }}"><img src="{% static 'images/Like.png' %}" /></div>
+							<div data-count="{{ place.number_of_dislikes }}"><img src="{% static 'images/Dislike.png' %}" /></div>
+							<div class="RemoveButton">Remove</div>
+						</div>
 					</div>
-				</div>
-				
-				<div>
-					<h2 class="RestaurantName">Restaurant</h2>
-					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
-					<div class="Ratings">
-						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
-						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
-						<div class="RemoveButton">Remove</div>
-					</div>
-				</div>
-		  
-				<div>
-					<h2 class="RestaurantName">Restaurant</h2>
-					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
-					<div class="Ratings">
-						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
-						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
-						<div class="RemoveButton">Remove</div>
-					</div>
-				</div>
-				
-				<div>
-					<h2 class="RestaurantName">Restaurant</h2>
-					<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{% static 'images/Restaurant.jpg' %}" /></div>
-					<div class="Ratings">
-						<div data-count="13"><img src="{% static 'images/Like.png' %}" /></div>
-						<div data-count="69"><img src="{% static 'images/Dislike.png' %}" /></div>
-						<div class="RemoveButton">Remove</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
 		</div>
+	{% else %}
+		You have no saved places
+	{% endif %}
+		
 	</main>
 	<br />
 	<!-- make this a button? !-->

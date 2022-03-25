@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views import View
 from django.utils.decorators import method_decorator
-from rango.models import Place, Ratings, Category, User
+from rango.models import Place, Ratings, Category, User, UserProfile
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
 import random
@@ -56,8 +56,10 @@ def show_place(request, place_name_slug, **kwargs):
     try:
         #place = Place.objects.get(slug = place_name_slug)
         place = Place.objects.get(slug = place_name_slug)
+        print(request.user)
+        user = User.objects.get(username = request.user)
         context_dict['place'] = place
-        model = Place
+        #model = Place
 
         def get_context_data(self, **kwargs):
             data = super().get_context_data(**kwargs)
@@ -73,6 +75,12 @@ def show_place(request, place_name_slug, **kwargs):
                 disliked = True
             context_dict['number_of_dislikes'] = likes_connected.number_of_likes()
             context_dict['post_is_disliked'] = disliked
+
+            user_connected = get_object_or_404(user, user=self.kwargs['user'])
+            saved = false
+            if user_connected.saves.filter(slug=self.request.place.slug).exists():
+                saved = True
+            data['post_is_saved'] = saved
         
     except Place.DoesNotExist:
         
@@ -127,6 +135,8 @@ def sign_up(request):
             user = User.objects.create_user(user_form.data['username'], user_form.data['email'], user_form.data['password'])
             user.set_password(user.password)
             user.save()
+            u = UserProfile.objects.get_or_create(user=user)[0]
+            u.save()
 
             registered = True
             return redirect(reverse('suggestGlasgow:home'))
@@ -166,7 +176,11 @@ def user_login(request):
 
 @login_required
 def profile(request):
-    return render(request, 'rango/profile.html')
+    user = get_object_or_404(UserProfile, user=request.user)
+    context_dict = {}
+    context_dict['saved'] = user.saves.all()
+    print(context_dict)
+    return render(request, 'rango/profile.html', context=context_dict)
 
     
 @login_required
@@ -200,30 +214,14 @@ def PlaceDislike(request, slug):
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                      kwargs={'place_name_slug':
                                  slug}))
-
-
-
-class SavePlaceView(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        place_id = request.GET['place_id']
-
-        try:
-            place = Place.objects.get(PlaceID = place_id)
-
-        except Place.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
+def PlaceSave(request, slug):
+    post = get_object_or_404(Place, slug =request.POST.get('slug'))
+    user = get_object_or_404(UserProfile,user = request.user)
+    print(post,user)
+    if user.saves.filter(PlaceID=post.PlaceID).exists():
+        user.saves.remove(post)
+    else:
+        user.saves.add(post)
         
-        #p = Page.objects.get_or_create(category=category, title=title, url=url)
-        
-        #pages = Page.objects.filter(category=category).order_by('-views')
-        #user = UserProfile
-        #user.saved.extend(place)
-        #return render(request, 'rango/page_listing.html', {'pages': pages})
-        
-#def Comment(request, slug):
- #   post = get_object_or_404(Place, slug =request.POST.get('slug'))
-  #  print(post)
-    
+    return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
+                     kwargs={'place_name_slug': slug}))
