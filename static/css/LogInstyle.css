@@ -42,7 +42,7 @@ body{
   text-align: center;
 }
 
-#login_form > *{
+#form > *{
   font-size: 20px;
 }
 .FieldContainer > input[type="text"],
@@ -66,12 +66,12 @@ body{
 }
 
 
-#login_form > input[type="checkbox"]{
+#form > input[type="checkbox"]{
   transform: scale(2);
   margin: 10px;
   font-size: 20px;
 }
-#login_form > input[type="checkbox"] > span{
+#form > input[type="checkbox"] > span{
   font-size: 20px;
 }
 

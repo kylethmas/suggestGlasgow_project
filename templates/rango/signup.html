@@ -18,25 +18,25 @@
         <h1>Sign up to SuggestGlasgow</h1>
 		<!-- changed this id so will need to change in css 
 		<form id="login_form" method="post" action="{% url 'suggestGlasgow:login' %}" <!-- target="StayOnThisSite" !-->
-		<form id="login_form" method="post" action="{% url 'suggestGlasgow:sign up' %}">
+		<form id="form" method="post" action="{% url 'suggestGlasgow:sign up' %}">
 			{% csrf_token %}
 			<div class="FieldContainer">
+				{{ user_form.username.errors }}
 				<p class="FieldInfo">Username</p>
 				{{ user_form.username }}
 			</div>
 
 			<div class="FieldContainer">
+				{{ user_form.password.errors }}
 				<p class="FieldInfo">Password</p>
 				{{ user_form.password }}
 			</div>
 
 			<div class="FieldContainer">
+				{{ user_form.email.errors }}
 				<p class="FieldInfo">Email</p>
 				{{ user_form.email }}
 			</div>
-			<br/> 
-			<input type="checkbox" name="Remember"><span>Remember me</span></input>
-			<br/>
 			<br/>
 			<a href="{% url 'suggestGlasgow:login' %}"><button type="submit" name = "submit">Sign up</button></a>
 			<a href="{% url 'suggestGlasgow:home' %}"><button type="button">Go back</button></a>
