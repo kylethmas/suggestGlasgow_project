@@ -126,13 +126,10 @@ def add_place(request):
             name = place['place_name'].value()
             place_get = Place.objects.get(place_name=name)
             print(place_get.slug)
-            redirect(reverse('suggestGlasgow:show_place',
-                             kwargs={'place_name_slug':
-                                         place_get.slug}))
-
-            return redirect(reverse('suggestGlasgow:show_place',
-                                        kwargs={'place_name_slug':
-                                                    place_get.slug}))
+            #return redirect(reverse('suggestGlasgow:show_place',
+                                        #kwargs={'place_name_slug':
+                                                    #place_get.slug}))
+            redirect(reverse('suggestGlasgow:home'))
 
         else:
             print(place.errors)
