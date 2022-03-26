@@ -20,7 +20,8 @@
 			</section>
 			
 			<section id="Right">
-				<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" method="POST" target="StayOnThisSite">
+				<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" 
+				method="POST" target="StayOnThisSite" enctype="multipart/form-data">
 					{% csrf_token %}
 					{% for hidden in form.hidden_fields %}
 						{{ hidden }}
