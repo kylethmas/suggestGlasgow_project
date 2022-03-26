@@ -12,17 +12,7 @@ new google.maps.Marker({
 
 
 async function GetCommentsFrom(Index){ //This would contain a database call
-  await new Promise(function(Resolve){window.setTimeout(Resolve, 2000);}); //Simulate database fetch lag
-  const Comments = [];
-  for(let i = Index; i < Index + 5 && i < 13; ++i){ //Set arbitrary limit to 13, this would be the amount of comments in the database
-    Comments.push({
-      "Title": "This is Comment #" + i,
-      "Username": "Mogus",
-      "Date": "2022-02-22",
-      "Text": "Among all of the restaurants in Glasgow, this one must be the one of the best. The food is great, and the staff are really nice."
-    });
-  }
-  return Comments;
+  return await (await fetch(window.origin + "/suggestGlasgow/GetComments?slug=sugo&start=" + Index)).json();
 }
 
 async function* GetNextCommentGenerator(){
@@ -47,7 +37,7 @@ void async function(){
     const CommentData = (await GetNextComment.next()).value;
     TCommentClone.querySelector(".Title").innerText = CommentData.Title;
     TCommentClone.querySelector(".UserDate").innerText = `by ${CommentData.Username} on ${CommentData.Date}`;
-    TCommentClone.querySelector(".Text").innerText = CommentData.Text;
+    TCommentClone.querySelector(".Text").innerText = CommentData.Comment;
     CommentsPreviewContainer.appendChild(TCommentClone);
   }
 }();
@@ -71,7 +61,7 @@ const LoadMoreComments = function(){
       }
       TCommentClone.querySelector(".Title").innerText = CommentData.Title;
       TCommentClone.querySelector(".UserDate").innerText = `by ${CommentData.Username} on ${CommentData.Date}`;
-      TCommentClone.querySelector(".Text").innerText = CommentData.Text;
+      TCommentClone.querySelector(".Text").innerText = CommentData.Comment;
       CommentsWrapper.appendChild(TCommentClone);
     }
     LoadingComments = false;

@@ -74,6 +74,8 @@ class Comments(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="the user",)
     PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place", )
     comment = models.CharField(max_length = 500)
+    date = models.CharField(max_length = 10)
+    title = models.CharField(max_length = 32)
 
 
     class Meta:

@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views import View
 from django.utils.decorators import method_decorator
-from rango.models import Place, Ratings, Category, User, UserProfile
+from django.core import serializers
+from rango.models import Place, Ratings, Category, User, UserProfile, Comments
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
 import random
@@ -259,3 +260,17 @@ def PlaceUnsave(request, slug):
     # user = UserProfile
     # user.saved.extend(place)
     # return render(request, 'rango/page_listing.html', {'pages': pages})
+
+def GetCommentsForPlace(request):
+    Start = int(request.GET.get("start")) or 0
+    if(Start < 0): Start = 0
+    QueriedComments = Comments.objects.filter(PlaceID = Place.objects.filter(slug = request.GET.get("slug")).first()).order_by("-date")[Start:Start + 5] #Apparently, this actually makes the sql have LIMIT 5 instead of slicing after querying everything...
+    CommentsArray = []
+    for Comment in QueriedComments:
+        CommentsArray.append({
+            "Username": Comment.username.username,
+            "Title": Comment.title,
+            "Comment": Comment.comment,
+            "Date": Comment.date
+        })
+    return JsonResponse(CommentsArray, safe=False)

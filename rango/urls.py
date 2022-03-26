@@ -19,4 +19,5 @@ urlpatterns = [
     path('place-dislike/<str:slug>', views.PlaceDislike, name="place_dislike"),
     path('place-save/<str:slug>', views.PlaceSave, name="place_save"),
     path('place-unsave/<str:slug>', views.PlaceUnsave, name="place_unsave"),
+    path("GetComments", views.GetCommentsForPlace, name="get_comments_for_place")
 ]

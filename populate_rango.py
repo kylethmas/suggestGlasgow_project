@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings
 
 import django
 django.setup()
-from rango.models import Category, Place, User, UserProfile
+from rango.models import Category, Place, User, UserProfile, Comments
 
 
 def populate():
@@ -79,6 +79,22 @@ def populate():
 
     for u in users:
         add_user(u['username'],u['email'], u['password'])
+
+    comments = [
+        {"title": "Good Restaurant", "date": "2022-02-22", "comment": "I really enjoyed this restaurant, the staff were really nice!!"},
+        {"title": "Enjoyed eating here", "date": "2022-03-01", "comment": "nice restaurant "},
+        {"title": "Good food", "date": "2022-01-31", "comment": "Nice place!"},
+        {"title": "Nice staff", "date": "2022-03-17", "comment": "the staff were really nice the fod wws also really goood "},
+        {"title": "meh", "date": "2022-03-14", "comment": "idk what this is it certainly isnt a restaurant these people just dont care about there customers and they only care about the profits chichen the food isnt well good that it is not retty well done i must say"},
+        {"title": "nice!", "date": "2022-01-14", "comment": "had a lovely night out!"}
+    ]
+    for c in comments:
+        add_comment(c["title"], c["date"], c["comment"])
+
+
+def add_comment(title, date, comment):
+    Comments.objects.create(PlaceID = Place.objects.order_by('?').first(), username = User.objects.order_by("?").first(), comment = comment, date = date, title = title)
+
 
 def add_place(place_type, place_name, latitude, longitude, url, slugName = '', comments = []):
     p = Place.objects.get_or_create(place_type=place_type, place_name=place_name)[0]
