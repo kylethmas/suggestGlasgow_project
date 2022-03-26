@@ -18,5 +18,6 @@ urlpatterns = [
     path('ExamplePlace/', views.example_place, name='example place'),
     path('place-like/<str:slug>', views.PlaceLike, name="place_like"),
     path('place-dislike/<str:slug>', views.PlaceDislike, name="place_dislike"),
-    path('place_save/<str:slug>', views.place_save, name="place_save"),
+    path('place-save/<str:slug>', views.PlaceSave, name="place_save"),
+    #path('place_save/<str:slug>', views.place_save, name="place_save"),
 ]

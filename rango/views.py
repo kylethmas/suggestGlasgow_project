@@ -244,22 +244,10 @@ def PlaceSave(request, slug):
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                      kwargs={'place_name_slug': slug}))
 
-class place_save(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        place_id = request.GET['place_id']
 
-        try:
-            place = Place.objects.get(PlaceID = place_id)
+    # p = Page.objects.get_or_create(category=category, title=title, url=url)
 
-        except Place.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
-        
-        #p = Page.objects.get_or_create(category=category, title=title, url=url)
-        
-        #pages = Page.objects.filter(category=category).order_by('-views')
-        #user = UserProfile
-        #user.saved.extend(place)
-        #return render(request, 'rango/page_listing.html', {'pages': pages})
+    # pages = Page.objects.filter(category=category).order_by('-views')
+    # user = UserProfile
+    # user.saved.extend(place)
+    # return render(request, 'rango/page_listing.html', {'pages': pages})
