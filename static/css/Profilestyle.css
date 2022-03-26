@@ -15,6 +15,41 @@ body{
   --box-margin: 20px;
 }
 
+#ButtonsWrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+#ButtonsWrapper > a{
+  display: block;
+  margin: 8px 8px 8px 0;
+  padding: 8px;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 100px;
+
+  background-color: #7C83B7;
+  color: #ffffff;
+  backdrop-filter: blur(3px);
+  user-select: none;
+  cursor: pointer;
+}
+#ButtonsWrapper > a:hover{
+  filter: brightness(.85);
+}
+#ButtonsWrapper > a:active{
+  filter: brightness(.7);
+}
+
+#ButtonsWrapper > div:hover{
+  filter: brightness(.85);
+}
+#ButtonsWrapper > div:active{
+  filter: brightness(.7);
+}
+
 .ItemsWrapper::-webkit-scrollbar,
 .ItemsWrapper::-webkit-scrollbar-button{
   width: 0;
@@ -129,9 +164,9 @@ body{
   user-select: none;
   cursor: pointer;
 }
-.Ratings > *:hover{
+.Ratings > .RemoveButton:hover{
   backdrop-filter: invert(.6);
-}
+} 
 
 #PageContainer{
   position: relative;

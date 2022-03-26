@@ -80,7 +80,7 @@ def show_place(request, place_name_slug, **kwargs):
         #model = Place
 
         def get_context_data(self, **kwargs):
-            data = super().get_context_data(**kwargs)
+            context_dict = super().get_context_data(**kwargs)
             likes_connected = get_object_or_404(place, slug=self.kwargs['slug'])
             liked = False
             if likes_connected.likes.filter(id=self.request.user.id).exists():
@@ -99,7 +99,8 @@ def show_place(request, place_name_slug, **kwargs):
             saved = false
             if user_connected.saves.filter(slug=self.request.place.slug).exists():
                 saved = True
-            data['post_is_saved'] = saved
+            context_dict['post_is_saved'] = saved
+            return context_dict
 
     except Place.DoesNotExist:
         
@@ -196,6 +197,8 @@ def profile(request):
     context_dict = {}
     context_dict['saved'] = user.saves.all()
     print(context_dict)
+
+
     return render(request, 'rango/profile.html', context=context_dict)
 
     
@@ -242,6 +245,12 @@ def PlaceSave(request, slug):
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                      kwargs={'place_name_slug': slug}))
 
+def PlaceUnsave(request, slug):
+    post = get_object_or_404(Place, slug=request.POST.get('slug'))
+    user = get_object_or_404(UserProfile, user=request.user)
+    user.saves.remove(post)
+
+    return HttpResponseRedirect(reverse('suggestGlasgow:profile'))
 
     # p = Page.objects.get_or_create(category=category, title=title, url=url)
 
