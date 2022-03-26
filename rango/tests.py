@@ -1,7 +1,9 @@
 from django.test import TestCase
 from rango.models import Place, User, UserProfile
 from django.urls import reverse
-
+from rango import forms
+from django.db import models
+import rango.models
 # Create your tests here.
 class PlaceMethodTests(TestCase):
     def test_slug_line_creation(self):
@@ -202,11 +204,22 @@ class HomeViewTests(TestCase):
         
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Contact us!')
-        
+
+
+def create_a_user():
+    """
+    A helper function which creates a user
+    """
+    user = User.objects.get_or_create(username='Niamh', email='Niamh@test.com')[0]
+    user.set_password('1234')
+    user.save()   
+    u = UserProfile.objects.get_or_create(user=user)[0]
+    u.save()
+    
 class LogInViewTests(TestCase):
-    def test_login_box_working(self):
+    def test_login_display(self):
         """
-        Check if the log in box is working
+        Check if the log in display is working
         """
         response = self.client.get(reverse('suggestGlasgow:login'))
         
@@ -218,10 +231,36 @@ class LogInViewTests(TestCase):
         self.assertContains(response, 'Go back')
         self.assertContains(response, "Don't have an account? Sign up now!")
         
-class SignUpViewTests(TestCase):
-    def test_signup_box_working(self):
+    def test_login(self): 
         """
-        Check if the log in box is working
+        test if login works 
+        """
+        user = create_a_user()
+        
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
+       
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('suggestGlasgow:home'))
+        
+class LogOutViewTests(TestCase):
+    def test_logout(self): 
+        """
+        test if logout works 
+        """
+        user = create_a_user()
+        
+        self.client.login(username='Niamh', password='1234')
+        
+        response = self.client.get(reverse('suggestGlasgow:logout'))
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('suggestGlasgow:home'))
+        self.assertTrue('_auth_user_id' not in self.client.session)
+        
+class SignUpViewTests(TestCase):
+    def test_signup_display_working(self):
+        """
+        Check if the sign up display is working
         """
         response = self.client.get(reverse('suggestGlasgow:sign up'))
 
@@ -234,7 +273,15 @@ class SignUpViewTests(TestCase):
         self.assertContains(response, 'Go back')
         self.assertContains(response, "Already have an account? Log in!")
         
-class PlacesViewTests(TestCase):
+    def test_signup_working(self):
+        response = self.client.post(reverse('suggestGlasgow:sign up'), {'username' : 'Niamh', 'password' : '1234', 'email':'n@gmail.com'})
+
+        self.assertEqual(len(User.objects.all()), 1)
+        self.assertEqual(len(rango.models.UserProfile.objects.all()), 1)
+        self.assertTrue(self.client.login(username='Niamh', password='1234'))
+        
+        
+class ShowPlaceViewTests(TestCase):
     def test_basic_view(self):
         """
         Check if a cafe page displays correctly
@@ -303,8 +350,7 @@ class PlacesViewTests(TestCase):
         self.assertContains(response, 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         self.assertContains(response,  "Click here to visit their website")
         
-    
-       
+        
     def test_likes_and_dislikes(self):
         place = Place(place_name = "Niamh testing cafe", place_type = "Cafe", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         place.save()
@@ -312,12 +358,62 @@ class PlacesViewTests(TestCase):
         
         self.assertContains(response, place.likes.count())
         self.assertContains(response, place.dislikes.count())
-   
-class AddPageViewTests(TestCase):
-    def test_basic_view(self):
-        """
         
+        
+### not working from here on out :) ###   
+class AddPageViewTests(TestCase):
+    def test_basic_view_not_logged_in(self):
+        """
+        Since the user is not logged in this page should not load
+        """
+        response = self.client.get(reverse('suggestGlasgow:add place'))
+        
+        self.assertEqual(response.status_code, 302)
+        
+    def test_basic_view_logged_in(self):
+        """
+        Since the user is logged in this page should load,
+        tests ensure display is working properly
+        no places will be saved here
+        """
+        user = create_a_user()
+        
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
+        
+        response = self.client.get(reverse('suggestGlasgow:add place'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Place name")
+        self.assertContains(response, "Category")
+        self.assertContains(response, "Restaurant")
+        self.assertContains(response, "Cafe")
+        self.assertContains(response, "Fast Food")
+        self.assertContains(response, "Nightlife")
+        #self.assertContains(response, "Choose file")
+        self.assertContains(response, "Map")
+        
+class ProfileViewTests(TestCase):
+    def test_basic_view_not_logged_in(self):
+        """
+        Since the user is not logged in this page should not load
         """
         response = self.client.get(reverse('suggestGlasgow:profile'))
         
-        #user not logged in
+        self.assertEqual(response.status_code, 302)
+        
+    def test_basic_view_logged_in(self):
+        """
+        Since the user is logged in this page should load,
+        tests ensure display is working properly
+        """
+        user = create_a_user()
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
+        
+        response = self.client.get(reverse('suggestGlasgow:profile'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "My places")
+        self.assertContains(response, "Here you can find all of the places you've added!")
+        self.assertContains(response, "You have no saved places")
+        self.assertContains(response, "Add a new place here")
+

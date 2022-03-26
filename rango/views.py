@@ -64,11 +64,6 @@ def suggest_place(request):
             print(form.errors)
     return render(request, 'rango/home.html')
 
-
-def example_place(request):
-    return render(request, 'rango/ExamplePlace.html')
-
-
 def show_place(request, place_name_slug, **kwargs):
     context_dict = {}
 
