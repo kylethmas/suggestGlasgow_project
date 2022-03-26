@@ -2,10 +2,11 @@ from django import forms
 from rango.models import Place, Ratings, UserProfile
 from django.contrib.auth.models import User
 
-place_types = (("Restaurant", "Restaurant"),
-               ("Cafe", "Cafe"),
+place_types = (("Restaurants", "Restaurants"),
+               ("Cafes", "Cafes"),
                ("Fast Food", "Fast Food"),
-               ("Nightlife", "Nightlife"))
+               ("Nightlife", "Nightlife"),
+               ("Anywhere","Anywhere"))
 
 
 class PlaceForm(forms.ModelForm):

@@ -13,17 +13,33 @@ import random
 
 
 def home(request):
+    place_list = Place.objects.all()
     context_dict = {}
     form = SuggestForm()
+    try:
+        random_place = random.choice(place_list)
+        context_dict['place'] = random_place
+    except Exception as e:
+        # likely the database isnt populated need to handle this > force an error page?
+        print(e)
+        random_place = None
     if request.method == 'POST':
         form = SuggestForm(request.POST)
         if form.is_valid():
             category = form['place_type'].value()
-            place_list = Place.objects.filter(place_type=category)
+            try:
+                # place_type validation is from tuple "place_types" defined in forms.py AND field "choices" in "place_type" from "Place" class in models.py
+                place_list = Place.objects.filter(place_type=category)
+            except Exception as e:
+                #invalid category > this is for development purposes
+                print(e)
             if len(place_list) > 1 :
                 random_place = random.choice(place_list)
-            else:
+            elif len(place_list) == 1:
                 random_place = place_list[0]
+            else:
+                # can change this for speed as this is predefined
+                random_place = random.choice(Place.objects.all())
             print(category, random_place)
             return redirect(reverse('suggestGlasgow:show_place',
                                     kwargs={'place_name_slug':
@@ -83,7 +99,7 @@ def show_place(request, place_name_slug, **kwargs):
             if user_connected.saves.filter(slug=self.request.place.slug).exists():
                 saved = True
             data['post_is_saved'] = saved
-        
+
     except Place.DoesNotExist:
         
         context_dict['place'] = None
@@ -92,20 +108,20 @@ def show_place(request, place_name_slug, **kwargs):
 
 @login_required
 def add_place(request):
-    
+
     if request.method == 'POST':
         place = PlaceForm(request.POST)
         print("hi")
-        
+
         if place.is_valid():
-        
+
             print("Page has been saved!!!")
-            
+
             #if 'place_image' in request.FILES:
              #   place.place_image = request.FILES['place_image']
-            
+
             place.save()
-            
+
             name = place['place_name'].value()
             place_get = Place.objects.get(place_name=name)
             print(place_get.place_image)
@@ -116,12 +132,13 @@ def add_place(request):
 
         else:
             print(place.errors)
-            
+
     else:
         place = PlaceForm()
 
     context_dict = {'form': place}
     return render(request, 'rango/add_place.html', context=context_dict)
+
 
 def sign_up(request):
 
@@ -131,17 +148,15 @@ def sign_up(request):
         user_form = UserForm(request.POST)
         
         if user_form.is_valid():
-            #user = user_form.save()
-            print(user_form.data['username'])
-            print(user_form.data['email'])
-            user = User.objects.create_user(user_form.data['username'], user_form.data['email'], user_form.data['password'])
+            user = user_form.save()
+            #user = User.objects.create_user(user_form.cleaned_data['username'], user_form.cleaned_data['email'], user_form.cleaned_data['password'])
+            print(user.username)
+            print(user.email)
             user.set_password(user.password)
             user.save()
-            u = UserProfile.objects.get_or_create(user=user)[0]
-            u.save()
 
             registered = True
-            return redirect(reverse('suggestGlasgow:home'))
+            return redirect(reverse('suggestGlasgow:login'))
         else:
             print(user_form.errors)
         
@@ -159,7 +174,6 @@ def user_login(request):
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
-
         if user:
             if user.is_active:
                 login(request, user)
@@ -224,6 +238,26 @@ def PlaceSave(request, slug):
         user.saves.remove(post)
     else:
         user.saves.add(post)
-        
+
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                      kwargs={'place_name_slug': slug}))
+
+class place_save(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        place_id = request.GET['place_id']
+
+        try:
+            place = Place.objects.get(PlaceID = place_id)
+
+        except Place.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        
+        #p = Page.objects.get_or_create(category=category, title=title, url=url)
+        
+        #pages = Page.objects.filter(category=category).order_by('-views')
+        #user = UserProfile
+        #user.saved.extend(place)
+        #return render(request, 'rango/page_listing.html', {'pages': pages})

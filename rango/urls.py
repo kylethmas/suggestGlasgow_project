@@ -4,7 +4,7 @@ from rango import views
 
 LOGIN_URL = 'rango:login'
 app_name = 'suggestGlasgow'
-
+#normalise urls
 urlpatterns = [
     path('', views.home, name='home'),
     path('Places/<slug:place_name_slug>/', views.show_place, name = 'show_place'),
@@ -18,5 +18,5 @@ urlpatterns = [
     path('ExamplePlace/', views.example_place, name='example place'),
     path('place-like/<str:slug>', views.PlaceLike, name="place_like"),
     path('place-dislike/<str:slug>', views.PlaceDislike, name="place_dislike"),
-    path('place-save/<str:slug>', views.PlaceSave, name="place_save"),
+    path('place_save/<str:slug>', views.place_save, name="place_save"),
 ]
