@@ -18,5 +18,5 @@ urlpatterns = [
     path('place-like/<str:slug>', views.PlaceLike, name="place_like"),
     path('place-dislike/<str:slug>', views.PlaceDislike, name="place_dislike"),
     path('place-save/<str:slug>', views.PlaceSave, name="place_save"),
-    #path('place_save/<str:slug>', views.place_save, name="place_save"),
+    path('place-unsave/<str:slug>', views.PlaceUnsave, name="place_unsave"),
 ]

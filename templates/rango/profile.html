@@ -28,7 +28,15 @@
 						<div class="Ratings">
 							<div data-count="{{ place.number_of_likes }}"><img src="{% static 'images/Like.png' %}" /></div>
 							<div data-count="{{ place.number_of_dislikes }}"><img src="{% static 'images/Dislike.png' %}" /></div>
-							<div class="RemoveButton">Remove</div>
+							<div class="RemoveButton">
+								
+								<form data-count="Add" action="{% url 'suggestGlasgow:place_unsave' place.slug %}" method="POST">
+								{% csrf_token %}
+								<div id="ButtonsWrapper">
+								<button type="submit" value="{{place.slug}}" name="slug">Remove</button>
+								</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				{% endfor %}

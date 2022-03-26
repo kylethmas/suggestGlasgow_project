@@ -84,7 +84,7 @@
   margin: 0px auto 20px auto;
 }
 
-
+/*
 
 .DropdownMenu{
   font-size: 25px;
@@ -127,7 +127,7 @@
 
 .DropdownMenu > input{
   display: none;
-}
+}*/
 
 .setloc-map {
     max-width: 100%;
@@ -180,7 +180,7 @@ button,input{
 	cursor: pointer;
 	outline: inherit;
 }
-button{
+.button{
   margin: 5px auto 5px auto;
   border: 2px solid black;
   padding: 5px 15px 5px 15px;
@@ -189,10 +189,10 @@ button{
   transform: translateX(-50%);
   font-size: 20px;
 }
-button:hover{
+.button:hover{
   backdrop-filter: brightness(.9);
 }
-button:active{
+.button:active{
   backdrop-filter: brightness(.7);
 }
 
@@ -210,4 +210,11 @@ input[type="checkbox"] + span{
   font-size: 20px;
   margin-left: 10px;
   display: inline-block;
+}
+select {
+  width: 100%;
+  font-size: 22px;
+  filter: none;
+  backdrop-filter: none;
+  border: 2px solid black;
 }
