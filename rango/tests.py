@@ -83,6 +83,23 @@ class PlaceMethodTests(TestCase):
         place = Place(url = "https://moodle.gla.ac.uk/course/view.php?id=29970" )
         place.save()
         self.assertEqual(place.url, "https://moodle.gla.ac.uk/course/view.php?id=29970")
+        
+    def test_all_works_together(self):
+        """
+        Checks to make sure that when a place is created, all the 
+        appropriate fields are saved.
+        """
+        place = Place(place_name = "Random Place String", place_type = "Cafe", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
+        place.save()
+        
+        self.assertEqual(place.place_name, "Random Place String")
+        self.assertEqual(place.place_type, "Cafe")
+        self.assertEqual(place.place_image, "Testing.png")
+        self.assertEqual(place.latitude, "55.46")
+        self.assertEqual(place.longitude, "4.46")
+        self.assertEqual(place.url, "https://moodle.gla.ac.uk/course/view.php?id=29970")
+        self.assertEqual(place.slug, "random-place-string")
+        
     
      
     def test_str_method(self):
@@ -97,7 +114,7 @@ class PlaceMethodTests(TestCase):
         """
         Checks to make sure that when a place is created, an
         default number of likes is created.
-        Example: likes should be ???.
+        Example: likes should be 0.
         """
         place = Place(place_name = "Random Place String")
         place.save()
@@ -108,7 +125,7 @@ class PlaceMethodTests(TestCase):
         """
         Checks to make sure that when a place is created, an
         default number of likes is created.
-        Example: likes should be ???.
+        Example: dislikes should be 0.
         """
         place = Place(place_name = "Random Place String")
         place.save()
@@ -220,7 +237,7 @@ class SignUpViewTests(TestCase):
 class PlacesViewTests(TestCase):
     def test_basic_view(self):
         """
-        Check if the log in box is working
+        Check if a cafe page displays correctly
         """
         place = Place(place_name = "Niamh testing cafe", place_type = "Cafe", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         place.save()
@@ -228,7 +245,7 @@ class PlacesViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Niamh testing cafe")
-        self.assertContains(response, 'Cafe')
+        self.assertContains(response, 'This is in the Cafe category')
         self.assertContains(response, 'Testing.png')
         self.assertContains(response, '55.46')
         self.assertContains(response, '4.46')
@@ -237,7 +254,7 @@ class PlacesViewTests(TestCase):
         
     def test_basic_view_restaurant(self):
         """
-        Check if the log in box is working
+        Check if a restaurant page displays correctly
         """
         place = Place(place_name = "Niamh testing restaurant", place_type = "Restaurant", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         place.save()
@@ -245,7 +262,7 @@ class PlacesViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Niamh testing restaurant")
-        self.assertContains(response, 'Restaurant')
+        self.assertContains(response, 'This is in the Restaurant category')
         self.assertContains(response, 'Testing.png')
         self.assertContains(response, '55.46')
         self.assertContains(response, '4.46')
@@ -254,7 +271,7 @@ class PlacesViewTests(TestCase):
         
     def test_basic_view_fast_food(self):
         """
-        Check if the log in box is working
+        Check if a fast food page displays correctly
         """
         place = Place(place_name = "Niamh testing fast food", place_type = "Fast Food", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         place.save()
@@ -262,7 +279,7 @@ class PlacesViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Niamh testing fast food")
-        self.assertContains(response, 'Fast Food')
+        self.assertContains(response, 'This is in the Fast Food category')
         self.assertContains(response, 'Testing.png')
         self.assertContains(response, '55.46')
         self.assertContains(response, '4.46')
@@ -271,7 +288,7 @@ class PlacesViewTests(TestCase):
         
     def test_basic_view_nightlife(self):
         """
-        Check if the log in box is working
+        Check if a nightlife page displays correctly
         """
         place = Place(place_name = "Niamh testing bar", place_type = "Nightlife", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         place.save()
@@ -279,7 +296,7 @@ class PlacesViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Niamh testing bar")
-        self.assertContains(response, 'Nightlife')
+        self.assertContains(response, 'This is in the Nightlife category')
         self.assertContains(response, 'Testing.png')
         self.assertContains(response, '55.46')
         self.assertContains(response, '4.46')
@@ -296,3 +313,11 @@ class PlacesViewTests(TestCase):
         self.assertContains(response, place.likes.count())
         self.assertContains(response, place.dislikes.count())
    
+class AddPageViewTests(TestCase):
+    def test_basic_view(self):
+        """
+        
+        """
+        response = self.client.get(reverse('suggestGlasgow:profile'))
+        
+        #user not logged in
