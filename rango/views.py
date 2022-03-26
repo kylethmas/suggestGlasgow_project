@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views import View
 from django.utils.decorators import method_decorator
-from rango.models import Place, Ratings, Category, User, UserProfile
+from rango.models import Place, Category, User, UserProfile
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
 import random

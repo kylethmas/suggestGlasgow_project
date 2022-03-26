@@ -1,5 +1,5 @@
 from django import forms
-from rango.models import Place, Ratings, UserProfile
+from rango.models import Place, UserProfile
 from django.contrib.auth.models import User
 
 place_types = (("Restaurant", "Restaurant"),
