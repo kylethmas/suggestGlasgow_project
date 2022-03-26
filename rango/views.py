@@ -6,12 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views import View
 from django.utils.decorators import method_decorator
-<<<<<<< HEAD
 from django.core import serializers
-from rango.models import Place, Ratings, Category, User, UserProfile, Comments
-=======
-from rango.models import Place, Category, User, UserProfile
->>>>>>> 276f16495b2ff2df0036931f848bc273a169b7d1
+from rango.models import Place, Category, User, UserProfile, Comments
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
 import random
