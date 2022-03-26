@@ -123,6 +123,7 @@ def add_place(request):
             place = place_form.save(commit=False)
 
             if 'place_image' in request.FILES:
+                print(request.FILES['place_image'])
                 place.place_image = request.FILES['place_image']
             place.save()
 
