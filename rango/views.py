@@ -158,6 +158,7 @@ def sign_up(request):
             
             # need to add back in user profile stuff
 
+
             registered = True
             return redirect(reverse('suggestGlasgow:login'))
         else:
@@ -169,10 +170,7 @@ def sign_up(request):
     return render(request, 'rango/signup.html',
             context = {'user_form' : user_form,
                        'registered' : registered})
-
-
-
-
+                       
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
