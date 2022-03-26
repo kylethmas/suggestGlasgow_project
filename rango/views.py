@@ -149,13 +149,9 @@ def sign_up(request):
         user_form = UserForm(request.POST)
         
         if user_form.is_valid():
-            #broken? - can't log in?
-            user = user_form.save()
-            #user = User.objects.create_user(user_form.cleaned_data['username'], user_form.cleaned_data['email'], user_form.cleaned_data['password'])
-            print(user.username)
-            print(user.email)
-            user.set_password(user.password)
-            user.save()
+            user = User.objects.create_user(user_form.cleaned_data['username'], user_form.cleaned_data['email'], user_form.cleaned_data['password'])
+            u = UserProfile.objects.get_or_create(user=user)[0]
+            u.save()
             
             # need to add back in user profile stuff
 
@@ -170,6 +166,7 @@ def sign_up(request):
     return render(request, 'rango/signup.html',
             context = {'user_form' : user_form,
                        'registered' : registered})
+
 
 
 
