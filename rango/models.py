@@ -26,7 +26,7 @@ class Place(models.Model):
     PlaceID = models.BigAutoField(primary_key=True)
     place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife")))
     place_name = models.CharField(max_length=150)
-    place_image = models.ImageField(upload_to='place_images', blank = True, default = "/place_images/Default.jpg")
+    place_image = models.ImageField(upload_to='place_images', default = "/place_images/Default.jpg")
     latitude = models.CharField(u'latitude', max_length=25, blank=True, default = 0)
     longitude = models.CharField(u'longitude', max_length=25, blank=True, default = 0)
     url = models.URLField()

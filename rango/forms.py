@@ -10,7 +10,7 @@ place_types = (("Restaurant", "Restaurant"),
 
 class PlaceForm(forms.ModelForm):
     place_name = forms.CharField(max_length=128, help_text="Place name", required=True)
-    place_type = forms.ChoiceField(choices=place_types, help_text="Category ", required=True)
+    place_type = forms.ChoiceField(choices=place_types, help_text="Category ", required = False)
     place_image = forms.ImageField(required = False)
     latitude = forms.CharField(max_length=25, help_text="Latitude of place", required=True)
     longitude = forms.CharField(max_length=25, help_text="Longitude of place", required=True)  

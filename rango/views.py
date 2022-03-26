@@ -69,6 +69,7 @@ def show_place(request, place_name_slug, **kwargs):
             liked = False
             if likes_connected.likes.filter(id=self.request.user.id).exists():
                 liked = True
+
             context_dict['number_of_likes'] = likes_connected.number_of_likes()
             context_dict['post_is_liked'] = liked
 
