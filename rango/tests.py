@@ -234,6 +234,59 @@ class PlacesViewTests(TestCase):
         self.assertContains(response, '4.46')
         self.assertContains(response, 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         self.assertContains(response,  "Click here to visit their website")
+        
+    def test_basic_view_restaurant(self):
+        """
+        Check if the log in box is working
+        """
+        place = Place(place_name = "Niamh testing restaurant", place_type = "Restaurant", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
+        place.save()
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Niamh testing restaurant")
+        self.assertContains(response, 'Restaurant')
+        self.assertContains(response, 'Testing.png')
+        self.assertContains(response, '55.46')
+        self.assertContains(response, '4.46')
+        self.assertContains(response, 'https://moodle.gla.ac.uk/course/view.php?id=29970')
+        self.assertContains(response,  "Click here to visit their website")
+        
+    def test_basic_view_fast_food(self):
+        """
+        Check if the log in box is working
+        """
+        place = Place(place_name = "Niamh testing fast food", place_type = "Fast Food", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
+        place.save()
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Niamh testing fast food")
+        self.assertContains(response, 'Fast Food')
+        self.assertContains(response, 'Testing.png')
+        self.assertContains(response, '55.46')
+        self.assertContains(response, '4.46')
+        self.assertContains(response, 'https://moodle.gla.ac.uk/course/view.php?id=29970')
+        self.assertContains(response,  "Click here to visit their website")
+        
+    def test_basic_view_nightlife(self):
+        """
+        Check if the log in box is working
+        """
+        place = Place(place_name = "Niamh testing bar", place_type = "Nightlife", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
+        place.save()
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Niamh testing bar")
+        self.assertContains(response, 'Nightlife')
+        self.assertContains(response, 'Testing.png')
+        self.assertContains(response, '55.46')
+        self.assertContains(response, '4.46')
+        self.assertContains(response, 'https://moodle.gla.ac.uk/course/view.php?id=29970')
+        self.assertContains(response,  "Click here to visit their website")
+        
+    
        
     def test_likes_and_dislikes(self):
         place = Place(place_name = "Niamh testing cafe", place_type = "Cafe", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
