@@ -149,12 +149,12 @@ def sign_up(request):
         user_form = UserForm(request.POST)
         
         if user_form.is_valid():
-            user = user_form.save()
-            #user = User.objects.create_user(user_form.cleaned_data['username'], user_form.cleaned_data['email'], user_form.cleaned_data['password'])
-            print(user.username)
-            print(user.email)
-            user.set_password(user.password)
-            user.save()
+            user = User.objects.create_user(user_form.cleaned_data['username'], user_form.cleaned_data['email'], user_form.cleaned_data['password'])
+            u = UserProfile.objects.get_or_create(user=user)[0]
+            u.save()
+            
+            # need to add back in user profile stuff
+
 
             registered = True
             return redirect(reverse('suggestGlasgow:login'))
@@ -169,6 +169,11 @@ def sign_up(request):
                        'registered' : registered})
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b234cf874b070f7c2666d2fa8a601c3c4d325399
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -243,22 +248,10 @@ def PlaceSave(request, slug):
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                      kwargs={'place_name_slug': slug}))
 
-class place_save(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        place_id = request.GET['place_id']
 
-        try:
-            place = Place.objects.get(PlaceID = place_id)
+    # p = Page.objects.get_or_create(category=category, title=title, url=url)
 
-        except Place.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
-        
-        #p = Page.objects.get_or_create(category=category, title=title, url=url)
-        
-        #pages = Page.objects.filter(category=category).order_by('-views')
-        #user = UserProfile
-        #user.saved.extend(place)
-        #return render(request, 'rango/page_listing.html', {'pages': pages})
+    # pages = Page.objects.filter(category=category).order_by('-views')
+    # user = UserProfile
+    # user.saved.extend(place)
+    # return render(request, 'rango/page_listing.html', {'pages': pages})

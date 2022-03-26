@@ -49,6 +49,11 @@ class Place(models.Model):
         return self.likes.count()
     def number_of_dislikes(self):
         return self.dislikes.count()
+    def liked(self):
+        liked = False
+        if likes_connected.likes.filter(id=self.request.user.id).exists():
+            liked = True
+        return liked
 
         
 class Ratings(models.Model):

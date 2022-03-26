@@ -25,58 +25,49 @@
 				<section id="Left">
 					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
 					<div id="Ratings"> 
-					<!-- place.post_is_liked doesn't work? !-->
-					<p> is liked = {{ place.post_is_liked }}</p>
-					<p> user = {{ user }} </p>
-						{% if user.is_authenticated %}
-							<form data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
-								{% csrf_token %}
-									{% if user in place.likes %}
-										<img src="{% static 'images/Liked.png' %}" />
-									{% else %}
-										<img src="{% static 'images/Like.png' %}" />
-									{% endif %}
-									<button type="submit" value="{{place.slug}}" name="slug"></button>
-							</form>
-						{% else %}
-							<img src="{% static 'images/Like.png' %}" />
-						{% endif %}
+					
+					<!--<p> is liked = {{ place.post_is_liked }}</p>
+					<p> user = {{ user }} </p>-->
 						
-						{% if user.is_authenticated %}
-							<form data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
-								{% csrf_token %}
-								{% if place.post_is_disliked %}
-									<img src="{% static 'images/Disliked.png' %}" />
-								{% else %}
-									<img src="{% static 'images/Dislike.png' %}" />
-								{% endif %}
-								<button type="submit" value="{{place.slug}}" name="slug"></button>
+						<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
+							{% csrf_token %}
+							{% if user in place.likes %}<!-- place.post_is_liked doesn't work? !-->
+								<img src="{% static 'images/Liked.png' %}" />
+							{% else %}
+								<img src="{% static 'images/Like.png' %}" />
+							{% endif %}
+							<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
 						</form>
-						{% else %}
-							<img src="{% static 'images/Dislike.png' %}" />
-						{% endif %}
+						
+						<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
+							{% csrf_token %}
+							{% if place.post_is_disliked %}
+								<img src="{% static 'images/Disliked.png' %}" />
+							{% else %}
+								<img src="{% static 'images/Dislike.png' %}" />
+							{% endif %}
+							<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
+						</form>
 						
 						{% if user.is_authenticated %}
-							<form data-count="Add" action="{% url 'suggestGlasgow:place_save' place.slug %}" method="POST">
-								{% csrf_token %}
-									{% if post_is_saved %}
-										saved
-									{% else %}
-										<img src="{% static 'images/Add.png' %}" />
-									{% endif %}
-									<button type="submit" value="{{place.slug}}" name="slug"></button>
-							</form>
-						{% else %}
-							<img src="{% static 'images/Add.png' %}" />
-						{% endif %}					
-						<div id="CommentButton">Comment</div>
+						<form data-count="Add" action="{% url 'suggestGlasgow:place_save' place.slug %}" method="POST">
+							{% csrf_token %}
+							{% if post_is_saved %}
+								Saved! <!--Add an image here-->
+							{% else %}
+								<img src="{% static 'images/Add.png' %}" />
+							{% endif %}
+							<button type="submit" value="{{place.slug}}" name="slug"></button>
+						</form>
+						{% endif %}	
+						<div id="CommentButton">{% if user.is_authenticated %}Comment{% else %}View Comments{% endif %}</div>
 					</div>
 				</section>
 				
 				<section id="Right">
 					<div id="OverflowWrapper">
 					
-						<div id="Map" data-lat = {{ place.latitude }} data-lng = {{place.longitude }}></div>
+						<div id="Map" data-lat={{ place.latitude }} data-lng = {{place.longitude }}></div>
 						
 						<h2 id="CommentSectionTitle">Top Comments</h2>
 						<h4 id="ViewAllComments">Click to view all</h4>
@@ -86,7 +77,7 @@
 			</main>
 			<br />
 	{% else %}
-		Error, not receieving place
+		The place was not found!
 	{% endif %}
 	
 	<br/>
@@ -95,19 +86,22 @@
 
 	<div id="CommentsOverlayBackground">
 	<div>
-		<h1>Comments for Place Name</h1>
+		<h1>Comments for {{ place.place_name }}</h1>
 		<div id="CommentsSection">
 			<div id="CommentsWrapper"></div><!--Comments will appear here -->
 			<div id="LoadMoreCommentsButton">Load more comments</div>
 		</div>
-	
 		<div id="PostCommentWrapper">
+			{% if user.is_authenticated %}
 			<form name="PostCommentForm" id="PostCommentForm" action="/SubmitThisSomewhere" method="POST" target="StayOnThisSite">
 				<h3>Post a comment</h3>
 
 				<textarea name="Comment" placeholder="Type your comment here..."></textarea>
-				<button type="submit" name="Submit">Submit</button>
+				<button class="Button" type="submit" name="Submit">Submit</button>
 			</form>
+			{% else %}
+				<a href="{% url 'suggestGlasgow:login' %}" class="Button">Log in to post a comment!</a>
+			{% endif %}
 		</div>
 	</div>
 	</div>
