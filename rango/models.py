@@ -29,7 +29,7 @@ class Place(models.Model):
     place_image = models.ImageField(upload_to='place_images', default = "/place_images/Default.jpg")
     latitude = models.CharField(u'latitude', max_length=25, blank=True, default = 0)
     longitude = models.CharField(u'longitude', max_length=25, blank=True, default = 0)
-    url = models.URLField()
+    url = models.CharField(max_length=200)
     likes = models.ManyToManyField(User, related_name='place_like')
     dislikes = models.ManyToManyField(User, related_name='place_dislike')
     slug = models.SlugField(unique=True)
