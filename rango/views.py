@@ -167,13 +167,7 @@ def sign_up(request):
     return render(request, 'rango/signup.html',
             context = {'user_form' : user_form,
                        'registered' : registered})
-
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> b234cf874b070f7c2666d2fa8a601c3c4d325399
+                       
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
