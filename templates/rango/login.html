@@ -18,8 +18,9 @@
         <h1>Log in to SuggestGlasgow</h1>
 		<!-- changed this id so will need to change in css 
 		<form id="login_form" method="post" action="{% url 'suggestGlasgow:login' %}" <!-- target="StayOnThisSite" !-->
-		<form id="login_form" method="post" action="{% url 'suggestGlasgow:login' %}">
+		<form id="form" method="post" action="{% url 'suggestGlasgow:login' %}">
 			{% csrf_token %}
+			
 			<div class="FieldContainer">
 				<p class="FieldInfo">Username</p>
 				<input type="text" name="username" value="" size="50" />

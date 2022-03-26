@@ -15,7 +15,6 @@ urlpatterns = [
     path('Profile/', views.profile, name='profile'),
     path('LogOut/', views.user_logout, name='logout'),
     path('Profile/AddPlace/', views.add_place, name='add place'),
-    path('ExamplePlace/', views.example_place, name='example place'),
     path('place-like/<str:slug>', views.PlaceLike, name="place_like"),
     path('place-dislike/<str:slug>', views.PlaceDislike, name="place_dislike"),
     path('place-save/<str:slug>', views.PlaceSave, name="place_save"),
