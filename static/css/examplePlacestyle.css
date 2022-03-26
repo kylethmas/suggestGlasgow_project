@@ -150,7 +150,7 @@ main > section{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  overflow: hidden;
+  overflow-y: auto;
   cursor: default;
 }
 #CommentsOverlayBackground > div > h1{
@@ -189,12 +189,13 @@ textarea{
   font-size: 20px;
 }
 textarea[name="Comment"]{
-  width: calc(100% - 5px);
+  width: 100%;
+  box-sizing: border-box;
   height: calc(max(100px, 15vh));
   outline: none;
 }
 
-button{
+button, input{
   background: none;
 	color: inherit;
 	border: none;
@@ -219,4 +220,19 @@ button{
 }
 .Button:active{
   backdrop-filter: brightness(.7);
+}
+input[type="text"],
+input[type="url"],
+input[type="password"]{
+  border: 2px solid black;
+  background-color: #00000000;
+  width: 100%;
+  height: 33px;
+  font-size: 25px;
+  box-sizing: border-box;
+}
+.FieldInfo{
+  font-size: 16px;
+  text-align: left;
+  margin-bottom: .2em;
 }

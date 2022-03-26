@@ -10,9 +10,9 @@ new google.maps.Marker({
   "title": "Place location"
 }).setPosition(new google.maps.LatLng(MapElement.dataset.lat, MapElement.dataset.lng));
 
-
+const ThisPlaceSlug = document.querySelector("#ThisPlaceSlug").innerText;
 async function GetCommentsFrom(Index){ //This would contain a database call
-  return await (await fetch(window.origin + "/suggestGlasgow/GetComments?slug=sugo&start=" + Index)).json();
+  return await (await fetch(`${window.origin}/suggestGlasgow/GetComments?slug=${ThisPlaceSlug}&start=${Index}`)).json();
 }
 
 async function* GetNextCommentGenerator(){

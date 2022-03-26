@@ -10,6 +10,7 @@ from django.core import serializers
 from rango.models import Place, Category, User, UserProfile, Comments
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
+import datetime
 import random
 
 
@@ -258,3 +259,11 @@ def GetCommentsForPlace(request):
             "Date": Comment.date
         })
     return JsonResponse(CommentsArray, safe=False)
+
+@login_required
+def PostComment(request, slug):
+    print("hiu")
+    print(request.POST.get("Comment"))
+    Comments.objects.create(PlaceID = Place.objects.filter(slug = slug).first(), username = User.objects.filter(id=request.GET.get("userid")).first(), comment = request.POST.get("Comment"), date = datetime.datetime.now().isoformat()[:10], title = request.POST.get("Title"))
+    return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
+                                        kwargs={'place_name_slug': slug}))

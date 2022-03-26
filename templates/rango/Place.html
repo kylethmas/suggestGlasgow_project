@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block body_block %}
-				
+	<p id="ThisPlaceSlug" hidden>{{place.slug}}</p>
 	<div>	
 	{% if place %}
 		<h1 id="PlaceName">{{ place.place_name }}</h1>
@@ -20,7 +20,7 @@
 			<h2 id="PlaceLink"><a href="{{ place.url }}">Click here to visit their website </a></h2>
 		{% endif %}
 			<br/>
-	
+			
 			<main>
 				<section id="Left">
 					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
@@ -93,9 +93,12 @@
 		</div>
 		<div id="PostCommentWrapper">
 			{% if user.is_authenticated %}
-			<form name="PostCommentForm" id="PostCommentForm" action="/SubmitThisSomewhere" method="POST" target="StayOnThisSite">
+			<form name="PostCommentForm" id="PostCommentForm" action="/suggestGlasgow/PostComment/{{place.slug}}?userid={{user.id}}" method="POST">
+				{% csrf_token %}
 				<h3>Post a comment</h3>
-
+				<p class="FieldInfo">Comment title</p>
+				<input name="Title" type="text" />
+				<p class="FieldInfo">Comment text</p>
 				<textarea name="Comment" placeholder="Type your comment here..."></textarea>
 				<button class="Button" type="submit" name="Submit">Submit</button>
 			</form>
