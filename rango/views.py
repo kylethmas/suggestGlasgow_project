@@ -51,19 +51,6 @@ def home(request):
     return render(request, 'rango/home.html', context=context_dict)
 
 
-def suggest_place(request):
-    form = SuggestForm()
-    if request.method == 'POST':
-        form = SuggestForm(request.POST)
-        if form.is_valid():
-            category = form['place_type'].value()
-            place_list = Place.objects.filter(place_type=category)
-            random_place = random.choice(place_list)
-            print(category, random_place)
-        else:
-            print(form.errors)
-    return render(request, 'rango/home.html')
-
 def show_place(request, place_name_slug, **kwargs):
     context_dict = {}
 
