@@ -47,16 +47,18 @@
 			<h2>Suggest Glasgow</h2>
 			<p>Can you never decide where you want to catch up with friends for a coffee? Where you want to go for a drink after a hards day work?
 			Where you want to treat yourself to a nice dinner? Where you want to dance the night away? Or just want to try somewhere new? <br>
-			Then Suggest Glasgow is here for you!<br>
+			Then Suggest Glasgow is here for you!<br><br>
 			Simply choose a option from our dropdown menu above to start your new experience now</p>
 		</div>
 	</div>
 	<div>
-		<img src ="{% static 'images/Background.jpg' %}" alt=" Background Logo" />
+		<img src ="{% static 'images/mactassos.jpg' %}" alt=" Background Logo" />
 		<div>
 		  <h2>This weeks reccomendation: </h2>
-		  <h2> </h2>
-		 
+		  <h2> <a href="{% url 'suggestGlasgow:show_place' reccomendation.slug %}">{{ reccomendation.place_name }} </a></h2>
+		 <p> Mactassos is an authentic Greek food, family run business, based in Glasgow which was founded in February 2017. 
+		 They specialise in Greek gyros and have other delicious Greek items on our menu. 
+		 They are passionate about bringing a bite size of Greece to you every single time you come visit us! </p>
 		</div>
 	</div>
 </main>

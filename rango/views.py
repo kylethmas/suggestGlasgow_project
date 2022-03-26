@@ -47,6 +47,7 @@ def home(request):
         else:
             print(form.errors)
     context_dict['form'] = form
+    context_dict['reccomendation'] = Place.objects.get(slug = 'mactassos')
     return render(request, 'rango/home.html', context=context_dict)
 
 def suggest_place(request):
