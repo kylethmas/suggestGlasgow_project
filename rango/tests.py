@@ -4,6 +4,8 @@ from django.urls import reverse
 from rango import forms
 from django.db import models
 import rango.models
+from population_script import populate
+
 # Create your tests here.
 class PlaceMethodTests(TestCase):
     def test_slug_line_creation(self):
@@ -179,6 +181,7 @@ class HomeViewTests(TestCase):
         """
         Check if the categories are displaying properly
         """
+        populate()
         response = self.client.get(reverse('suggestGlasgow:home'))
         
         self.assertEqual(response.status_code, 200)
@@ -191,6 +194,7 @@ class HomeViewTests(TestCase):
         """
         Check if the header is displaying properly
         """
+        populate()
         response = self.client.get(reverse('suggestGlasgow:home'))
         
         self.assertEqual(response.status_code, 200)
@@ -200,6 +204,7 @@ class HomeViewTests(TestCase):
         """
         Check if the footer is displaying properly
         """
+        populate()
         response = self.client.get(reverse('suggestGlasgow:home'))
         
         self.assertEqual(response.status_code, 200)
@@ -354,6 +359,8 @@ class ShowPlaceViewTests(TestCase):
     def test_likes_and_dislikes(self):
         place = Place(place_name = "Niamh testing cafe", place_type = "Cafe", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         place.save()
+        
+
         response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         
         self.assertContains(response, place.likes.count())
@@ -391,6 +398,17 @@ class AddPageViewTests(TestCase):
         self.assertContains(response, "Nightlife")
         #self.assertContains(response, "Choose file")
         self.assertContains(response, "Map")
+        
+    def test_add_page(self):
+        populate()
+        response = self.client.post(reverse('suggestGlasgow:add place'), {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':"https://moodle.gla.ac.uk/course/view.php?id=29970"})
+        
+        #place_made = Place.get_or_create(place_name = "Niamh testing cafe")
+        #print(place_made.slug)
+        #response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place_made.slug}))
+        
+        #self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': place_made.slug})
+
         
 class ProfileViewTests(TestCase):
     def test_basic_view_not_logged_in(self):
