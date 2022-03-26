@@ -178,6 +178,10 @@ main > section{
   backdrop-filter: brightness(.7);
   cursor: not-allowed !important;
 }
+*[data-disabled]{
+  opacity: .6 !important;
+  cursor: not-allowed !important;
+}
 
 textarea{
   display: block;
@@ -199,7 +203,9 @@ button{
 	cursor: pointer;
 	outline: inherit;
 }
-button[name="Submit"]{
+.Button{
+  margin: auto;
+  display: inline-block;
   margin: 5px auto 5px auto;
   border: 2px solid black;
   padding: 5px 15px 5px 15px;
@@ -208,9 +214,9 @@ button[name="Submit"]{
   transform: translateX(-50%);
   font-size: 20px;
 }
-button[name="Submit"]:hover{
+.Button:hover{
   backdrop-filter: brightness(.9);
 }
-button[name="Submit"]:active{
+.Button:active{
   backdrop-filter: brightness(.7);
 }
