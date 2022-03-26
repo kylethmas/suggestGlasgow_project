@@ -25,17 +25,11 @@
 				<section id="Left">
 					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
 					<div id="Ratings"> 
-					<!-- place.post_is_liked doesn't work? !-->
-					<p> is liked = {{ place.post_is_liked }}</p>
-					<p> user = {{ user }} </p>
+
 						{% if user.is_authenticated %}
 							<form data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
 								{% csrf_token %}
-									{% if user in place.likes %}
-										<img src="{% static 'images/Liked.png' %}" />
-									{% else %}
-										<img src="{% static 'images/Like.png' %}" />
-									{% endif %}
+									<img src="{% static 'images/Like.png' %}" />
 									<button type="submit" value="{{place.slug}}" name="slug"></button>
 							</form>
 						{% else %}
