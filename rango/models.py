@@ -55,19 +55,6 @@ class Place(models.Model):
             liked = True
         return liked
 
-        
-class Ratings(models.Model):
-    PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place",)
-    username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="the user",)
-    liked = models.BooleanField(default=False)
-    disliked = models.BooleanField(default=False)
-    saved = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name_plural = 'ratings'
-
-    def __str__(self):
-        return self.liked
 
 class Comments(models.Model):
     CommentID = models.BigAutoField(primary_key=True)
