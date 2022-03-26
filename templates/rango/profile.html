@@ -13,10 +13,10 @@
 {% block body_block %}
 	<br/>
 	<h1 id="Title">My places</h1>
+	{% if saved %}
 	<h2 id="Subtitle">Here you can find all of the places you've added!</h2>
 	<br/>
 	<main>
-	{% if saved %}
 		<div class="OverflowWrapper" id="AddedPlacesWrapper">
 			<div class="ItemsWrapper">
 				{% for place in saved %}
@@ -25,31 +25,45 @@
 							<h2 class="RestaurantName">{{ place.place_name }}</h2>
 							<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
 						</a>
-						<div class="Ratings">
-							<div data-count="{{ place.number_of_likes }}"><img src="{% static 'images/Like.png' %}" /></div>
-							<div data-count="{{ place.number_of_dislikes }}"><img src="{% static 'images/Dislike.png' %}" /></div>
-							<div class="RemoveButton">
-								
-								<form data-count="Add" action="{% url 'suggestGlasgow:place_unsave' place.slug %}" method="POST">
+						<div class="Ratings" id="Ratings">
+							<form data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" target="StayOnThisSite" method="POST">
 								{% csrf_token %}
-								<div id="ButtonsWrapper">
-								<button type="submit" value="{{place.slug}}" name="slug">Remove</button>
-								</div>
-								</form>
-							</div>
+								<img src="{% static 'images/Like.png' %}" />
+								<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
+							</form>
+							
+							<form data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" target="StayOnThisSite" method="POST">
+								{% csrf_token %}
+								<img src="{% static 'images/Dislike.png' %}" />
+								<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
+							</form>
+
+							<form class="RemoveButton" action="{% url 'suggestGlasgow:place_unsave' place.slug %}" target="StayOnThisSite" method="POST">
+								{% csrf_token %}
+								Remove
+								<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
+							</form>
 						</div>
 					</div>
 				{% endfor %}
 			</div>
 		</div>
-	{% else %}
-		You have no saved places
-	{% endif %}
-		
 	</main>
+	
+	{% else %}
+	<h2 id="Subtitle">You have no saved places. Go to the home page and find some you like!</h2>
+	{% endif %}
 	<br />
 	<!-- make this a button? !-->
-	<h2 id="Subtitle"><a href="{% url 'suggestGlasgow:add place' %}">Add a new place here</a></h2>
+	<section id="AddPlaceToSystemExplainer">
+		<h2>Not finding it?</h2>
+		<p>
+			Have you recently been to a place you really liked, but you can't find it on this website? If you're sure it doesn't already exist,
+			you can add it by clicking the button below! It will start getting recommended to users as soon as you have added it.
+		</p>
+		<a href="{% url 'suggestGlasgow:add place' %}" class="Button">Add new place</a>
+	</section>
 	<br/>
-    <script type="text/javascript" src="{% static 'js/HorizontalAlignment.mjs' %}" type="module"></script>
+	<iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
+    <script type="module" src="{% static 'js/ProfileMain.mjs' %}"></script>
 {% endblock %}
