@@ -26,7 +26,7 @@ class Place(models.Model):
     PlaceID = models.BigAutoField(primary_key=True)
     place_type = models.CharField(max_length = 128, choices = (("Restaurant", "Restaurant"),("Cafe", "Cafe"),("Fast Food", "Fast Food"),("Nightlife", "Nightlife"),("Anywhere","Anywhere")))
     place_name = models.CharField(max_length=150)
-    place_image = models.ImageField(upload_to='place_images', default = "/place_images/Default.jpg")
+    place_image = models.ImageField(upload_to='place_images', default = "/place_images/Default.jpg", blank = True)
     latitude = models.CharField(u'latitude', max_length=25, blank=True, default = 0)
     longitude = models.CharField(u'longitude', max_length=25, blank=True, default = 0)
     url = models.CharField(max_length=200)
@@ -55,19 +55,6 @@ class Place(models.Model):
             liked = True
         return liked
 
-        
-class Ratings(models.Model):
-    PlaceID = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name="the related place",)
-    username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="the user",)
-    liked = models.BooleanField(default=False)
-    disliked = models.BooleanField(default=False)
-    saved = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name_plural = 'ratings'
-
-    def __str__(self):
-        return self.liked
 
 class Comments(models.Model):
     CommentID = models.BigAutoField(primary_key=True)

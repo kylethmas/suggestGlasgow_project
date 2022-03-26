@@ -4,7 +4,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings
 import django
 django.setup()
 from rango.models import Category, Place, User, UserProfile, Comments
-
+from PIL import Image
+from django.core.files import File as DjangoFile
 
 def populate():
 
@@ -14,35 +15,40 @@ def populate():
          'latitude': '55.87226',
          'longitude': '-4.27247',
          'url':'https://kylescatering.ie/delivery/kyles-cafe/',
-         'slug': 'cafe_kyle'},
+         'slug': 'cafe_kyle',
+         'image':'static/images/cafekyle.jpg'},
         {'place_type': 'Nightlife',
          'place_name': 'Bamboo',
          'latitude': '55.87226',
          'longitude': '-4.27247',
          'url': 'http://www.bamboonightclub.co.uk/',
-         'slug': 'bamboo'},
+         'slug': 'bamboo',
+         'image':'static/images/bamboo.jpg'},
         {'place_type': 'Restaurant',
          'place_name': 'Sugo',
          'latitude': '55.87226',
          'longitude': '-4.27247',
          'url': 'https://www.sugopasta.co.uk/',
-         'slug': 'sugo'},
+         'slug': 'sugo',
+         'image':'static/images/sugo.jpg'},
         {'place_type': 'Restaurant',
          'place_name': 'MacTassos',
          'latitude': '55.867546761164064',
          'longitude': '-4.2882667016457905',
          'url': 'https://www.tripadvisor.co.uk/Restaurant_Review-g186534-d12580740-Reviews-MacTassos-Glasgow_Scotland.html',
-         'slug': 'mactassos'},
+         'slug': 'mactassos',
+         'image':'static/images/mactassos.jpg'},
         {'place_type': 'Fast Food',
          'place_name': "McDonald's Finnieston",
          'latitude': '55.87226',
          'longitude': '-4.27247',
          'url': 'https://www.just-eat.co.uk/restaurants-mcdonalds-finnieston-glasgow/menu',
-         'slug': 'mcdonalds_finnieston'}
+         'slug': 'mcdonalds_finnieston',
+         'image':'static/images/mcd.jpg'}
     ]
 
     for p in places:
-        add_place(p['place_type'],p['place_name'],p['latitude'], p['longitude'], p['url'], p['slug'])
+        add_place(p['place_type'],p['place_name'],p['latitude'], p['longitude'], p['url'],p['image'], p['slug'])
 
     users = [
         {'username':'john101',
@@ -103,6 +109,8 @@ def add_place(place_type, place_name, latitude, longitude, url, slugName = '', c
     p.longitude = longitude
     p.slug = slugName
     p.comments = comments
+    file_obj1 = DjangoFile(open(image, mode='rb'), name=image)
+    p.place_image = file_obj1
     p.save()
     return p
 
