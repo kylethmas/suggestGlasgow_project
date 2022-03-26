@@ -14,7 +14,7 @@
 <div id="Parent">
 	<div id="WebsiteTitleWrapper">
 		<h1 id="WelcomeTitle">Welcome to this website!</h1>
-		<h2 id="SelectionTitle">I would like to go to...<span>
+		<h2 id="SelectionTitle">I would like to go to a...<span>
 		<form name = "SuggestPlaceForm" id="suggest_form" method="post" action = "">
 			{% csrf_token %}
 			<div class = "DropdownMenu" id="SelectTypeMenu">
@@ -44,14 +44,18 @@
 	<div>
 		<img src ="{% static 'images/Background.jpg' %}" alt=" Background Logo" />
 		<div>
-			<h2>Blurb on website</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent metus erat, vestibulum id mauris sed, viverra vestibulum magna. Sed venenatis aliquet mauris in bibendum. Morbi felis leo, finibus ut dapibus ut, gravida id felis. Mauris enim massa, lacinia eget sem sed, commodo malesuada turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris sodales ligula non est venenatis scelerisque. In fringilla risus ut ex luctus feugiat. Aenean luctus dignissim ante eu dapibus. Suspendisse potenti.</p>
+			<h2>Suggest Glasgow</h2>
+			<p>Can you never decide where you want to catch up with friends for a coffee? Where you want to go for a drink after a hards day work?
+			Where you want to treat yourself to a nice dinner? Where you want to dance the night away? Or just want to try somewhere new? <br>
+			Then Suggest Glasgow is here for you!<br>
+			Simply choose a option from our dropdown menu above to start your new experience now</p>
 		</div>
 	</div>
 	<div>
 		<img src ="{% static 'images/Background.jpg' %}" alt=" Background Logo" />
 		<div>
-		  <h2>Top 5 most liked places</h2>
+		  <h2>This weeks reccomendation: </h2>
+		  <h2> </h2>
 		 
 		</div>
 	</div>

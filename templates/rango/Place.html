@@ -15,7 +15,7 @@
 	<div>	
 	{% if place %}
 		<h1 id="PlaceName">{{ place.place_name }}</h1>
-		<h2 id="PlaceDescription">This is a {{ place.place_type }}.</h2>
+		<h2 id="PlaceDescription">This is in the {{ place.place_type }} category.</h2>
 		{% if place.url %}
 			<h2 id="PlaceLink"><a href="{{ place.url }}">Click here to visit their website </a></h2>
 		{% endif %}

@@ -2,8 +2,8 @@ from django import forms
 from rango.models import Place, Ratings, UserProfile
 from django.contrib.auth.models import User
 
-place_types = (("Restaurants", "Restaurants"),
-               ("Cafes", "Cafes"),
+place_types = (("Restaurant", "Restaurant"),
+               ("Cafe", "Cafe"),
                ("Fast Food", "Fast Food"),
                ("Nightlife", "Nightlife"),
                ("Anywhere","Anywhere"))
@@ -11,8 +11,8 @@ place_types = (("Restaurants", "Restaurants"),
 
 class PlaceForm(forms.ModelForm):
     place_name = forms.CharField(max_length=128, help_text="Place name", required=True)
-    place_type = forms.ChoiceField(choices=(("Restaurants", "Restaurants"),
-               ("Cafes", "Cafes"),
+    place_type = forms.ChoiceField(choices=(("Restaurant", "Restaurant"),
+               ("Cafe", "Cafe"),
                ("Fast Food", "Fast Food"),
                ("Nightlife", "Nightlife")), help_text="Category ", required = False)
     place_image = forms.ImageField(required = False)
