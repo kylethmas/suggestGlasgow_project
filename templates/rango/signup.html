@@ -21,21 +21,21 @@
 		<form id="form" method="post" action="{% url 'suggestGlasgow:sign up' %}">
 			{% csrf_token %}
 			<div class="FieldContainer">
-				{{ user_form.username.errors }}
 				<p class="FieldInfo">Username</p>
 				{{ user_form.username }}
+				<p class="FieldInfo Errors">{{ user_form.username.errors.as_text }}</p>
 			</div>
 
 			<div class="FieldContainer">
-				{{ user_form.password.errors }}
 				<p class="FieldInfo">Password</p>
 				{{ user_form.password }}
+				<p class="FieldInfo Errors">{{ user_form.password.errors.as_text }}</p>
 			</div>
 
 			<div class="FieldContainer">
-				{{ user_form.email.errors }}
 				<p class="FieldInfo">Email</p>
 				{{ user_form.email }}
+				<p class="FieldInfo Errors">{{ user_form.email.errors.as_text }}</p>
 			</div>
 			<br/>
 			<a href="{% url 'suggestGlasgow:login' %}"><button type="submit" name = "submit">Sign up</button></a>

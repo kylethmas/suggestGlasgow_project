@@ -57,7 +57,11 @@ body{
 .FieldInfo{
   font-size: 12px;
   text-align: left;
-  margin: 7px 0px 2px 0px;
+  margin-block: .2em;
+}
+.Errors{
+  font-size: 10px;
+  color: red;
 }
 
 .FieldContainer{
