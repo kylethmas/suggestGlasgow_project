@@ -21,7 +21,7 @@
 			
 			<section id="Right">
 				<form name="AddPlaceForm" id="AddPlaceForm" action="{% url 'suggestGlasgow:add place' %}" 
-				method="POST" target="StayOnThisSite" enctype="multipart/form-data">
+				method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					{% for hidden in form.hidden_fields %}
 						{{ hidden }}
@@ -78,7 +78,7 @@
 						<span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>
 					</div>
 					<br>
-					<button type="submit" name="submit">Submit</button>
+					<button type="submit" name="submit" class="button">Submit</button>
 				</form>
 			</section>
 		</div>
