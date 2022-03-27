@@ -179,7 +179,6 @@ def populate():
 def add_saves():
     counter = 0
     places = list(Place.objects.all())
-    print(places)
     users = UserProfile.objects.all()
     while counter < users.count():
         place = places[counter]

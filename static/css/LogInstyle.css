@@ -15,7 +15,7 @@ body{
 
 
 #BackgroundImage{
-  background-image: url("../Images/Background.jpg");
+  background-image: url("../images/Background.jpg");
   background-position: center; 
   background-repeat: no-repeat;
   background-size: cover;
