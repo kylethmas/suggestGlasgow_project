@@ -410,30 +410,7 @@ class AddPageViewTests(TestCase):
         #place = Place.objects.get(place_name="MacTassos")
         self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': "niamh-test"})
     """
-class SavePlaceViewTests(TestCase):
-    def save_a_place(self):
-        """
-        Checks that a place can be saved successfully
-        """
-        populate()
-        #log in 
-        user = create_a_user()
-        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
-        
-        place = Place.objects.get(place_name = "MacTassos")
-        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
-        
-        response = self.client.get(reverse('suggestGlasgow:place_save', kwargs={'place_name_slug': place.slug}))
-        
-        self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': place.slug})
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "MacTassos")
-        
-        response = self.client.get(reverse('suggestGlasgow:profile'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "MacTassos")
-        self.assertContains(response, "My Places")
-        
+
         
 class ProfileViewTests(TestCase):
     def test_basic_view_not_logged_in(self):
@@ -461,3 +438,63 @@ class ProfileViewTests(TestCase):
         self.assertContains(response, "Add new place")
     
 
+class SavePlaceViewTests(TestCase):
+    def test_save_a_place(self):
+        """
+        Checks that a place can be saved successfully
+        """
+        populate()
+        #log in 
+        user = create_a_user()
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
+        
+        place = Place.objects.get(place_name = "MacTassos")
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        
+        response = self.client.get(reverse('suggestGlasgow:place_save', kwargs={'slug':place.slug}))
+        self.assertEqual(response.url, reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        self.assertEqual(response.status_code, 302)
+        
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        self.assertContains(response, "MacTassos")
+        
+        response = self.client.get(reverse('suggestGlasgow:profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "MacTassos")
+        self.assertContains(response, "My places")
+        
+        
+class UnsavePlaceViewTests(TestCase):
+    def test_unsave_a_place(self):
+        """
+        Checks that a place can be saved successfully and then unsaved successfully
+        """
+        populate()
+        #log in 
+        user = create_a_user()
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
+        
+        place = Place.objects.get(place_name = "MacTassos")
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        
+        response = self.client.get(reverse('suggestGlasgow:place_save', kwargs={'slug':place.slug}))
+        self.assertEqual(response.url, reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        self.assertEqual(response.status_code, 302)
+        
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        self.assertContains(response, "MacTassos")
+        
+        response = self.client.get(reverse('suggestGlasgow:profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "MacTassos")
+        self.assertContains(response, "My places")
+        
+        response = self.client.get(reverse('suggestGlasgow:place_unsave', kwargs={'slug':place.slug}))
+        self.assertEqual(response.url, reverse('suggestGlasgow:profile'))
+        self.assertEqual(response.status_code, 302)
+
+        
+        response = self.client.get(reverse('suggestGlasgow:profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "MacTassos")
+        self.assertContains(response, "My places")
