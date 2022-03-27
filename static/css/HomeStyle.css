@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   height: calc(min(max(100px, 30vh), 350px));
-  background-image: url("../Images/Background.jpg");
+  background-image: url("../images/Background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
