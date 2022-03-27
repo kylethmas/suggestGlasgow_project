@@ -102,7 +102,7 @@ def add_comment(title, date, comment):
     Comments.objects.create(PlaceID = Place.objects.order_by('?').first(), username = User.objects.order_by("?").first(), comment = comment, date = date, title = title)
 
 
-def add_place(place_type, place_name, latitude, longitude, url, slugName = '', comments = []):
+def add_place(place_type, place_name, latitude, longitude, url, image, slugName = '', comments = []):
     p = Place.objects.get_or_create(place_type=place_type, place_name=place_name)[0]
     p.url = url
     p.latitude = latitude
