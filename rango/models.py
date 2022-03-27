@@ -12,7 +12,8 @@ class Place(models.Model):
         ("Restaurant", "Restaurant"),
         ("Cafe", "Cafe"),
         ("Fast Food", "Fast Food"),
-        ("Nightlife", "Nightlife")))
+        ("Nightlife", "Nightlife"),
+        ("Anywhere", "Anywhere")))
     place_name = models.CharField(max_length=150)
     place_image = models.ImageField(upload_to='place_images', default="/place_images/Default.jpg", blank=True)
     latitude = models.CharField(u'latitude', max_length=25, blank=True, default=0)
