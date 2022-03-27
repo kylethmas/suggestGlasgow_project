@@ -253,7 +253,6 @@ def get_comments_for_place(request):
 
 @login_required
 def post_comment(request, slug):
-    print("hiu")
     print(request.POST.get("Comment"))
     Comments.objects.create(PlaceID = Place.objects.filter(slug = slug).first(), username = User.objects.filter(id=request.GET.get("userid")).first(), comment = request.POST.get("Comment"), date = datetime.datetime.now().isoformat()[:10], title = request.POST.get("Title"))
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',

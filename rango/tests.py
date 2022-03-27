@@ -104,8 +104,6 @@ class PlaceMethodTests(TestCase):
         self.assertEqual(place.url, "https://moodle.gla.ac.uk/course/view.php?id=29970")
         self.assertEqual(place.slug, "random-place-string")
         
-    
-     
     def test_str_method(self):
         """
         Checks to make sure the __str__ method works.
@@ -162,19 +160,19 @@ class UserMethodTests(TestCase):
         
         self.assertEqual(user.email, "n@gmail.com")
     
-    """
-    def test_password_creation(self):
-        "" "
+    
+    def test_save_list_creation(self):
+        """
         Checks to make sure that when a user is created, an
         appropriate saves list is created.
-        Example: userProfile.saves should be null.
-        "" "
+        Example: userProfile.saves should be 0.
+        """
         user = User.objects.create_user('Niamh', "n@gmail.com", "thisisabadpassword")
         u = UserProfile.objects.get_or_create(user=user)[0]
         u.save()
         
-        self.assertEqual(u.number_of_saves, 0) #why istn this working
-    """
+        self.assertEqual(u.number_of_saves(), 0)
+    
 
 class HomeViewTests(TestCase):
     def test_if_drop_down_categories_are_present(self):
@@ -357,6 +355,9 @@ class ShowPlaceViewTests(TestCase):
         
         
     def test_likes_and_dislikes(self):
+        """
+        Checks if likes and dislikes display properly
+        """
         place = Place(place_name = "Niamh testing cafe", place_type = "Cafe", place_image = "Testing.png", latitude = '55.46', longitude = '4.46', url= 'https://moodle.gla.ac.uk/course/view.php?id=29970')
         place.save()
         
@@ -410,11 +411,12 @@ class AddPageViewTests(TestCase):
         #add place
         page_data = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'}
         response = self.client.post(reverse('suggestGlasgow:add place'), page_data)
+        place = Place.objects.get(place_name = "Niamh test")
        
-        self.assertEqual(response.url, reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
+        self.assertEqual(response.url, reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         
         #check places display
-        response = self.client.post(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
+        response = self.client.post(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         self.assertContains(response, "Niamh test")
         self.assertContains(response, "Cafe")
 
@@ -448,51 +450,58 @@ class ProfileViewTests(TestCase):
         """
         Check that if a place is saved it is then displayed on the profile
         """
-        populate()
         #log in - new user so will have no saved places
         user = create_a_user()
         response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
         
+        #add place - know this works due to add place tests
+        page_data = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'}
+        response = self.client.post(reverse('suggestGlasgow:add place'), page_data)
+        place = Place.objects.get(place_name = "Niamh test")
+        
         ##save - know this works due to save tests
-        place = Place.objects.get(place_name = "MacTassos")
         response = self.client.get(reverse('suggestGlasgow:place_save', kwargs={'slug':place.slug}))
     
         #check profile is displaying properly
         response = self.client.get(reverse('suggestGlasgow:profile'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "MacTassos")
+        self.assertContains(response, "Niamh test")
         self.assertContains(response, "My places")
-
+    
 class SavePlaceViewTests(TestCase):
     def test_save_a_place(self):
         """
         Checks that a place can be saved successfully
         """
-        populate()
         #log in 
         user = create_a_user()
         response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
         
+        #add place - know this works due to add place tests
+        page_data = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'}
+        response = self.client.post(reverse('suggestGlasgow:add place'), page_data)
+        place = Place.objects.get(place_name = "Niamh test")
+        
         #check the place is not saved to the profile
         response = self.client.get(reverse('suggestGlasgow:profile'))
         self.assertEqual(response.status_code, 200)
-        self.assertNotContains(response, "MacTassos")
+        self.assertNotContains(response, "Niamh test")
         self.assertContains(response, "My places")
         
         #save the place
-        place = Place.objects.get(place_name = "MacTassos") 
+        place = Place.objects.get(place_name = "Niamh test")
         response = self.client.get(reverse('suggestGlasgow:place_save', kwargs={'slug':place.slug}))
         self.assertEqual(response.url, reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         self.assertEqual(response.status_code, 302)
         
         #check the show_place is still working
         response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
-        self.assertContains(response, "MacTassos")
+        self.assertContains(response, "Niamh test")
         
         #check profile has newly saved place
         response = self.client.get(reverse('suggestGlasgow:profile'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "MacTassos")
+        self.assertContains(response, "Niamh test")
         self.assertContains(response, "My places")
         
         
@@ -502,13 +511,16 @@ class UnsavePlaceViewTests(TestCase):
         """
         Checks that a place can be saved successfully and then unsaved successfully
         """
-        populate()
         #log in 
         user = create_a_user()
         response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
         
+        #add place - know this works due to add place tests
+        page_data = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'}
+        response = self.client.post(reverse('suggestGlasgow:add place'), page_data)
+        place = Place.objects.get(place_name = "Niamh test")
+        
         ##save - know this works due to save tests
-        place = Place.objects.get(place_name = "MacTassos")
         response = self.client.get(reverse('suggestGlasgow:place_save', kwargs={'slug':place.slug}))
         
         ##unsave
@@ -519,7 +531,7 @@ class UnsavePlaceViewTests(TestCase):
         #check profile is displaying properly
         response = self.client.get(reverse('suggestGlasgow:profile'))
         self.assertEqual(response.status_code, 200)
-        self.assertNotContains(response, "MacTassos")
+        self.assertNotContains(response, "Niamh test")
         self.assertContains(response, "My places")
         
 class LikePlaceViewTests(TestCase):
@@ -528,16 +540,17 @@ class LikePlaceViewTests(TestCase):
         """
         Checks that a place can be liked successfully
         """
-        populate()
         #log in 
         user = create_a_user()
         response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
         
-        ##save - know this works due to save tests
-        place = Place.objects.get(place_name = "MacTassos")
-        likes = place.number_of_likes()
+        #add place - know this works due to add place tests
+        page_data = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'}
+        response = self.client.post(reverse('suggestGlasgow:add place'), page_data)
+        place = Place.objects.get(place_name = "Niamh test")
         
         # check the current number of likes
+        likes = place.number_of_likes()
         response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         self.assertContains(response, likes)
         
@@ -556,16 +569,17 @@ class DislikePlaceViewTests(TestCase):
         """
         Checks that a place can be disliked successfully
         """
-        populate()
         #log in 
         user = create_a_user()
         response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
         
-        ##save - know this works due to save tests
-        place = Place.objects.get(place_name = "MacTassos")
-        dislikes = place.number_of_dislikes()
-        
+        #add place - know this works due to add place tests
+        page_data = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'}
+        response = self.client.post(reverse('suggestGlasgow:add place'), page_data)
+        place = Place.objects.get(place_name = "Niamh test")
+
         # check the current number of dislikes
+        dislikes = place.number_of_dislikes()
         response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         self.assertContains(response, dislikes)
         
@@ -577,5 +591,3 @@ class DislikePlaceViewTests(TestCase):
         #check new number of dislikes
         response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         self.assertContains(response, dislikes + 1)
-
-        
