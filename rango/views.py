@@ -17,8 +17,8 @@ from datetime import datetime
 import datetime
 import random
 
-logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 logger = logging.getLogger(__name__)
+logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
 def home(request):
     place_list = Place.objects.all()
