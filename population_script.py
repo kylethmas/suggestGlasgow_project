@@ -1,10 +1,11 @@
 import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings')
 import django
-from rango.models import Place, User, UserProfile, Comments
+django.setup()
+from rango.models import Place, User, UserProfile, Comments, Category
 from PIL import Image
 from django.core.files import File as DjangoFile
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings')
-django.setup()
+
 
 
 def populate():
