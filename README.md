@@ -10,3 +10,8 @@ There is a user for the tester to use if needed in the population script which d
 associated with it alternatively you can create a new user:
 - Username: tester
 - Password: testtest
+
+We do not have a paid licence for the maps API so any page which uses the API will have a pop up box
+saying "This page can't load Google Maps correctly".
+However, this doesn't affect the functionality of our website as you can simply click "Ok"
+and the pointers and displayed in the correct position. 
