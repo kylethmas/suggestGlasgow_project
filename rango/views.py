@@ -93,7 +93,7 @@ def show_place(request, place_name_slug, **kwargs):
 
         context_dict['place'] = None
 
-    return render(request, 'rango/place.html', context=context_dict)
+    return render(request, 'rango/Place.html', context=context_dict)
 
 
 @login_required
