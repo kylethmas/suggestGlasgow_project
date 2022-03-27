@@ -192,7 +192,7 @@ def user_logout(request):
 
 
 def PlaceLike(request, slug):
-    post = get_object_or_404(Place, slug=request.POST.get('slug'))
+    post = get_object_or_404(Place, slug = slug)
     print(post)
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
@@ -206,7 +206,7 @@ def PlaceLike(request, slug):
 
 
 def PlaceDislike(request, slug):
-    post = get_object_or_404(Place, slug=request.POST.get('slug'))
+    post = get_object_or_404(Place, slug = slug)
     print(post)
     if post.dislikes.filter(id=request.user.id).exists():
         post.dislikes.remove(request.user)
