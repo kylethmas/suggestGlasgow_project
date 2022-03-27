@@ -27,6 +27,7 @@
 						{{ hidden }}
 					{% endfor %}
 					
+					<!-- add name -->
 					<div class="FieldContainer">
 						{{ form.place_name.errors }}
 						<p class="FieldInfo">
@@ -36,7 +37,7 @@
 							
 					</div>
 					
-					
+					<!-- add place type -->
 					<div class="FieldContainer">
 						{{ form.place_type.errors }}
 						<p class="FieldInfo">
@@ -49,6 +50,7 @@
 						</div>
 					</div>
 					
+					<!-- add image -->
 					<div class="FieldContainer">
 						{{ form.place_image.errors }}
 						<p class="FieldInfo">
@@ -57,6 +59,7 @@
 						{{ form.place_image }} 
 					</div>
 					
+					<!-- add map location -->
 					<div class="FieldContainer" onLoad="loadMap()">
 						<p id="MapTitleExplanation">Select a point on the map</p>
 						<div id="Map" data-lat="55.865" data-lng="-4.25"></div>
@@ -64,6 +67,7 @@
 						{{ form.latitude }}
 					</div>
 					
+					<!-- add the url -->
 					<div class="FieldContainer">
 						{{ form.url.errors }}
 						<p class="FieldInfo">
@@ -72,7 +76,7 @@
 						{{ form.url }}
 					</div>
 					
-
+					<!-- consent box -->
 					<div id="ConsentCheckboxWrapper">
 						<input id="ConsentCheckbox" type="checkbox" name="Consent" required></input>
 						<span>By submitting, you confirm that this information is correct to the best of your knowledge.</span>

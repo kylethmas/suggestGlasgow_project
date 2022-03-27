@@ -8,7 +8,6 @@
 		<title>
 			SuggestGlasgow -
 			{% block title_block %}
-				
 			{% endblock %}
 		</title>
 		
@@ -17,17 +16,15 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		
 		{% block staticfiles_block %}
-
 		{% endblock %}
 	</head>
 	
 	<body>
 		<div id="PageContainer">
 			<div id="PageContentWrapper">
-				<!-- display username in corner?-->
 				<header>
 					<h1 id="WebsiteTitle"><a href="{% url 'suggestGlasgow:home' %}"> SuggestGlasgow </a></h1>
-					<div id="ButtonsWrapper">	<!-- do we change these to buttons? !-->
+					<div id="ButtonsWrapper">
 						{% if user.is_authenticated %}
 							<a href="{% url 'suggestGlasgow:logout' %}">LogOut </a>
 							<a href="{% url 'suggestGlasgow:profile' %}">My Profile</a>

@@ -5,64 +5,62 @@
 	Homepage
 {% endblock %}
 
-{% block body_block %}
-
 {% block staticfiles_block %}
 	<link rel="stylesheet" href="{% static 'css/HomeStyle.css' %}" />
 {% endblock %}
 
-<div id="Parent">
-	<div id="WebsiteTitleWrapper">
-		<h1 id="WelcomeTitle">Where would you like to go?</h1>
-		<h2 id="SelectionTitle">I would like to go to a...<span>
-		<form name = "SuggestPlaceForm" id="suggest_form" method="post" action = "">
-			{% csrf_token %}
-			<div class = "DropdownMenu" id="SelectTypeMenu">
-				<!--
-					<div>{{ form.place_type }}</div>
-				{% for x, y in form.fields.place_type.choices %}
-					<option value="{{ x }}">{{ y }}</option>
-				{% endfor %}
-				-->
-				<div>
-					<div>&nbsp;</div>
-					{% for x, y in form.fields.place_type.choices %}
-					<div data-type="{{ x }}">{{ y }}</div>
-					{% endfor %}
-				</div>
+{% block body_block %}
+	<div id="Parent">
+		<div id="WebsiteTitleWrapper">
+			<h1 id="WelcomeTitle">Where would you like to go?</h1>
+			<h2 id="SelectionTitle">I would like to go to a...
+				<span>
+					<!-- choose category form -->
+					<form name = "SuggestPlaceForm" id="suggest_form" method="post" action = "">
+						{% csrf_token %}
+						<!-- dropdown menu form that works with our css -->
+						<div class = "DropdownMenu" id="SelectTypeMenu">
+							<div>
+								<div>&nbsp;</div>
+								{% for x, y in form.fields.place_type.choices %}
+								<div data-type="{{ x }}">{{ y }}</div>
+								{% endfor %}
+							</div>
+						</div>
+						
+						<input id="id_place_type" name="place_type" type="text" />
+						<input id="SubmitButton" type="submit" name="submit" value="Suggest Place" />
+					</form>
+				</span>
+			</h2>
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<main>
+		<div>
+			<img src ="{% static 'images/Background.jpg' %}" alt=" Background Logo" />
+			<div>
+				<h2>Suggest Glasgow</h2>
+				<p>Can you never decide where you want to catch up with friends for a coffee? Where you want to go for a drink after a hards day work?
+				Where you want to treat yourself to a nice dinner? Where you want to dance the night away? Or just want to try somewhere new? <br>
+				Then Suggest Glasgow is here for you!<br><br>
+				Simply choose a option from our dropdown menu above to start your new experience now</p>
 			</div>
-			
-			<input id="id_place_type" name="place_type" type="text" />
-			<input id="SubmitButton" type="submit" name="submit" value="Suggest Place" />
-		</form>
-		</span></h2>
-	</div>
-</div>
-<br/>
-<br/>
-<main>
-	<div>
-		<img src ="{% static 'images/Background.jpg' %}" alt=" Background Logo" />
-		<div>
-			<h2>Suggest Glasgow</h2>
-			<p>Can you never decide where you want to catch up with friends for a coffee? Where you want to go for a drink after a hards day work?
-			Where you want to treat yourself to a nice dinner? Where you want to dance the night away? Or just want to try somewhere new? <br>
-			Then Suggest Glasgow is here for you!<br><br>
-			Simply choose a option from our dropdown menu above to start your new experience now</p>
 		</div>
-	</div>
-	<div>
-		<img src ="{% static 'images/mactassos.jpg' %}" alt=" Background Logo" />
 		<div>
-		  <h2>This weeks reccomendation: </h2>
-		  <h2> <a href="{% url 'suggestGlasgow:show_place' reccomendation.slug %}">{{ reccomendation.place_name }} </a></h2>
-		 <p> Mactassos is an authentic Greek food, family run business, based in Glasgow which was founded in February 2017. 
-		 They specialise in Greek gyros and have other delicious Greek items on our menu. 
-		 They are passionate about bringing a bite size of Greece to you every single time you come visit us! </p>
+			<!-- reccomendation by us with a link to place using the place in context dict -->
+			<img src ="{% static 'images/mactassos.jpg' %}" alt=" Background Logo" />
+			<div>
+			  <h2>This weeks reccomendation: </h2>
+			  <h2> <a href="{% url 'suggestGlasgow:show_place' reccomendation.slug %}">{{ reccomendation.place_name }} </a></h2>
+			 <p> Mactassos is an authentic Greek food, family run business, based in Glasgow which was founded in February 2017. 
+			 They specialise in Greek gyros and have other delicious Greek items on our menu. 
+			 They are passionate about bringing a bite size of Greece to you every single time you come visit us! </p>
+			</div>
 		</div>
-	</div>
-</main>
-<script type="text/javascript" src="{% static 'js/Home.mjs' %}" type="module"></script>
-<br />
+	</main>
+	<script type="text/javascript" src="{% static 'js/Home.mjs' %}" type="module"></script>
+	<br/>
 {% endblock %}
 

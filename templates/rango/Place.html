@@ -12,118 +12,115 @@
 
 {% block body_block %}
 	<p id="ThisPlaceSlug" hidden>{{place.slug}}</p>
-	<div>	
-	{% if place %}
-		<h1 id="PlaceName">{{ place.place_name }}</h1>
-		<h2 id="PlaceDescription">This is in the {{ place.place_type }} category.</h2>
-		{% if place.url %}
-			<h2 id="PlaceLink"><a href="{{ place.url }}">Click here to visit their website </a></h2>
-		{% endif %}
-			<br/>
-			
-			<main>
-				<section id="Left">
-					<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
-					<div id="Ratings"> 
-					
-					<!--<p> is liked = {{ place.post_is_liked }}</p>
-					<p> user = {{ user }} </p>-->
-						
-						<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
-							{% csrf_token %}
-							{% if user in place.likes %}<!-- place.post_is_liked doesn't work? !-->
-								<img src="{% static 'images/Liked.png' %}" />
-							{% else %}
-								<img src="{% static 'images/Like.png' %}" />
-							{% endif %}
-							<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
-						</form>
-						
-						<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
-							{% csrf_token %}
-							{% if place.post_is_disliked %}
-								<img src="{% static 'images/Disliked.png' %}" />
-							{% else %}
-								<img src="{% static 'images/Dislike.png' %}" />
-							{% endif %}
-							<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
-						</form>
-						
-						{% if user.is_authenticated %}
-						<form data-count="Add" action="{% url 'suggestGlasgow:place_save' place.slug %}" method="POST">
-							{% csrf_token %}
-							{% if post_is_saved %}
-								Saved! <!--Add an image here-->
-							{% else %}
-								<img src="{% static 'images/Add.png' %}" />
-							{% endif %}
-							<button type="submit" value="{{place.slug}}" name="slug"></button>
-						</form>
-						{% endif %}	
-						<div id="CommentButton">{% if user.is_authenticated %}Comment{% else %}View Comments{% endif %}</div>
-					</div>
-				</section>
-				
-				<section id="Right">
-					<div id="OverflowWrapper">
-					
-						<div id="Map" data-lat={{ place.latitude }} data-lng = {{place.longitude }}></div>
-						
-						<h2 id="CommentSectionTitle">Top Comments</h2>
-						<h4 id="ViewAllComments">Click to view all</h4>
-						<!-- Top comments will be added here -->
-					</div>
-				</section>
-			</main>
-			<br />
-	{% else %}
-		The place was not found!
-	{% endif %}
-	
-	<br/>
-	
-
-
-	<div id="CommentsOverlayBackground">
 	<div>
-		<h1>Comments for {{ place.place_name }}</h1>
-		<div id="CommentsSection">
-			<div id="CommentsWrapper"></div><!--Comments will appear here -->
-			<div id="LoadMoreCommentsButton">Load more comments</div>
-		</div>
-		<div id="PostCommentWrapper">
-			{% if user.is_authenticated %}
-			<form name="PostCommentForm" id="PostCommentForm" action="/suggestGlasgow/PostComment/{{place.slug}}?userid={{user.id}}" method="POST">
-				{% csrf_token %}
-				<h3>Post a comment</h3>
-				<p class="FieldInfo">Comment title</p>
-				<input name="Title" type="text" />
-				<p class="FieldInfo">Comment text</p>
-				<textarea name="Comment" placeholder="Type your comment here..."></textarea>
-				<button class="Button" type="submit" name="Submit">Submit</button>
-			</form>
-			{% else %}
-				<a href="{% url 'suggestGlasgow:login' %}" class="Button">Log in to post a comment!</a>
+		<!-- if a valid place slug passed in then it will be displayed if not an error msg -->
+		{% if place %}
+			<h1 id="PlaceName">{{ place.place_name }}</h1>
+			<h2 id="PlaceDescription">This is in the {{ place.place_type }} category.</h2>
+			<!-- url are not required always so only display when available -->
+			{% if place.url %}
+				<h2 id="PlaceLink"><a href="{{ place.url }}">Click here to visit their website </a></h2>
 			{% endif %}
-		</div>
-	</div>
-	</div>
-
-	<template id="TComment">
-		<div class="Comment">
-			<div class="InfoWrapper">
-				<div class="Title">Great restaurant</div>
-				<div class="UserDate">by Mogus on 2022-02-22</div>
-			</div>
+				<br/>
+				
+				<main>
+					<section id="Left">
+						<div id="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
+						<div id="Ratings"> 
+							
+							<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
+								{% csrf_token %}
+								{% if user in place.likes %}<!-- place.post_is_liked doesn't work? !-->
+									<img src="{% static 'images/Liked.png' %}" />
+								{% else %}
+									<img src="{% static 'images/Like.png' %}" />
+								{% endif %}
+								<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
+							</form>
+							
+							<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
+								{% csrf_token %}
+								{% if place.post_is_disliked %}
+									<img src="{% static 'images/Disliked.png' %}" />
+								{% else %}
+									<img src="{% static 'images/Dislike.png' %}" />
+								{% endif %}
+								<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
+							</form>
+							
+							{% if user.is_authenticated %}
+								<form data-count="Add" action="{% url 'suggestGlasgow:place_save' place.slug %}" method="POST">
+									{% csrf_token %}
+									{% if post_is_saved %}
+										Saved! <!--Add an image here-->
+									{% else %}
+										<img src="{% static 'images/Add.png' %}" />
+									{% endif %}
+									<button type="submit" value="{{place.slug}}" name="slug"></button>
+								</form>
+							{% endif %}	
+							<div id="CommentButton">{% if user.is_authenticated %}Comment{% else %}View Comments{% endif %}</div>
+						</div>
+					</section>
+					
+					<section id="Right">
+						<div id="OverflowWrapper">
+						
+							<div id="Map" data-lat={{ place.latitude }} data-lng = {{place.longitude }}></div>
+							
+							<h2 id="CommentSectionTitle">Top Comments</h2>
+							<h4 id="ViewAllComments">Click to view all</h4>
+							<!-- Top comments will be added here -->
+						</div>
+					</section>
+				</main>
+				<br/>
+		{% else %}
+			The place was not found!
+		{% endif %}
 	
-			<p class="Text">
-				Among all of the restaurants in Glasgow, this one must be the one of the best.
-				The food is great, and the staff are really nice.
-			</p>
+		<br/>
+		<div id="CommentsOverlayBackground">
+			<div>
+				<h1>Comments for {{ place.place_name }}</h1>
+				<div id="CommentsSection">
+					<div id="CommentsWrapper"></div><!--Comments will appear here -->
+					<div id="LoadMoreCommentsButton">Load more comments</div>
+				</div>
+				<div id="PostCommentWrapper">
+					{% if user.is_authenticated %}
+						<form name="PostCommentForm" id="PostCommentForm" action="/suggestGlasgow/PostComment/{{place.slug}}?userid={{user.id}}" method="POST">
+							{% csrf_token %}
+							<h3>Post a comment</h3>
+							<p class="FieldInfo">Comment title</p>
+							<input name="Title" type="text" />
+							<p class="FieldInfo">Comment text</p>
+							<textarea name="Comment" placeholder="Type your comment here..."></textarea>
+							<button class="Button" type="submit" name="Submit">Submit</button>
+						</form>
+					{% else %}
+						<a href="{% url 'suggestGlasgow:login' %}" class="Button">Log in to post a comment!</a>
+					{% endif %}
+				</div>
+			</div>
 		</div>
-	</template>
 
-	<iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-	<script type="module" src="{% static 'js/PlaceMain.mjs' %}"></script>
+		<template id="TComment">
+			<div class="Comment">
+				<div class="InfoWrapper">
+					<div class="Title">Great restaurant</div>
+					<div class="UserDate">by Mogus on 2022-02-22</div>
+				</div>
+		
+				<p class="Text">
+					Among all of the restaurants in Glasgow, this one must be the one of the best.
+					The food is great, and the staff are really nice.
+				</p>
+			</div>
+		</template>
+
+		<iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+		<script type="module" src="{% static 'js/PlaceMain.mjs' %}"></script>
+	</div>
 {% endblock %}

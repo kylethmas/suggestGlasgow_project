@@ -13,48 +13,52 @@
 {% block body_block %}
 	<br/>
 	<h1 id="Title">My places</h1>
+	<!-- displays saved places if user has saved places -->
 	{% if saved %}
-	<h2 id="Subtitle">Here you can find all of the places you've added!</h2>
-	<br/>
-	<main>
-		<div class="OverflowWrapper" id="AddedPlacesWrapper">
-			<div class="ItemsWrapper">
-				{% for place in saved %}
-					<div>
-						<a href="{% url 'suggestGlasgow:show_place' place.slug %}">
-							<h2 class="RestaurantName">{{ place.place_name }}</h2>
-							<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
-						</a>
-						<div class="Ratings" id="Ratings">
-							<form data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" target="StayOnThisSite" method="POST">
-								{% csrf_token %}
-								<img src="{% static 'images/Like.png' %}" />
-								<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
-							</form>
-							
-							<form data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" target="StayOnThisSite" method="POST">
-								{% csrf_token %}
-								<img src="{% static 'images/Dislike.png' %}" />
-								<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
-							</form>
-
-							<form class="RemoveButton" action="{% url 'suggestGlasgow:place_unsave' place.slug %}" target="StayOnThisSite" method="POST">
-								{% csrf_token %}
-								Remove
-								<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
-							</form>
+		<h2 id="Subtitle">Here you can find all of the places you've added!</h2>
+		<br/>
+		<main>
+			<div class="OverflowWrapper" id="AddedPlacesWrapper">
+				<div class="ItemsWrapper">
+					{% for place in saved %}
+						<div>
+							<a href="{% url 'suggestGlasgow:show_place' place.slug %}">
+								<h2 class="RestaurantName">{{ place.place_name }}</h2>
+								<div class="RestaurantImageWrapper"><img alt="Restaurant Image" src="{{ MEDIA_URL }}{{ place.place_image }}" /></div>
+							</a>
+							<!-- shows the number of likes and dislikes for saved places -->
+							<div class="Ratings" id="Ratings">
+								<form data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" target="StayOnThisSite" method="POST">
+									{% csrf_token %}
+									<img src="{% static 'images/Like.png' %}" />
+									<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
+								</form>
+								
+								<form data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" target="StayOnThisSite" method="POST">
+									{% csrf_token %}
+									<img src="{% static 'images/Dislike.png' %}" />
+									<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
+								</form>
+								
+								<!-- removes the place from saved places -->
+								<form class="RemoveButton" action="{% url 'suggestGlasgow:place_unsave' place.slug %}" target="StayOnThisSite" method="POST">
+									{% csrf_token %}
+									Remove
+									<button type="submit" value="{{place.slug}}" name="slug" hidden></button>
+								</form>
+							</div>
 						</div>
-					</div>
-				{% endfor %}
+					{% endfor %}
+				</div>
 			</div>
-		</div>
-	</main>
+		</main>
 	
 	{% else %}
-	<h2 id="Subtitle">You have no saved places. Go to the home page and find some you like!</h2>
+		<h2 id="Subtitle">You have no saved places. Go to the home page and find some you like!</h2>
 	{% endif %}
 	<br />
-	<!-- make this a button? !-->
+	
+	<!-- add a new place to the webapp -->
 	<section id="AddPlaceToSystemExplainer">
 		<h2>Not finding it?</h2>
 		<p>

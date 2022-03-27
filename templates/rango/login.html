@@ -10,36 +10,35 @@
 	<link rel="stylesheet" href="{% static 'css/LogInstyle.css' %}" />
 {% endblock %}
 
-<!-- need to modify this so that you can either scroll or there is no header and footer !-->
 {% block body_block %}
 	<div id="BackgroundImage"></div>
     <div id="CenterWrapper">
-	<div>
-        <h1>Log in to SuggestGlasgow</h1>
-		<!-- changed this id so will need to change in css 
-		<form id="login_form" method="post" action="{% url 'suggestGlasgow:login' %}" <!-- target="StayOnThisSite" !-->
-		<form id="form" method="post" action="{% url 'suggestGlasgow:login' %}">
-			{% csrf_token %}
-			
-			<div class="FieldContainer">
-				<p class="FieldInfo">Username</p>
-				<input type="text" name="username" value="" size="50" />
-			</div>
+		<div>
+			<h1>Log in to SuggestGlasgow</h1>
+			<!-- login form -->
+			<form id="form" method="post" action="{% url 'suggestGlasgow:login' %}">
+				{% csrf_token %}
+				
+				<div class="FieldContainer">
+					<p class="FieldInfo">Username</p>
+					<input type="text" name="username" value="" size="50" />
+				</div>
 
-			<div class="FieldContainer">
-				<p class="FieldInfo">Password</p>
-				<input type="password" name="password" value="" size="50" />
-			</div>
+				<div class="FieldContainer">
+					<p class="FieldInfo">Password</p>
+					<input type="password" name="password" value="" size="50" />
+				</div>
+				<br/>
+				<button type="submit" name = "submit">Log in</button>
+				<!-- return to home page button -->
+				<a href="{% url 'suggestGlasgow:home' %}"><button type="button">Go back</button></a>
+				<br/> 
+			</form> 
+			
 			<br/>
-			<button type="submit" name = "submit">Log in</button>
-			<!-- this button doesn't work? !-->
-			<a href="{% url 'suggestGlasgow:home' %}"><button type="button">Go back</button></a>
-			<br/> 
-        </form> 
-		
-        <br />
-        <p><a href= "{% url 'suggestGlasgow:sign up' %}" >Don't have an account? Sign up now!</a></p>
-      </div>
-    <iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
+			<!-- link to sign up -->
+			<p><a href= "{% url 'suggestGlasgow:sign up' %}" >Don't have an account? Sign up now!</a></p>
+		</div>
+		<iframe id="StayOnThisSite" name="StayOnThisSite" style="display: none"></iframe>
 	</div>
 {% endblock %}
