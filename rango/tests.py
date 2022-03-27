@@ -367,7 +367,7 @@ class ShowPlaceViewTests(TestCase):
         self.assertContains(response, place.dislikes.count())
         
         
-### not working from here on out :) ###   
+
 class AddPageViewTests(TestCase):
     def test_basic_view_not_logged_in(self):
         """
@@ -384,7 +384,6 @@ class AddPageViewTests(TestCase):
         no places will be saved here
         """
         user = create_a_user()
-        
         response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
         
         response = self.client.get(reverse('suggestGlasgow:add place'))
@@ -401,15 +400,23 @@ class AddPageViewTests(TestCase):
         
      
     def test_add_page(self):
-        #populate()
-        response = self.client.post(reverse('suggestGlasgow:add place'), kwargs = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'})
+        """ 
+        Check add a place works
+        """
+        #log in
+        user = create_a_user()
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
         
-        #place_made = Place.get_or_create(place_name = "Niamh test")
-        #print(place_made.slug)
-        #response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
-        #place = Place.objects.get(place_name="MacTassos")
-        self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': "niamh-test"})
-    
+        #add place
+        page_data = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'}
+        response = self.client.post(reverse('suggestGlasgow:add place'), page_data)
+       
+        self.assertEqual(response.url, reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
+        
+        #check places display
+        response = self.client.post(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
+        self.assertContains(response, "Niamh test")
+        self.assertContains(response, "Cafe")
 
         
 class ProfileViewTests(TestCase):

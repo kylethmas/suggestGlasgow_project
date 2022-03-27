@@ -116,8 +116,8 @@ def add_place(request):
                                                 place.slug}))
 
         else:
-            print(place.errors)
-
+            print(place_form.errors)
+            place = PlaceForm()
     else:
         place = PlaceForm()
 
