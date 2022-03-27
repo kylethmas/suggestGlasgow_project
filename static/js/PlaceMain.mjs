@@ -32,9 +32,10 @@ const CommentsPreviewContainer = $("#OverflowWrapper")[0];
 //Loads top comments preview
 void async function(){
   const GetNextComment = GetNextCommentGenerator();
-  for(let i = 0; i < 5; ++i){
-    const TCommentClone = TComment.content.firstElementChild.cloneNode(true);
+  for(let i = 0; i < 300; ++i){
     const CommentData = (await GetNextComment.next()).value;
+    if(!CommentData) break;
+    const TCommentClone = TComment.content.firstElementChild.cloneNode(true);
     TCommentClone.querySelector(".Title").innerText = CommentData.Title;
     TCommentClone.querySelector(".UserDate").innerText = `by ${CommentData.Username} on ${CommentData.Date}`;
     TCommentClone.querySelector(".Text").innerText = CommentData.Comment;
@@ -93,6 +94,6 @@ $("#CommentButton, #OverflowWrapper").each(function(){
 
 $("#LoadMoreCommentsButton").click(LoadMoreComments);
 
-$("#Ratings > form").each($(this).click(function(Event){
+$("#Ratings > form").each(function(){$(this).click(function(Event){
   this.querySelector("button").click();
-}));
+})});
