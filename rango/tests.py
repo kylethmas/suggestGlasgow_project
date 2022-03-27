@@ -402,7 +402,7 @@ class AddPageViewTests(TestCase):
      
     def test_add_page(self):
         #populate()
-        response = self.client.post(reverse('suggestGlasgow:add place'), kwargs = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':"https://moodle.gla.ac.uk/course/view.php?id=29970"})
+        response = self.client.post(reverse('suggestGlasgow:add place'), kwargs = {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':'https://moodle.gla.ac.uk/course/view.php?id=29970'})
         
         #place_made = Place.get_or_create(place_name = "Niamh test")
         #print(place_made.slug)

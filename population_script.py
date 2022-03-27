@@ -1,6 +1,6 @@
 import os
 import django
-from rango.models import Category, Place, User, UserProfile, Comments
+from rango.models import Place, User, UserProfile, Comments
 from PIL import Image
 from django.core.files import File as DjangoFile
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings')
