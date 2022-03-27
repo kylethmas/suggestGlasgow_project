@@ -1,0 +1,26 @@
+{% if messages %}
+    <br>
+    {% for message in messages %}
+        <div class="alert alert-{{ message.level_tag }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <div class="message-icon pull-left" style="margin-right: 0.5rem;">
+                {% if message.level_tag == "info" %}
+                    <i class="fas fa-info-circle"></i>
+                {% elif message.level_tag == "success" %}
+                    <i class="fas fa-check-circle"></i>
+                {% elif message.level_tag == "warning" %}
+                    <i class="fas fa-exclamation-circle"></i>
+                {% elif "danger" in message.level_tag %}
+                    <i class="fas fa-exclamation-triangle"></i>
+                {% endif %}
+            </div>
+
+            <div class="message-text" style="margin-left: 2.5rem;">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
