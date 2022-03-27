@@ -29,6 +29,6 @@ void function Animate(){
 SelectTypeMenu.addEventListener("click", function(Event){
     const Type = Event.target.dataset.type;
     if(Type === undefined) return;
-    document.querySelector("#id_place_type").value = Event.target.innerText;
-    document.querySelector("#SubmitButton").click(); //Submit form
+    $("#id_place_type")[0].value = Event.target.innerText;
+    $("#SubmitButton")[0].click(); //Submit form
 });

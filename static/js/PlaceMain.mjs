@@ -1,4 +1,4 @@
-const MapElement = document.querySelector("#Map");
+const MapElement = $("#Map")[0];
 const Map = new google.maps.Map(MapElement, {
   "zoom": 12.,
   "center": new google.maps.LatLng(MapElement.dataset.lat, MapElement.dataset.lng),
@@ -10,7 +10,7 @@ new google.maps.Marker({
   "title": "Place location"
 }).setPosition(new google.maps.LatLng(MapElement.dataset.lat, MapElement.dataset.lng));
 
-const ThisPlaceSlug = document.querySelector("#ThisPlaceSlug").innerText;
+const ThisPlaceSlug = $("#ThisPlaceSlug")[0].innerText;
 async function GetCommentsFrom(Index){ //This would contain a database call
   return await (await fetch(`${window.origin}/suggestGlasgow/GetComments?slug=${ThisPlaceSlug}&start=${Index}`)).json();
 }
@@ -26,8 +26,8 @@ async function* GetNextCommentGenerator(){
 }
 
 
-const TComment = document.querySelector("#TComment");
-const CommentsPreviewContainer = document.querySelector("#OverflowWrapper");
+const TComment = $("#TComment")[0];
+const CommentsPreviewContainer = $("#OverflowWrapper")[0];
 
 //Loads top comments preview
 void async function(){
@@ -45,15 +45,16 @@ void async function(){
 let LoadingComments = false;
 const LoadMoreComments = function(){
   const GetNextComment = GetNextCommentGenerator();
-  const CommentsWrapper = document.querySelector("#CommentsWrapper");
-  const LoadCommentsButton = document.querySelector("#LoadMoreCommentsButton");
+  const CommentsWrapper = $("#CommentsWrapper")[0];
+  const LoadCommentsButton = $("#LoadMoreCommentsButton")[0];
   return async function(){
     if(LoadingComments) return;
     LoadingComments = true;
     LoadCommentsButton.classList.add("Disabled");
-    for(let i = 0; i < 5; ++i){
-      const TCommentClone = TComment.content.firstElementChild.cloneNode(true);
+    for(let i = 0; i < 300; ++i){
       const CommentData = (await GetNextComment.next()).value;
+      if(!CommentData) break;
+      const TCommentClone = TComment.content.firstElementChild.cloneNode(true);
       if(CommentData === undefined){
         LoadCommentsButton.style.display = "none";
         LoadingComments = false;
@@ -70,28 +71,28 @@ const LoadMoreComments = function(){
 }();
 
 function OpenCommentsView(){
-  document.querySelector("#CommentsOverlayBackground").style.display = "block";
-  if(document.querySelector("#CommentsWrapper").childNodes.length === 0) LoadMoreComments();
+  $("#CommentsOverlayBackground")[0].style.display = "block";
+  if($("#CommentsWrapper")[0].childNodes.length === 0) LoadMoreComments();
 }
 function CloseCommentsView(){
-  document.querySelector("#CommentsOverlayBackground").style.display = "none";
+  $("#CommentsOverlayBackground")[0].style.display = "none";
 }
 
-document.querySelector("#CommentsOverlayBackground").addEventListener("click", function(Event){
+$("#CommentsOverlayBackground").click(function(Event){
   if(Event.target === this) CloseCommentsView(); //Only trigger if the background is clicked
 });
-document.addEventListener("keydown", function(Event){
+$(document).keydown(function(Event){
   if(Event.code === "Escape") CloseCommentsView();
 });
 
-for(const Element of document.querySelectorAll("#CommentButton, #OverflowWrapper")){
-  Element.addEventListener("mousedown", function(Event){ //This has to be mousedown because click sometimes misfires on the map
+$("#CommentButton, #OverflowWrapper").each(function(){
+  $(this).mousedown(function(Event){//This has to be mousedown because click sometimes misfires on the map
     if(!MapElement.contains(Event.target)) OpenCommentsView();
   });
-}
+});
 
-document.querySelector("#LoadMoreCommentsButton").addEventListener("click", LoadMoreComments);
+$("#LoadMoreCommentsButton").click(LoadMoreComments);
 
-document.querySelectorAll("#Ratings > form").forEach(Element => Element.addEventListener("click", function(Event){
+$("#Ratings > form").each($(this).click(function(Event){
   this.querySelector("button").click();
 }));
