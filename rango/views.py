@@ -116,8 +116,8 @@ def add_place(request):
                                                 place.slug}))
 
         else:
-            print(place.errors)
-
+            print(place_form.errors)
+            place = PlaceForm()
     else:
         place = PlaceForm()
 
@@ -191,7 +191,7 @@ def user_logout(request):
     return redirect(reverse('suggestGlasgow:home'))
 
 
-def PlaceLike(request, slug):
+def place_like(request, slug):
     post = get_object_or_404(Place, slug = slug)
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
@@ -204,7 +204,7 @@ def PlaceLike(request, slug):
                                                     slug}))
 
 
-def PlaceDislike(request, slug):
+def place_dislike(request, slug):
     post = get_object_or_404(Place, slug = slug)
     if post.dislikes.filter(id=request.user.id).exists():
         post.dislikes.remove(request.user)
@@ -217,7 +217,7 @@ def PlaceDislike(request, slug):
                                                     slug}))
 
 
-def PlaceSave(request, slug):
+def place_save(request, slug):
     post = get_object_or_404(Place, slug = slug)
 
     user = get_object_or_404(UserProfile, user=request.user)
@@ -229,7 +229,7 @@ def PlaceSave(request, slug):
     return redirect(reverse('suggestGlasgow:show_place',
                                         kwargs={'place_name_slug': post.slug}))
                                         
-def PlaceUnsave(request, slug):
+def place_unsave(request, slug):
     post = get_object_or_404(Place, slug = slug)
     user = get_object_or_404(UserProfile, user=request.user)
     user.saves.remove(post)
@@ -237,7 +237,7 @@ def PlaceUnsave(request, slug):
     return redirect(reverse('suggestGlasgow:profile'))
 
 
-def GetCommentsForPlace(request):
+def get_comments_for_place(request):
     Start = int(request.GET.get("start")) or 0
     if(Start < 0): Start = 0
     QueriedComments = Comments.objects.filter(PlaceID = Place.objects.filter(slug = request.GET.get("slug")).first()).order_by("-date")[Start:Start + 5] #Apparently, this actually makes the sql have LIMIT 5 instead of slicing after querying everything...
@@ -252,7 +252,7 @@ def GetCommentsForPlace(request):
     return JsonResponse(CommentsArray, safe=False)
 
 @login_required
-def PostComment(request, slug):
+def post_comment(request, slug):
     print("hiu")
     print(request.POST.get("Comment"))
     Comments.objects.create(PlaceID = Place.objects.filter(slug = slug).first(), username = User.objects.filter(id=request.GET.get("userid")).first(), comment = request.POST.get("Comment"), date = datetime.datetime.now().isoformat()[:10], title = request.POST.get("Title"))
