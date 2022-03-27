@@ -13,7 +13,8 @@ from datetime import datetime
 import datetime
 import random
 
-
+# the view for home, can return randomly generated suggestions based on the users chosen category 
+# also will return the place of the week
 def home(request):
     place_list = Place.objects.all()
     context_dict = {}
@@ -52,19 +53,16 @@ def home(request):
     context_dict['reccomendation'] = Place.objects.get(slug='mactassos')
     return render(request, 'rango/home.html', context=context_dict)
 
-
+# this will redirect the user to a place page
 def show_place(request, place_name_slug, **kwargs):
     context_dict = {}
 
     try:
-        # place = Place.objects.get(slug = place_name_slug)
         place = Place.objects.get(slug=place_name_slug)
         print(request.user)
         context_dict['place'] = place
         if request.user.username != "":
             user = User.objects.get(username=request.user)
-
-        # model = Place
 
         def get_context_data(self, **kwargs):
             context_dict = super().get_context_data(**kwargs)
@@ -96,6 +94,7 @@ def show_place(request, place_name_slug, **kwargs):
     return render(request, 'rango/Place.html', context=context_dict)
 
 
+#this is the view to add a place to the website, users need to be logged in to access this
 @login_required
 def add_place(request):
     if request.method == 'POST':
@@ -125,6 +124,7 @@ def add_place(request):
     return render(request, 'rango/add_place.html', context=context_dict)
 
 
+#this is the view to allow our users to sign up
 def sign_up(request):
     registered = False
 
@@ -151,7 +151,7 @@ def sign_up(request):
                   context={'user_form': user_form,
                            'registered': registered})
 
-
+# this is the view to allow our users to log in
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -175,6 +175,7 @@ def user_login(request):
         return render(request, 'rango/login.html')
 
 
+# this is the view which will display the saved places on the profile page
 @login_required
 def profile(request):
     user = get_object_or_404(UserProfile, user=request.user)
@@ -184,13 +185,13 @@ def profile(request):
 
     return render(request, 'rango/profile.html', context=context_dict)
 
-
+# this view allows the user to log out
 @login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('suggestGlasgow:home'))
 
-
+# this view allows a user to like and then unlike a place (if they have already liked it)
 def place_like(request, slug):
     post = get_object_or_404(Place, slug = slug)
     if post.likes.filter(id=request.user.id).exists():
@@ -198,12 +199,11 @@ def place_like(request, slug):
     else:
         post.likes.add(request.user)
 
-    # return HttpResponseRedirect(reverse('show_place', args=[str(post)]))
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                                         kwargs={'place_name_slug':
                                                     slug}))
 
-
+# this view allows a user to dislike and then undislike a place (if they have already disliked it)
 def place_dislike(request, slug):
     post = get_object_or_404(Place, slug = slug)
     if post.dislikes.filter(id=request.user.id).exists():
@@ -211,12 +211,11 @@ def place_dislike(request, slug):
     else:
         post.dislikes.add(request.user)
 
-    # return HttpResponseRedirect(reverse('show_place', args=[str(post)]))
     return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
                                         kwargs={'place_name_slug':
                                                     slug}))
 
-
+# this allows a user to save and unsave a place from the place's page
 def place_save(request, slug):
     post = get_object_or_404(Place, slug = slug)
 
@@ -229,6 +228,7 @@ def place_save(request, slug):
     return redirect(reverse('suggestGlasgow:show_place',
                                         kwargs={'place_name_slug': post.slug}))
                                         
+# this view allows a user to unsave a place from the profile page                                       
 def place_unsave(request, slug):
     post = get_object_or_404(Place, slug = slug)
     user = get_object_or_404(UserProfile, user=request.user)
@@ -236,7 +236,7 @@ def place_unsave(request, slug):
 
     return redirect(reverse('suggestGlasgow:profile'))
 
-
+# this view posts the comment for a place
 def get_comments_for_place(request):
     Start = int(request.GET.get("start")) or 0
     if(Start < 0): Start = 0
@@ -251,6 +251,7 @@ def get_comments_for_place(request):
         })
     return JsonResponse(CommentsArray, safe=False)
 
+# this view lets a logged in user add a comment
 @login_required
 def post_comment(request, slug):
     print("hiu")

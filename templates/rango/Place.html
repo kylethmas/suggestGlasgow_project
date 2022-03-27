@@ -30,32 +30,21 @@
 							
 							<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_likes }}" action="{% url 'suggestGlasgow:place_like' place.slug %}" method="POST">
 								{% csrf_token %}
-								{% if user in place.likes %}<!-- place.post_is_liked doesn't work? !-->
-									<img src="{% static 'images/Liked.png' %}" />
-								{% else %}
-									<img src="{% static 'images/Like.png' %}" />
-								{% endif %}
+								<img src="{% static 'images/Like.png' %}" />
+								
 								<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
 							</form>
 							
 							<form {% if not user.is_authenticated %}data-disabled{%endif%} data-count="{{ place.number_of_dislikes }}" action="{% url 'suggestGlasgow:place_dislike' place.slug %}" method="POST">
 								{% csrf_token %}
-								{% if place.post_is_disliked %}
-									<img src="{% static 'images/Disliked.png' %}" />
-								{% else %}
-									<img src="{% static 'images/Dislike.png' %}" />
-								{% endif %}
+								<img src="{% static 'images/Dislike.png' %}" />
 								<button type="submit" value="{{place.slug}}" name="slug" {% if not user.is_authenticated %}disabled{% endif %}></button>
 							</form>
 							
 							{% if user.is_authenticated %}
 								<form data-count="Add" action="{% url 'suggestGlasgow:place_save' place.slug %}" method="POST">
 									{% csrf_token %}
-									{% if post_is_saved %}
-										Saved! <!--Add an image here-->
-									{% else %}
-										<img src="{% static 'images/Add.png' %}" />
-									{% endif %}
+									<img src="{% static 'images/Add.png' %}" />
 									<button type="submit" value="{{place.slug}}" name="slug"></button>
 								</form>
 							{% endif %}	
