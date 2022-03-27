@@ -222,7 +222,6 @@ def PlaceDislike(request, slug):
 def PlaceSave(request, slug):
     post = get_object_or_404(Place, slug=request.POST.get('slug'))
     user = get_object_or_404(UserProfile, user=request.user)
-    print(post, user)
     if user.saves.filter(PlaceID=post.PlaceID).exists():
         user.saves.remove(post)
     else:
