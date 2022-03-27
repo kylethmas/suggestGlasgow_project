@@ -434,8 +434,4 @@ class ProfileViewTests(TestCase):
         self.assertContains(response, "Here you can find all of the places you've added!")
         self.assertContains(response, "You have no saved places")
         self.assertContains(response, "Add a new place here")
-
-
-class AddCommentTests(TestCase):
-        def test_add_comment(self):
-            
+           
