@@ -405,9 +405,9 @@ class AddPageViewTests(TestCase):
         
         #place_made = Place.get_or_create(place_name = "Niamh testing cafe")
         #print(place_made.slug)
-        #response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place_made.slug}))
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
         
-        #self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': place_made.slug})
+        self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': "niamh-test"})
 
         
 class ProfileViewTests(TestCase):
@@ -431,7 +431,7 @@ class ProfileViewTests(TestCase):
         
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "My places")
-        self.assertContains(response, "Here you can find all of the places you've added!")
-        self.assertContains(response, "You have no saved places")
-        self.assertContains(response, "Add a new place here")
+        self.assertContains(response, "You have no saved places. Go to the home page and find some you like!")
+        self.assertContains(response, "Not finding it?")
+        self.assertContains(response, "Add new place")
 
