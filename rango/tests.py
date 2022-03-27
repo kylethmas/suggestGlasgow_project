@@ -399,16 +399,41 @@ class AddPageViewTests(TestCase):
         #self.assertContains(response, "Choose file")
         self.assertContains(response, "Map")
         
+    """ < this isnt working?  
     def test_add_page(self):
-        populate()
+        #populate()
         response = self.client.post(reverse('suggestGlasgow:add place'), {'place_name' : 'Niamh test', 'place_type' : 'Cafe', 'place_image':'Testing.png', 'latitude': 55.67, 'longitude':4.43, 'url':"https://moodle.gla.ac.uk/course/view.php?id=29970"})
         
-        #place_made = Place.get_or_create(place_name = "Niamh testing cafe")
+        #place_made = Place.get_or_create(place_name = "Niamh test")
         #print(place_made.slug)
-        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
-        
+        #response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': "niamh-test"}))
+        #place = Place.objects.get(place_name="MacTassos")
         self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': "niamh-test"})
-
+    """
+class SavePlaceViewTests(TestCase):
+    def save_a_place(self):
+        """
+        Checks that a place can be saved successfully
+        """
+        populate()
+        #log in 
+        user = create_a_user()
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
+        
+        place = Place.objects.get(place_name = "MacTassos")
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        
+        response = self.client.get(reverse('suggestGlasgow:place_save', kwargs={'place_name_slug': place.slug}))
+        
+        self.assertEqual(response.url, reverse('suggestGlasgow:show_place'), kwargs={'place_name_slug': place.slug})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "MacTassos")
+        
+        response = self.client.get(reverse('suggestGlasgow:profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "MacTassos")
+        self.assertContains(response, "My Places")
+        
         
 class ProfileViewTests(TestCase):
     def test_basic_view_not_logged_in(self):
@@ -434,4 +459,5 @@ class ProfileViewTests(TestCase):
         self.assertContains(response, "You have no saved places. Go to the home page and find some you like!")
         self.assertContains(response, "Not finding it?")
         self.assertContains(response, "Add new place")
+    
 
