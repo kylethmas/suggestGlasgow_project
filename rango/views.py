@@ -220,30 +220,24 @@ def PlaceDislike(request, slug):
 
 
 def PlaceSave(request, slug):
-    post = get_object_or_404(Place, slug=request.POST.get('slug'))
+    post = get_object_or_404(Place, slug = slug)
+
     user = get_object_or_404(UserProfile, user=request.user)
     if user.saves.filter(PlaceID=post.PlaceID).exists():
         user.saves.remove(post)
     else:
         user.saves.add(post)
 
-    return HttpResponseRedirect(reverse('suggestGlasgow:show_place',
-                                        kwargs={'place_name_slug': slug}))
-
-
+    return redirect(reverse('suggestGlasgow:show_place',
+                                        kwargs={'place_name_slug': post.slug}))
+                                        
 def PlaceUnsave(request, slug):
-    post = get_object_or_404(Place, slug=request.POST.get('slug'))
+    post = get_object_or_404(Place, slug = slug)
     user = get_object_or_404(UserProfile, user=request.user)
     user.saves.remove(post)
 
-    return HttpResponseRedirect(reverse('suggestGlasgow:profile'))
+    return redirect(reverse('suggestGlasgow:profile'))
 
-    # p = Page.objects.get_or_create(category=category, title=title, url=url)
-
-    # pages = Page.objects.filter(category=category).order_by('-views')
-    # user = UserProfile
-    # user.saved.extend(place)
-    # return render(request, 'rango/page_listing.html', {'pages': pages})
 
 def GetCommentsForPlace(request):
     Start = int(request.GET.get("start")) or 0
