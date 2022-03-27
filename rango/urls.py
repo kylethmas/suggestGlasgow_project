@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.urls import path
 from rango import views
 
-LOGIN_URL = 'rango:login'
+
 app_name = 'suggestGlasgow'
 
 

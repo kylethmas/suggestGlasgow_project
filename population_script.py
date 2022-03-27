@@ -1,11 +1,11 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings')
-
 import django
-django.setup()
 from rango.models import Category, Place, User, UserProfile, Comments
 from PIL import Image
 from django.core.files import File as DjangoFile
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suggestGlasgow_project.settings')
+django.setup()
+
 
 def populate():
     places = [
@@ -113,15 +113,15 @@ def populate():
     ]
 
     for p in places:
-        add_place(p['place_type'],p['place_name'],p['latitude'], p['longitude'], p['url'],p['image'], p['slug'])
+        add_place(p['place_type'], p['place_name'], p['latitude'], p['longitude'], p['url'], p['image'], p['slug'])
 
     users = [
         {'username': 'tester',
          'email': 'tester@hp.com',
          'password': 'testtest'},
-        {'username':'john101',
-         'email':'lennon@thebeatles.com',
-         'password':'johnpassword'},
+        {'username': 'john101',
+         'email': 'lennon@thebeatles.com',
+         'password': 'johnpassword'},
         {'username': 'ali',
          'email': 'ali@gmail.com',
          'password': 'ali987654'},
@@ -152,14 +152,17 @@ def populate():
     ]
 
     for u in users:
-        add_user(u['username'],u['email'], u['password'])
+        add_user(u['username'], u['email'], u['password'])
 
     comments = [
-        {"title": "Good Restaurant", "date": "2022-02-22", "comment": "I really enjoyed this restaurant, the staff were really nice!!"},
+        {"title": "Good Restaurant", "date": "2022-02-22",
+         "comment": "I really enjoyed this restaurant, the staff were really nice!!"},
         {"title": "Enjoyed eating here", "date": "2022-03-01", "comment": "nice restaurant "},
         {"title": "Good food", "date": "2022-01-31", "comment": "Nice place!"},
-        {"title": "Nice staff", "date": "2022-03-17", "comment": "the staff were really nice the fod wws also really goood "},
-        {"title": "meh", "date": "2022-03-14", "comment": "idk what this is it certainly isnt a restaurant these people just dont care about there customers and they only care about the profits chichen the food isnt well good that it is not retty well done i must say"},
+        {"title": "Nice staff", "date": "2022-03-17",
+         "comment": "the staff were really nice the fod wws also really goood "},
+        {"title": "meh", "date": "2022-03-14",
+         "comment": "idk what this is it certainly isnt a restaurant these people just dont care about there customers and they only care about the profits chichen the food isnt well good that it is not retty well done i must say"},
         {"title": "nice!", "date": "2022-01-14", "comment": "had a lovely night out!"},
         {"title": "Magical!", "date": "2021-03-24", "comment": "had a lovely night out!"},
         {"title": "good!", "date": "2021-11-14", "comment": "I proposed here!"},
@@ -209,10 +212,12 @@ def add_likes():
 
 
 def add_comment(title, date, comment):
-    Comments.objects.create(PlaceID = Place.objects.order_by('?').first(), username = User.objects.order_by("?").first(), comment = comment, date = date, title = title)
+    Comments.objects.create(PlaceID=Place.objects.order_by('?').first(), username=User.objects.order_by("?").first(),
+                            comment=comment, date=date, title=title)
 
 
-def add_place(place_type, place_name, latitude, longitude, url, image = 'static/images/Default.jpg', slugName = '', comments = []):
+def add_place(place_type, place_name, latitude, longitude, url, image='static/images/Default.jpg', slugName='',
+              comments=[]):
     p = Place.objects.get_or_create(place_type=place_type, place_name=place_name)[0]
     p.url = url
     p.latitude = latitude
@@ -225,12 +230,12 @@ def add_place(place_type, place_name, latitude, longitude, url, image = 'static/
     return p
 
 
-def add_user(name,email,password):
+def add_user(name, email, password):
     users = User.objects
     if users.filter(username=name).exists():
         user = User.objects.get(username=name)
     else:
-        user = User.objects.create_user(name,email,password)
+        user = User.objects.create_user(name, email, password)
         u = UserProfile.objects.get_or_create(user=user)[0]
         u.save()
 
