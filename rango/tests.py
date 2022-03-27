@@ -517,5 +517,33 @@ class LikePlaceViewTests(TestCase):
         #check new number of likes
         response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
         self.assertContains(response, likes + 1)
+        
+class DislikePlaceViewTests(TestCase):
+        
+    def test_dislike_a_place(self):
+        """
+        Checks that a place can be disliked successfully
+        """
+        populate()
+        #log in 
+        user = create_a_user()
+        response = self.client.post(reverse('suggestGlasgow:login'), {'username' : 'Niamh', 'password' : '1234'})
+        
+        ##save - know this works due to save tests
+        place = Place.objects.get(place_name = "MacTassos")
+        dislikes = place.number_of_dislikes()
+        
+        # check the current number of likes
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        self.assertContains(response, dislikes)
+        
+        # like the place
+        response = self.client.get(reverse('suggestGlasgow:place_dislike', kwargs={'slug':place.slug}))
+        self.assertEqual(response.url, reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        self.assertEqual(response.status_code, 302)
+        
+        #check new number of likes
+        response = self.client.get(reverse('suggestGlasgow:show_place', kwargs={'place_name_slug': place.slug}))
+        self.assertContains(response, dislikes + 1)
 
         
