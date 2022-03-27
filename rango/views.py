@@ -138,9 +138,9 @@ def sign_up(request):
             u.save()
 
             # need to add back in user profile stuff
-
+            login(request, user)
             registered = True
-            return redirect(reverse('suggestGlasgow:login'))
+            return redirect(reverse('suggestGlasgow:home'))
         else:
             print(user_form.errors)
 
