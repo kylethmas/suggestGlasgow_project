@@ -1,8 +1,12 @@
+import logging
+
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+
+logger = logging.getLogger(__name__)
 
 # might come in useful later 
 class Category(models.Model):
@@ -54,7 +58,7 @@ class Place(models.Model):
         if likes_connected.likes.filter(id=self.request.user.id).exists():
             liked = True
         return liked
-
+    
 
 class Comments(models.Model):
     CommentID = models.BigAutoField(primary_key=True)

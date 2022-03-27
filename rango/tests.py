@@ -1,5 +1,5 @@
 from django.test import TestCase
-from rango.models import Place, User, UserProfile
+from rango.models import Place, User, UserProfile, Comments
 from django.urls import reverse
 from rango import forms
 from django.db import models
@@ -435,3 +435,7 @@ class ProfileViewTests(TestCase):
         self.assertContains(response, "You have no saved places")
         self.assertContains(response, "Add a new place here")
 
+
+class AddCommentTests(TestCase):
+        def test_add_comment(self):
+            
