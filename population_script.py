@@ -116,6 +116,9 @@ def populate():
         add_place(p['place_type'],p['place_name'],p['latitude'], p['longitude'], p['url'],p['image'], p['slug'])
 
     users = [
+        {'username': 'tester',
+         'email': 'tester@hp.com',
+         'password': 'testtest'},
         {'username':'john101',
          'email':'lennon@thebeatles.com',
          'password':'johnpassword'},
@@ -157,10 +160,53 @@ def populate():
         {"title": "Good food", "date": "2022-01-31", "comment": "Nice place!"},
         {"title": "Nice staff", "date": "2022-03-17", "comment": "the staff were really nice the fod wws also really goood "},
         {"title": "meh", "date": "2022-03-14", "comment": "idk what this is it certainly isnt a restaurant these people just dont care about there customers and they only care about the profits chichen the food isnt well good that it is not retty well done i must say"},
-        {"title": "nice!", "date": "2022-01-14", "comment": "had a lovely night out!"}
+        {"title": "nice!", "date": "2022-01-14", "comment": "had a lovely night out!"},
+        {"title": "Magical!", "date": "2021-03-24", "comment": "had a lovely night out!"},
+        {"title": "good!", "date": "2021-11-14", "comment": "I proposed here!"},
+        {"title": "tasty!", "date": "2022-02-19", "comment": "Family friendly!"},
+        {"title": "fun!", "date": "2021-12-01", "comment": "good value"},
+        {"title": "loved it!", "date": "2022-03-11", "comment": "good vibes with good friends"},
+        {"title": "great time!", "date": "2022-01-19", "comment": "danced the night away"},
+        {"title": "would recommend!", "date": "2022-02-01", "comment": "was very happy with service"},
+        {"title": "hit the spot!", "date": "2022-03-27", "comment": "clean and fast"}
     ]
     for c in comments:
         add_comment(c["title"], c["date"], c["comment"])
+    add_likes()
+    add_saves()
+
+
+def add_saves():
+    counter = 0
+    places = list(Place.objects.all())
+    print(places)
+    users = UserProfile.objects.all()
+    while counter < users.count():
+        place = places[counter]
+        user = users[counter]
+        user.saves.add(place)
+        counter = counter + 1
+
+
+def add_likes():
+    places = Place.objects.all()
+    user1 = User.objects.get(username='ronron')
+    user2 = User.objects.get(username='dbecks')
+    user3 = User.objects.get(username='dbecks')
+    user4 = User.objects.get(username='scowell')
+    user5 = User.objects.get(username='niamh')
+    user6 = User.objects.get(username='kyle')
+    user7 = User.objects.get(username='jack')
+    user8 = User.objects.get(username='john101')
+    for place in places:
+        place.likes.add(user1)
+        place.likes.add(user2)
+        place.likes.add(user3)
+        place.likes.add(user4)
+        place.likes.add(user6)
+        place.likes.add(user7)
+        place.dislikes.add(user5)
+        place.dislikes.add(user8)
 
 
 def add_comment(title, date, comment):
