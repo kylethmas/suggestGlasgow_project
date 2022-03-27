@@ -7,7 +7,7 @@ from django.contrib.auth import logout
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.core import serializers
-from rango.models import Place, Category, User, UserProfile, Comments
+from rango.models import Place, User, UserProfile, Comments
 from rango.forms import PlaceForm, SuggestForm, UserForm
 from datetime import datetime
 import datetime
@@ -193,7 +193,6 @@ def user_logout(request):
 
 def PlaceLike(request, slug):
     post = get_object_or_404(Place, slug = slug)
-    print(post)
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
     else:
@@ -207,7 +206,6 @@ def PlaceLike(request, slug):
 
 def PlaceDislike(request, slug):
     post = get_object_or_404(Place, slug = slug)
-    print(post)
     if post.dislikes.filter(id=request.user.id).exists():
         post.dislikes.remove(request.user)
     else:
